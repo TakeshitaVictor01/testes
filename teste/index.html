@@ -128,7 +128,6 @@
         <input type="hidden" id="item-id">
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-6">
-            
             <div class="md:col-span-2">
                 <label for="item-name" class="block text-gray-700 font-medium mb-1">Nome Completo:</label>
                 <input type="text" id="item-name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
@@ -245,8 +244,10 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(itemData),
                     });
-                    console.log(response);
-                    if (!response.status != "success") throw new Error(`Falha ao criar o item: ${response.message}`);
+                    const data = await response.json();
+                    console.log(data.status);
+                    if (data.status != "success")
+                        throw new Error(`Falha ao criar o item: ${data.message}`);
                     fetchItems();
                     hideForm();
                 } catch (error) {
@@ -269,14 +270,19 @@
                 }
             }
 
-            async function deleteItem(id) {
+            async function deleteItem(id, itemData) {
                 // Substituindo confirm() por um modal customizado seria o ideal em uma app real
                 if (!confirm('Tem certeza que deseja excluir este item?')) return;
                 try {
-                    const response = await fetch(`${apiUrl}/delete/${id}`, {
+                    const response = await fetch(`${apiUrl}/delete`, {
                         method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(itemData)
                     });
-                    if (!response.ok) throw new Error('Falha ao excluir o item');
+                    const data = await response.json();
+                    console.log(data.status);
+                    if (data.status != 'success')
+                        throw new Error('Falha ao excluir o item');
                     fetchItems();
                 } catch (error) {
                     alert(error.message);
@@ -311,8 +317,8 @@
                 if (item) {
                     formTitle.textContent = 'Editar Item';
                     document.getElementById('item-id').value = item.id;
-                    document.getElementById('item-name').value = item.title || item.name;
-                    document.getElementById('item-description').value = item.body || item.description;
+                    document.getElementById('item-name').value = item.Name || item.Name;
+                    document.getElementById('item-email').value = item.email || item.email;
                 } else {
                     formTitle.textContent = 'Adicionar Novo Item';
                     itemForm.reset();
@@ -347,7 +353,7 @@
                 const itemData = {
                     name: document.getElementById('item-name').value,
                     email: document.getElementById('item-email').value,
-                    cpf: document.getElementById('item-cpf').value,
+                    cpf: document.getElementById('item-cpf').value.replace(/\D/g, ''),
                     phoneNumber: document.getElementById('item-phoneNumber').value,
                     group: document.getElementById('item-group').value,
                     state: document.getElementById('item-state').value,
@@ -366,14 +372,17 @@
                 if (!id) return;
 
                 if (e.target.classList.contains('delete-btn')) {
-                    deleteItem(id);
+                    const itemData = {
+                        id: id
+                    };
+                    deleteItem(id,itemData);
                 }
 
                 if (e.target.classList.contains('edit-btn')) {
                     try {
-                        const response = await fetch(`${apiUrl}/${id}`);
+                        const response = await fetch(`${apiUrl}/getById`);
                         if (!response.ok) throw new Error('Não foi possível carregar os dados para edição.');
-                        const item = await response.json();
+                        const item = await response.json().data;
                         showForm(item);
                     } catch (error) {
                         alert(error.message);
