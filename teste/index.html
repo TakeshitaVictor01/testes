@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,26 +12,32 @@
         body {
             font-family: 'Inter', sans-serif;
         }
+
         /* Efeito de transição suave para elementos */
         .transition-all {
             transition: all 0.3s ease-in-out;
         }
+
         /* Custom scrollbar for a better look */
         ::-webkit-scrollbar {
             width: 8px;
         }
+
         ::-webkit-scrollbar-track {
             background: #f1f1f1;
         }
+
         ::-webkit-scrollbar-thumb {
             background: #888;
             border-radius: 4px;
         }
+
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
     </style>
 </head>
+
 <body class="bg-gray-100 text-gray-800">
 
     <div class="flex h-screen bg-gray-200">
@@ -41,15 +48,29 @@
             </div>
             <nav class="mt-6">
                 <a href="#" class="flex items-center px-6 py-3 bg-gray-700 text-white">
-                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
                     Dashboard
                 </a>
                 <a href="#" class="flex items-center px-6 py-3 hover:bg-gray-700 transition-all">
-                     <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
+                        </path>
+                    </svg>
                     Produtos
                 </a>
                 <a href="#" class="flex items-center px-6 py-3 hover:bg-gray-700 transition-all">
-                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                        </path>
+                    </svg>
                     Relatórios
                 </a>
             </nav>
@@ -59,25 +80,31 @@
         <div class="flex-1 flex flex-col overflow-hidden">
             <!-- Header do Conteúdo -->
             <header class="bg-white shadow-md p-4 flex justify-between items-center">
-                 <h1 class="text-2xl font-bold text-gray-800">Dashboard de Controle</h1>
-                 <div class="relative">
-                     <button id="user-menu-button" class="flex items-center space-x-2 focus:outline-none">
-                         <span class="font-semibold">Nome do Usuário</span>
-                         <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                     </button>
-                     <div id="user-menu" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20 hidden">
-                         <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Configurações</a>
-                         <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sair</a>
-                     </div>
-                 </div>
+                <h1 class="text-2xl font-bold text-gray-800">Dashboard de Controle</h1>
+                <div class="relative">
+                    <button id="user-menu-button" class="flex items-center space-x-2 focus:outline-none">
+                        <span class="font-semibold">Nome do Usuário</span>
+                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="user-menu"
+                        class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20 hidden">
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Configurações</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sair</a>
+                    </div>
+                </div>
             </header>
-            
+
             <!-- Área de Rolagem do Conteúdo -->
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
                 <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-4xl">
                     <!-- Botão para adicionar novo item -->
                     <div class="flex justify-end mb-4">
-                        <button id="add-new-btn" class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition-all">
+                        <button id="add-new-btn"
+                            class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition-all">
                             Adicionar Novo Item
                         </button>
                     </div>
@@ -123,59 +150,81 @@
                     </div> -->
 
                     <div id="form-container" class="bg-white p-6 rounded-lg shadow-lg mb-8 hidden">
-    <h2 id="form-title" class="text-2xl font-bold mb-6">Adicionar Novo Usuário</h2>
-    <form id="item-form">
-        <input type="hidden" id="item-id">
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-6">
-            <div class="md:col-span-2">
-                <label for="item-name" class="block text-gray-700 font-medium mb-1">Nome Completo:</label>
-                <input type="text" id="item-name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-            </div>
-            
-            <div class="md:col-span-2">
-                <label for="item-email" class="block text-gray-700 font-medium mb-1">Email:</label>
-                <input type="email" id="item-email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-            </div>
+                        <h2 id="form-title" class="text-2xl font-bold mb-6">Adicionar Novo Usuário</h2>
+                        <form id="item-form">
+                            <input type="hidden" id="item-id">
 
-            <div>
-                <label for="item-cpf" class="block text-gray-700 font-medium mb-1">CPF:</label>
-                <input type="text" id="item-cpf" name="cpf" placeholder="000.000.000-00" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-            </div>
-            <div>
-                <label for="item-phoneNumber" class="block text-gray-700 font-medium mb-1">Telefone:</label>
-                <input type="tel" id="item-phoneNumber" name="phoneNumber" placeholder="(00) 90000-0000" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-6">
+                                <div class="md:col-span-2">
+                                    <label for="item-name" class="block text-gray-700 font-medium mb-1">Nome
+                                        Completo:</label>
+                                    <input type="text" id="item-name" name="name"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        required>
+                                </div>
 
-            <div>
-                <label for="item-group" class="block text-gray-700 font-medium mb-1">Grupo:</label>
-                <select id="item-group" name="group" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white" required>
-                    <option value="" disabled selected>Selecione um grupo</option>
-                    <option value="admin">Administrador</option>
-                    <option value="editor">Editor</option>
-                    <option value="viewer">Visualizador</option>
-                </select>
-            </div>
-             <div>
-                <label for="item-state" class="block text-gray-700 font-medium mb-1">Status:</label>
-                <select id="item-state" name="state" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white" required>
-                    <option value="" disabled selected>Selecione o status</option>
-                    <option value="1">Ativo</option>
-                    <option value="2">Inativo</option>
-                </select>
-            </div>
-            
-            <div class="md:col-span-2">
-                <label for="item-password" class="block text-gray-700 font-medium mb-1">Senha:</label>
-                <input type="password" id="item-password" name="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-            </div>
+                                <div class="md:col-span-2">
+                                    <label for="item-email" class="block text-gray-700 font-medium mb-1">Email:</label>
+                                    <input type="email" id="item-email" name="email"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        required>
+                                </div>
 
-        </div> <div class="flex items-center justify-end space-x-4">
-            <button type="button" id="cancel-btn" class="bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition-all">Cancelar</button>
-            <button type="submit" class="bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75 transition-all">Salvar Usuário</button>
-        </div>
-    </form>
-</div>
+                                <div>
+                                    <label for="item-cpf" class="block text-gray-700 font-medium mb-1">CPF:</label>
+                                    <input type="text" id="item-cpf" name="cpf" placeholder="000.000.000-00"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        required>
+                                </div>
+                                <div>
+                                    <label for="item-phoneNumber"
+                                        class="block text-gray-700 font-medium mb-1">Telefone:</label>
+                                    <input type="tel" id="item-phoneNumber" name="phoneNumber"
+                                        placeholder="(00) 90000-0000"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        required>
+                                </div>
+
+                                <div>
+                                    <label for="item-group" class="block text-gray-700 font-medium mb-1">Grupo:</label>
+                                    <select id="item-group" name="group"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                                        required>
+                                        <option value="" disabled selected>Selecione um grupo</option>
+                                        <option value="admin">Administrador</option>
+                                        <option value="editor">Editor</option>
+                                        <option value="viewer">Visualizador</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="item-state" class="block text-gray-700 font-medium mb-1">Status:</label>
+                                    <select id="item-state" name="state"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                                        required>
+                                        <option value="" disabled selected>Selecione o status</option>
+                                        <option value="1">Ativo</option>
+                                        <option value="2">Inativo</option>
+                                    </select>
+                                </div>
+
+                                <div class="md:col-span-2">
+                                    <label for="item-password"
+                                        class="block text-gray-700 font-medium mb-1">Senha:</label>
+                                    <input type="password" id="item-password" name="password"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        required>
+                                </div>
+
+                            </div>
+                            <div class="flex items-center justify-end space-x-4">
+                                <button type="button" id="cancel-btn"
+                                    class="bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition-all">Cancelar</button>
+                                <button type="submit"
+                                    class="bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75 transition-all">Salvar
+                                    Usuário</button>
+                            </div>
+                        </form>
+                    </div>
 
                     <!-- Container da Lista de Itens -->
                     <div id="items-list" class="bg-white p-6 rounded-lg shadow-lg">
@@ -201,6 +250,7 @@
             // --- ELEMENTOS DO DOM ---
             const itemsList = document.getElementById('items-ul');
             const itemForm = document.getElementById('item-form');
+            const mainContent = document.querySelector('main');
             const formContainer = document.getElementById('form-container');
             const formTitle = document.getElementById('form-title');
             const addNewBtn = document.getElementById('add-new-btn');
@@ -220,7 +270,7 @@
                     userMenu.classList.add('hidden');
                 }
             });
-            
+
             // --- FUNÇÕES DA API (CRUD) ---
             async function fetchItems() {
                 loadingIndicator.style.display = 'block';
@@ -257,12 +307,16 @@
 
             async function updateItem(id, itemData) {
                 try {
-                    const response = await fetch(`${apiUrl}/${id}`, {
+                    const response = await fetch(`${apiUrl}/update`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(itemData),
                     });
-                    if (!response.ok) throw new Error('Falha ao atualizar o item');
+                    console.log(itemData);
+                    const data = await response.json();
+                    if (data.status != "success") {
+                        throw new Error('Falha ao atualizar o item');
+                    }
                     fetchItems();
                     hideForm();
                 } catch (error) {
@@ -292,34 +346,120 @@
             // --- RENDERIZAÇÃO E MANIPULAÇÃO DO DOM ---
             function renderItems(items) {
                 itemsList.innerHTML = '';
-                if(items.length === 0) {
+                if (items.length === 0) {
                     itemsList.innerHTML = '<li class="text-center text-gray-500">Nenhum item encontrado.</li>';
                     return;
                 }
                 items.forEach(item => {
                     const li = document.createElement('li');
-                    li.className = 'flex items-center justify-between bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow';
+                    li.className = 'bg-white p-4 rounded-lg border border-gray-200 shadow-sm hover:shadow-lg transition-shadow duration-300';
+
+                    // --- Lógica Auxiliar ---
+                    // 1. Define o texto e a cor do selo de status
+                    const isActive = item.State === '1';
+                    const statusText = isActive ? 'Ativo' : 'Inativo';
+                    const statusClass = isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+
+                    // 2. Formata a data de criação para o padrão brasileiro (DD/MM/AAAA)
+                    let formattedCreationDate = 'Não definida';
+                    if (item.CreationDate) {
+                        const creationDate = new Date(item.CreationDate);
+                        // Opções para garantir que a data seja formatada corretamente
+                        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+                        formattedCreationDate = creationDate.toLocaleDateString('pt-BR', options);
+                    }
+                    // --- Fim da Lógica Auxiliar ---
+
                     li.innerHTML = `
-                        <div class="flex-grow">
-                            <h3 class="font-bold text-lg text-gray-800">${item.Name}</h3>
-                            <p class="text-gray-600">${item.Email}</p>
-                        </div>
-                        <div class="flex-shrink-0 flex items-center space-x-3 ml-4">
-                            <button data-id="${item.Id}" class="edit-btn text-blue-600 hover:text-blue-800 font-medium">Editar</button>
-                            <button data-id="${item.Id}" class="delete-btn text-red-600 hover:text-red-800 font-medium">Excluir</button>
-                        </div>
-                    `;
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            
+            <div class="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-4 w-full">
+                
+                <div class="flex flex-col">
+                    <div class="flex items-center gap-3 mb-1">
+                        <h3 class="font-bold text-lg text-gray-900 truncate">${item.Name}</h3>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${statusClass}">
+                            ${statusText}
+                        </span>
+                    </div>
+                    <p class="text-sm text-gray-500">${item.Email}</p>
+                </div>
+
+                <div class="flex flex-col">
+                    <p class="text-sm font-semibold text-gray-700">CPF</p>
+                    <p class="text-sm text-gray-500">${item.CPF}</p>
+                </div>
+
+                <div class="flex flex-col">
+                     <p class="text-sm font-semibold text-gray-700">Grupo</p>
+                     <div class="flex items-center gap-2">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 capitalize">
+                           ${item.Group}
+                        </span>
+                        <p class="text-xs text-gray-400">(${formattedCreationDate})</p>
+                     </div>
+                </div>
+
+            </div>
+
+            <div class="flex-shrink-0 flex items-center space-x-3 w-full md:w-auto justify-end mt-2 md:mt-0">
+                <button data-id="${item.Id}" class="edit-btn text-blue-600 hover:text-blue-800 font-medium transition-colors">Editar</button>
+                <button data-id="${item.Id}" class="delete-btn text-red-600 hover:text-red-800 font-medium transition-colors">Excluir</button>
+            </div>
+        </div>
+    `;
                     itemsList.appendChild(li);
                 });
+                // items.forEach(item => {
+                //     const li = document.createElement('li');
+                //     li.className = 'flex items-center justify-between bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow';
+                //     li.innerHTML = `
+                //         <div class="flex-grow">
+                //             <h3 class="font-bold text-lg text-gray-800">${item.Name}</h3>
+                //             <p class="text-gray-600">${item.Email}</p>
+                //         </div>
+                //         <div class="flex-shrink-0 flex items-center space-x-3 ml-4">
+                //             <button data-id="${item.Id}" class="edit-btn text-blue-600 hover:text-blue-800 font-medium">Editar</button>
+                //             <button data-id="${item.Id}" class="delete-btn text-red-600 hover:text-red-800 font-medium">Excluir</button>
+                //         </div>
+                //     `;
+                //     itemsList.appendChild(li);
+                // });
             }
 
+            // item-id
+            // item-name
+            // item-email
+            // item-cpf
+            // item-phoneNumber
+            // item-group
+            // item-state
+            // item-password
+
             function showForm(item = null) {
+                const passwordInput = document.getElementById('item-password');
+                const passwordLabel = document.querySelector('label[for="item-password"]');
                 if (item) {
+                    mainContent.scrollTo({ top: 0, behavior: 'smooth' });
                     formTitle.textContent = 'Editar Item';
-                    document.getElementById('item-id').value = item.id;
-                    document.getElementById('item-name').value = item.Name || item.Name;
-                    document.getElementById('item-email').value = item.email || item.email;
+                    document.getElementById('item-id').value = item.Id;
+                    document.getElementById('item-name').value = item.Name;
+                    document.getElementById('item-email').value = item.Email;
+                    document.getElementById('item-cpf').value = item.CPF;
+                    document.getElementById('item-phoneNumber').value = item.PhoneNumber;
+                    document.getElementById('item-group').value = item.Group;
+                    document.getElementById('item-state').value = item.State;
+                    passwordInput.style.display = 'none';
+                    if (passwordLabel) {
+                        passwordLabel.style.display = 'none';
+                    }
+                    passwordInput.removeAttribute('required');
                 } else {
+                    passwordInput.style.display = 'block';
+                    if (passwordLabel) {
+                        passwordLabel.style.display = 'block';
+                    }
+                    passwordInput.setAttribute('required', '');
                     formTitle.textContent = 'Adicionar Novo Item';
                     itemForm.reset();
                 }
@@ -337,15 +477,15 @@
             addNewBtn.addEventListener('click', () => showForm());
             cancelBtn.addEventListener('click', hideForm);
 
-//             {
-//   "cpf": "string",
-//   "email": "string",
-//   "group": "string",
-//   "name": "string",
-//   "password": "string",
-//   "phoneNumber": "string",
-//   "state": "string"
-// }
+            //             {
+            //   "cpf": "string",
+            //   "email": "string",
+            //   "group": "string",
+            //   "name": "string",
+            //   "password": "string",
+            //   "phoneNumber": "string",
+            //   "state": "string"
+            // }
 
             itemForm.addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -353,14 +493,14 @@
                 const itemData = {
                     name: document.getElementById('item-name').value,
                     email: document.getElementById('item-email').value,
-                    cpf: document.getElementById('item-cpf').value.replace(/\D/g, ''),
+                    cpf: document.getElementById('item-cpf').value,
                     phoneNumber: document.getElementById('item-phoneNumber').value,
                     group: document.getElementById('item-group').value,
                     state: document.getElementById('item-state').value,
                     password: document.getElementById('item-password').value,
-                    //userId: 1
                 };
                 if (id) {
+                    itemData.id = id;
                     updateItem(id, itemData);
                 } else {
                     createItem(itemData);
@@ -375,15 +515,23 @@
                     const itemData = {
                         id: id
                     };
-                    deleteItem(id,itemData);
+                    deleteItem(id, itemData);
                 }
 
                 if (e.target.classList.contains('edit-btn')) {
                     try {
-                        const response = await fetch(`${apiUrl}/getById`);
-                        if (!response.ok) throw new Error('Não foi possível carregar os dados para edição.');
-                        const item = await response.json().data;
-                        showForm(item);
+                        const itemData = {
+                            id: id
+                        };
+                        const response = await fetch(`${apiUrl}/getById`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(itemData)
+                        });
+                        const data = await response.json();
+                        if (data.status != 'success')
+                            throw new Error('Não foi possível carregar os dados para edição.');
+                        showForm(data.data);
                     } catch (error) {
                         alert(error.message);
                     }
@@ -396,33 +544,33 @@
     </script>
     <script src="https://unpkg.com/imask"></script>
     <script>
-    // Espera o documento carregar completamente para garantir que os elementos existam
-    document.addEventListener('DOMContentLoaded', function() {
-        
-        // --- MÁSCARA PARA O CPF ---
-        const cpfInput = document.getElementById('item-cpf');
-        const cpfMaskOptions = {
-            mask: '000.000.000-00'
-        };
-        const cpfMask = IMask(cpfInput, cpfMaskOptions);
+        // Espera o documento carregar completamente para garantir que os elementos existam
+        document.addEventListener('DOMContentLoaded', function () {
 
-        // --- MÁSCARA PARA O TELEFONE (CELULAR E FIXO) ---
-        const phoneInput = document.getElementById('item-phoneNumber');
-        const phoneMaskOptions = {
-            // A máscara é dinâmica, se adaptando se o número tem 8 ou 9 dígitos
-            mask: [
-                {
-                    mask: '(00) 0000-0000',
-                    maxLength: 10
-                },
-                {
-                    mask: '(00) 00000-0000'
-                }
-            ]
-        };
-        const phoneMask = IMask(phoneInput, phoneMaskOptions);
-    });
-</script>
+            // --- MÁSCARA PARA O CPF ---
+            const cpfInput = document.getElementById('item-cpf');
+            const cpfMaskOptions = {
+                mask: '000.000.000-00'
+            };
+            const cpfMask = IMask(cpfInput, cpfMaskOptions);
+
+            // --- MÁSCARA PARA O TELEFONE (CELULAR E FIXO) ---
+            const phoneInput = document.getElementById('item-phoneNumber');
+            const phoneMaskOptions = {
+                // A máscara é dinâmica, se adaptando se o número tem 8 ou 9 dígitos
+                mask: [
+                    {
+                        mask: '(00) 0000-0000',
+                        maxLength: 10
+                    },
+                    {
+                        mask: '(00) 00000-0000'
+                    }
+                ]
+            };
+            const phoneMask = IMask(phoneInput, phoneMaskOptions);
+        });
+    </script>
 </body>
-</html>
 
+</html>

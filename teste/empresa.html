@@ -113,63 +113,70 @@
                         <h2 id="form-title" class="text-2xl font-bold mb-6">Adicionar Novo Usuário</h2>
                         <form id="item-form">
                             <input type="hidden" id="item-id">
-                    
+
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-6">
                                 <div class="md:col-span-2">
-                                    <label for="item-legalName" class="block text-gray-700 font-medium mb-1">Razão Social:</label>
+                                    <label for="item-legalName" class="block text-gray-700 font-medium mb-1">Razão
+                                        Social:</label>
                                     <input type="text" id="item-legalName" name="legalName"
                                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         required>
                                 </div>
-                    
+
                                 <div class="md:col-span-2">
-                                    <label for="item-tradeName" class="block text-gray-700 font-medium mb-1">Nome Fantasia:</label>
+                                    <label for="item-tradeName" class="block text-gray-700 font-medium mb-1">Nome
+                                        Fantasia:</label>
                                     <input type="text" id="item-tradeName" name="tradeName"
                                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         required>
                                 </div>
-                    
+
                                 <div>
                                     <label for="item-cnpj" class="block text-gray-700 font-medium mb-1">CNPJ:</label>
                                     <input type="text" id="item-cnpj" name="cnpj" placeholder="00.000.000/0000-00"
                                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         required>
                                 </div>
-                    
+
                                 <div>
-                                    <label for="item-phoneNumber" class="block text-gray-700 font-medium mb-1">Telefone:</label>
-                                    <input type="tel" id="item-phoneNumber" name="phoneNumber" placeholder="(00) 90000-0000"
+                                    <label for="item-phoneNumber"
+                                        class="block text-gray-700 font-medium mb-1">Telefone:</label>
+                                    <input type="tel" id="item-phoneNumber" name="phoneNumber"
+                                        placeholder="(00) 90000-0000"
                                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         required>
                                 </div>
-                    
+
                                 <div class="md:col-span-2">
                                     <label for="item-email" class="block text-gray-700 font-medium mb-1">Email:</label>
                                     <input type="email" id="item-email" name="email"
                                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         required>
                                 </div>
-                    
+
                                 <div>
-                                    <label for="item-startOperationsDate" class="block text-gray-700 font-medium mb-1">Início das Operações:</label>
+                                    <label for="item-startOperationsDate"
+                                        class="block text-gray-700 font-medium mb-1">Início das Operações:</label>
                                     <input type="date" id="item-startOperationsDate" name="startOperationsDate"
                                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         required>
                                 </div>
-                    
+
                                 <div>
-                                    <label for="item-contractEndDate" class="block text-gray-700 font-medium mb-1">Fim do Contrato:</label>
+                                    <label for="item-contractEndDate" class="block text-gray-700 font-medium mb-1">Fim
+                                        do Contrato:</label>
                                     <input type="date" id="item-contractEndDate" name="contractEndDate"
                                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         required>
                                 </div>
-                                
+
                                 <div>
-                                    <label for="item-endOperationsDate" class="block text-gray-700 font-medium mb-1">Fim das Operações (Opcional):</label>
+                                    <label for="item-endOperationsDate" class="block text-gray-700 font-medium mb-1">Fim
+                                        das Operações (Opcional):</label>
                                     <input type="date" id="item-endOperationsDate" name="endOperationsDate"
                                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 </div>
-                    
+
                                 <div>
                                     <label for="item-state" class="block text-gray-700 font-medium mb-1">Status:</label>
                                     <select id="item-state" name="state"
@@ -180,7 +187,7 @@
                                         <option value="2">Inativo</option>
                                     </select>
                                 </div>
-                    
+
                             </div>
                             <div class="flex items-center justify-end space-x-4">
                                 <button type="button" id="cancel-btn"
@@ -189,7 +196,7 @@
                                     class="bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75 transition-all">Salvar</button>
                             </div>
                         </form>
-                        </div>
+                    </div>
 
                     <!-- Container da Lista de Itens -->
                     <div id="items-list" class="bg-white p-6 rounded-lg shadow-lg">
@@ -215,6 +222,7 @@
             // --- ELEMENTOS DO DOM ---
             const itemsList = document.getElementById('items-ul');
             const itemForm = document.getElementById('item-form');
+            const mainContent = document.querySelector('main');
             const formContainer = document.getElementById('form-container');
             const formTitle = document.getElementById('form-title');
             const addNewBtn = document.getElementById('add-new-btn');
@@ -258,8 +266,8 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(itemData),
                     });
+                    console.log(itemData);
                     const data = await response.json();
-                    console.log(data.status);
                     if (data.status != "success")
                         throw new Error(`Falha ao criar o item: ${data.message}`);
                     fetchItems();
@@ -271,12 +279,16 @@
 
             async function updateItem(id, itemData) {
                 try {
-                    const response = await fetch(`${apiUrl}/${id}`, {
+                    const response = await fetch(`${apiUrl}/update`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(itemData),
                     });
-                    if (!response.ok) throw new Error('Falha ao atualizar o item');
+                    console.log(itemData);
+                    const data = await response.json();
+                    if (data.status != "success") {
+                        throw new Error('Falha ao atualizar o item');
+                    }
                     fetchItems();
                     hideForm();
                 } catch (error) {
@@ -312,27 +324,97 @@
                 }
                 items.forEach(item => {
                     const li = document.createElement('li');
-                    li.className = 'flex items-center justify-between bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow';
+                    li.className = 'bg-white p-4 rounded-lg border border-gray-200 shadow-sm hover:shadow-lg transition-shadow duration-300';
+
+                    // --- Lógica Auxiliar ---
+                    // 1. Define o texto e a cor do selo de status
+                    const isActive = item.State === '1';
+                    const statusText = isActive ? 'Ativo' : 'Inativo';
+                    const statusClass = isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+
+                    // 2. Formata a data para o padrão brasileiro (DD/MM/AAAA)
+                    let formattedEndDate = 'Não definida';
+                    if (item.ContractEndDate) {
+                        // Pega a data antes do 'T' e divide em ano, mês e dia
+                        const [year, month, day] = item.ContractEndDate.split('T')[0].split('-');
+                        formattedEndDate = `${day}/${month}/${year}`;
+                    }
+                    // --- Fim da Lógica Auxiliar ---
+
                     li.innerHTML = `
-                        <div class="flex-grow">
-                            <h3 class="font-bold text-lg text-gray-800">${item.TradeName}</h3>
-                            <p class="text-gray-600">${item.Email}</p>
-                        </div>
-                        <div class="flex-shrink-0 flex items-center space-x-3 ml-4">
-                            <button data-id="${item.Id}" class="edit-btn text-blue-600 hover:text-blue-800 font-medium">Editar</button>
-                            <button data-id="${item.Id}" class="delete-btn text-red-600 hover:text-red-800 font-medium">Excluir</button>
-                        </div>
-                    `;
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            
+            <div class="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-3 w-full">
+                
+                <div class="flex flex-col">
+                    <div class="flex items-center gap-3">
+                        <h3 class="font-bold text-lg text-gray-900 truncate">${item.TradeName}</h3>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${statusClass}">
+                            ${statusText}
+                        </span>
+                    </div>
+                    <p class="text-sm text-gray-500">${item.LegalName}</p>
+                </div>
+
+                <div class="flex flex-col">
+                    <p class="text-sm font-semibold text-gray-700">CNPJ</p>
+                    <p class="text-sm text-gray-500">${item.CNPJ}</p>
+                </div>
+
+                <div class="flex flex-col">
+                     <p class="text-sm font-semibold text-gray-700">Fim do Contrato</p>
+                     <p class="text-sm text-gray-500">${formattedEndDate}</p>
+                </div>
+            </div>
+
+            <div class="flex-shrink-0 flex items-center space-x-3 w-full md:w-auto justify-end">
+                <button data-id="${item.Id}" class="edit-btn text-blue-600 hover:text-blue-800 font-medium transition-colors">Editar</button>
+                <button data-id="${item.Id}" class="delete-btn text-red-600 hover:text-red-800 font-medium transition-colors">Excluir</button>
+            </div>
+        </div>
+    `;
                     itemsList.appendChild(li);
                 });
+                // items.forEach(item => {
+                //     const li = document.createElement('li');
+                //     li.className = 'flex items-center justify-between bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow';
+                //     li.innerHTML = `
+                //         <div class="flex-grow">
+                //             <h3 class="font-bold text-lg text-gray-800">${item.TradeName}</h3>
+                //             <p class="text-gray-600">${item.Email}</p>
+                //         </div>
+                //         <div class="flex-shrink-0 flex items-center space-x-3 ml-4">
+                //             <button data-id="${item.Id}" class="edit-btn text-blue-600 hover:text-blue-800 font-medium">Editar</button>
+                //             <button data-id="${item.Id}" class="delete-btn text-red-600 hover:text-red-800 font-medium">Excluir</button>
+                //         </div>
+                //     `;
+                //     itemsList.appendChild(li);
+                // });
             }
-
+            // item-id
+            // item-legalName
+            // item-tradeName
+            // item-cnpj
+            // item-phoneNumber
+            // item-email
+            // item-startOperationsDate
+            // item-contractEndDate
+            // item-endOperationsDate
+            // item-state
             function showForm(item = null) {
                 if (item) {
+                    mainContent.scrollTo({ top: 0, behavior: 'smooth' });
                     formTitle.textContent = 'Editar Item';
-                    document.getElementById('item-id').value = item.id;
-                    document.getElementById('item-name').value = item.Name || item.Name;
-                    document.getElementById('item-email').value = item.email || item.email;
+                    document.getElementById('item-id').value = item.Id;
+                    document.getElementById('item-legalName').value = item.LegalName;
+                    document.getElementById('item-tradeName').value = item.TradeName;
+                    document.getElementById('item-cnpj').value = item.CNPJ
+                    document.getElementById('item-phoneNumber').value = item.PhoneNumber
+                    document.getElementById('item-email').value = item.Email
+                    document.getElementById('item-startOperationsDate').value = item.StartOperationsDate
+                    document.getElementById('item-contractEndDate').value = item.ContractEndDate
+                    document.getElementById('item-endOperationsDate').value = item.EndOperationsDate
+                    document.getElementById('item-state').value = item.State;
                 } else {
                     formTitle.textContent = 'Adicionar Novo Item';
                     itemForm.reset();
@@ -351,30 +433,33 @@
             addNewBtn.addEventListener('click', () => showForm());
             cancelBtn.addEventListener('click', hideForm);
 
-            //             {
-            //   "cpf": "string",
-            //   "email": "string",
-            //   "group": "string",
-            //   "name": "string",
-            //   "password": "string",
-            //   "phoneNumber": "string",
-            //   "state": "string"
-            // }
+            // item-id
+            // item-legalName
+            // item-tradeName
+            // item-cnpj
+            // item-phoneNumber
+            // item-email
+            // item-startOperationsDate
+            // item-contractEndDate
+            // item-endOperationsDate
+            // item-state
 
             itemForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const id = document.getElementById('item-id').value;
                 const itemData = {
-                    name: document.getElementById('item-name').value,
-                    email: document.getElementById('item-email').value,
-                    cpf: document.getElementById('item-cpf').value.replace(/\D/g, ''),
+                    legalName: document.getElementById('item-legalName').value,
+                    tradeName: document.getElementById('item-tradeName').value,
+                    cnpj: document.getElementById('item-cnpj'),
                     phoneNumber: document.getElementById('item-phoneNumber').value,
-                    group: document.getElementById('item-group').value,
+                    email: document.getElementById('item-email').value,
+                    startOperationsDate: document.getElementById('item-startOperationsDate').value,
+                    contractEndDate: document.getElementById('item-contractEndDate').value,
+                    endOperationsDate: document.getElementById('item-endOperationsDate').value,
                     state: document.getElementById('item-state').value,
-                    password: document.getElementById('item-password').value,
-                    //userId: 1
                 };
                 if (id) {
+                    itemData.id = id;
                     updateItem(id, itemData);
                 } else {
                     createItem(itemData);
@@ -394,10 +479,18 @@
 
                 if (e.target.classList.contains('edit-btn')) {
                     try {
-                        const response = await fetch(`${apiUrl}/getById`);
-                        if (!response.ok) throw new Error('Não foi possível carregar os dados para edição.');
-                        const item = await response.json().data;
-                        showForm(item);
+                        const itemData = {
+                            id: id
+                        };
+                        const response = await fetch(`${apiUrl}/getById`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(itemData)
+                        });
+                        const data = await response.json();
+                        if (data.status != 'success')
+                            throw new Error('Não foi possível carregar os dados para edição.');
+                        showForm(data.data);
                     } catch (error) {
                         alert(error.message);
                     }

@@ -1,0 +1,3 @@
+Implementar:
+const mainContent = document.querySelector('main');
+
