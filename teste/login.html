@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Startup Overseer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style_login.css" />
+</head>
+<body class="antialiased">
+
+  <section id="hero" class="relative min-h-screen w-full flex flex-col bg-brand-teal">
+    <div class="flex flex-1">
+      
+      <div class="hidden md:flex md:w-[50%] items-center justify-center">
+        <div class="max-w-lg text-white p-12 animate-fade-in">
+          <h1 class="text-4xl font-bold mb-6">Startup Overseer</h1>
+          <p class="text-xl mb-8 opacity-90">
+            Sistema de gestão para empresas incubadas
+          </p>
+          <div class="bg-white/10 backdrop-blur-sm p-6 rounded-lg">
+            <p class="text-lg font-medium">
+              "Uma plataforma completa para o gerenciamento eficiente das suas empresas incubadas."
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full md:w-[40%] flex items-center justify-center p-8 relative z-20">
+        <div class="w-full max-w-md space-y-8 bg-white rounded-[2rem] shadow-2xl p-8 bubble-login animate-fade-in">
+          <div class="text-center">
+            <div class="mx-auto h-12 w-12 rounded-full bg-brand-teal text-white flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                <path d="M9 18V6"></path>
+                <path d="M15 18V6"></path>
+              </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-900">Bem-vindo(a)</h2>
+            <p class="mt-2 text-sm text-slate-600">Faça login para acessar a plataforma</p>
+          </div>
+
+          <form id="login-form" class="mt-8 space-y-6">
+            <div class="space-y-4">
+              <div>
+                <label for="email" class="block text-sm font-medium text-slate-700">Email</label>
+                <input id="email" name="email" type="email" required
+                  class="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-teal focus:border-brand-teal"
+                  placeholder="seu@email.com" />
+              </div>
+              <div>
+                <label for="password" class="block text-sm font-medium text-slate-700">Senha</label>
+                <input id="password" name="password" type="password" required
+                  class="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-teal focus:border-brand-teal"
+                  placeholder="••••••••" />
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <input id="remember-me" name="remember-me" type="checkbox"
+                  class="h-4 w-4 rounded border-slate-300 text-brand-teal focus:ring-brand-teal" />
+                <label for="remember-me" class="ml-2 block text-sm text-slate-700">Lembrar-me</label>
+              </div>
+              <div class="text-sm">
+                <a href="#" class="font-medium text-brand-teal hover:opacity-80">Esqueceu a senha?</a>
+              </div>
+            </div>
+
+            <div>
+              <button type="submit" id="login-button"
+                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-button text-sm font-medium text-white bg-brand-teal hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-teal disabled:opacity-70 disabled:cursor-not-allowed transition-all">
+                Entrar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-0 left-0 w-full h-40 gradient-separator"></div>
+
+    <button id="scroll-down-button-sobre" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-white animate-bounce z-50 p-2 rounded-full hover:bg-white/20 transition-colors" data-target="sobre">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+  </section>
+
+  <section id="sobre" class="bg-white py-20 px-6 md:px-20 text-center relative min-h-screen flex flex-col justify-center">
+    <div class="flex-grow flex items-center justify-center pt-10 pb-20"> 
+      <div class="w-full">
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Sobre o Startup Overseer</h2>
+        <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-12">
+          O Startup Overseer é a plataforma de <strong>gestão integrada</strong> desenvolvida para a <strong>Incubadora de Empresas Garça</strong>, focada em centralizar o gerenciamento financeiro, de usuários e o acompanhamento das incubadas.
+        </p>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+          <div class="p-6 bg-slate-50 rounded-xl shadow-md text-left">
+            <h3 class="text-xl font-semibold text-brand-teal mb-3">Controle Financeiro</h3>
+            <p class="text-slate-600 text-sm">Gerencie contas a <strong>Pagar e Receber</strong> de forma intuitiva para manter a saúde financeira de cada incubada.</p>
+          </div>
+          <div class="p-6 bg-slate-50 rounded-xl shadow-md text-left">
+            <h3 class="text-xl font-semibold text-brand-teal mb-3">Gestão de Empresas</h3>
+            <p class="text-slate-600 text-sm">Acompanhamento do status, documentação e ciclo de vida completo das <strong>empresas incubadas</strong>.</p>
+          </div>
+          <div class="p-6 bg-slate-50 rounded-xl shadow-md text-left">
+            <h3 class="text-xl font-semibold text-brand-teal mb-3">Múltiplos Usuários</h3>
+            <p class="text-slate-600 text-sm">Controle de acesso por níveis: <strong>Administrador, Proprietários, Gestores</strong> e <strong>Colaboradores</strong>.</p>
+          </div>
+          <div class="p-6 bg-slate-50 rounded-xl shadow-md text-left">
+            <h3 class="text-xl font-semibold text-brand-teal mb-3">Dashboard e Relatórios</h3>
+            <p class="text-slate-600 text-sm">Visualizações claras e <strong>relatórios estratégicos</strong> para embasar a tomada de decisão da Incubadora.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <button id="scroll-down-button-incubadora" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-slate-700 animate-bounce z-50 p-2 rounded-full hover:bg-slate-200 transition-colors" data-target="incubadora">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+  </section>
+
+  <section id="incubadora" class="bg-slate-50 py-20 px-6 md:px-20 min-h-screen flex items-center justify-center">
+    <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+      
+      <div class="text-left">
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Incubadora de Empresas Garça</h2>
+        <p class="text-lg text-slate-600 mb-8">
+          Fundada para fomentar a inovação e o empreendedorismo na região, a Incubadora de Garça é o ambiente ideal para startups transformarem ideias em negócios sólidos.
+        </p>
+        <div class="space-y-6">
+          <div class="flex items-start text-slate-700">
+            <span class="text-brand-teal font-bold mr-2 text-2xl">•</span>
+            <div>
+              <h3 class="font-bold text-lg text-slate-900">Nossa Missão</h3>
+              <p>Apoiar o desenvolvimento tecnológico e a criação de valor, gerando emprego e renda para a comunidade.</p>
+            </div>
+          </div>
+          <div class="flex items-start text-slate-700">
+            <span class="text-brand-teal font-bold mr-2 text-2xl">•</span>
+            <div>
+              <h3 class="font-bold text-lg text-slate-900">Equipe Desenvolvedora</h3>
+              <p>O Startup Overseer é um projeto de <strong>inovação interna</strong>, mantido e aprimorado por uma equipe de P&D dedicada, garantindo a ferramenta ideal para suas necessidades de gestão.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="p-10 bg-white rounded-xl shadow-xl text-center">
+        <div class="mx-auto h-16 w-16 bg-brand-teal rounded-full text-white flex items-center justify-center mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 4v-4z" />
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold text-slate-900 mb-3">Converse com Acrova AI!</h3>
+        <p class="text-slate-600 mb-6">
+          Quer saber mais sobre o processo de incubação, os benefícios ou a história da Incubadora de Empresas Garça?
+        </p>
+        <button id="open-chatbot-button" class="w-full py-3 px-4 border border-transparent rounded-lg shadow-button text-base font-medium text-white bg-brand-teal hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-brand-teal/50 transition-all">
+          Acessar Consultor de Inovação
+        </button>
+      </div>
+
+    </div>
+  </section>
+  
+  <div id="chatbot-panel" class="fixed top-0 right-0 w-full md:w-[400px] h-screen bg-white shadow-2xl z-[100] transform translate-x-full transition-transform duration-300 flex flex-col">
+    
+    <div class="p-4 bg-brand-teal text-white flex justify-between items-center shadow-md">
+      <h3 class="text-lg font-bold">Acrova AI - Consultor de Inovação</h3>
+      <button id="close-chatbot-button" class="hover:opacity-80 transition-opacity">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="p-3 border-b border-slate-200 flex justify-around bg-slate-50 text-sm">
+      <button id="chat-clear" class="text-slate-600 hover:text-brand-teal transition-colors flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+        Limpar Conversa
+      </button>
+      <button id="chat-history" class="text-slate-600 hover:text-brand-teal transition-colors flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.5v8.75m3.5-3.5h-7m-7 5.25v-12.5a2 2 0 012-2h12a2 2 0 012 2v12.5a2 2 0 01-2 2H5a2 2 0 01-2-2z" /></svg>
+        Histórico
+      </button>
+      <button id="chat-delete-history" class="text-red-500 hover:text-red-700 transition-colors flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+        Apagar
+      </button>
+    </div>
+
+    <div id="chat-messages" class="flex-grow p-4 overflow-y-auto space-y-4">
+      <div class="flex justify-start">
+        <div class="bg-slate-200 p-3 rounded-xl max-w-[80%] shadow-sm text-sm">
+          Seja muito bem-vindo(a)! Eu sou a <strong>Acrova AI</strong>, sua <strong>Consultora de Inovação</strong> da Incubadora de Empresas Garça. É um prazer recebê-lo. Por favor, sinta-se à vontade para perguntar sobre o processo de incubação, nossos serviços ou o sistema Startup Overseer. Como posso iniciar nossa conversa hoje?
+        </div>
+      </div>
+      
+      <div id="chat-suggestions" class="flex flex-wrap gap-2 pt-2 pb-4">
+        </div>
+    </div>
+
+    <div class="p-4 border-t border-slate-200 bg-white">
+      <div class="flex space-x-3">
+        <input type="text" id="chat-input" placeholder="Pergunte à Acrova AI..."
+          class="flex-grow px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-teal" />
+        <button id="chat-send-button" class="bg-brand-teal text-white p-2 rounded-lg shadow-button hover:opacity-90 transition-opacity">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script/script_login.js" defer></script>
+</body>
+</html>

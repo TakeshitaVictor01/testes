@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Contas - Incubadora</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .transition-all {
+            transition: all 0.3s ease-in-out;
+        }
+        /* Custom scrollbar for a better look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="flex h-screen bg-gray-200">
+        <aside class="w-64 bg-gray-800 text-white flex-shrink-0 hidden md:block">
+            <div class="p-6 text-2xl font-bold border-b border-gray-700">
+                Meu App
+            </div>
+            <nav class="mt-6">
+                <a href="#" class="flex items-center px-6 py-3 hover:bg-gray-700 transition-all">
+                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    Dashboard
+                </a>
+                <a href="#" class="flex items-center px-6 py-3 bg-gray-700 text-white">
+                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    Contas a Pagar
+                </a>
+                <a href="#" class="flex items-center px-6 py-3 hover:bg-gray-700 transition-all">
+                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    Relatórios
+                </a>
+            </nav>
+        </aside>
+
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <header class="bg-white shadow-md p-4 flex justify-between items-center">
+                 <h1 class="text-2xl font-bold text-gray-800">Contas a Pagar</h1>
+                 <div class="relative">
+                     <button id="user-menu-button" class="flex items-center space-x-2 focus:outline-none">
+                         <span class="font-semibold">Administrador</span>
+                         <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                     </button>
+                     <div id="user-menu" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20 hidden">
+                         <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Configurações</a>
+                         <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sair</a>
+                     </div>
+                 </div>
+            </header>
+            
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+                <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl">
+
+                    <div class="bg-white p-4 rounded-lg shadow-lg mb-6 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
+                        
+                        <div class="flex flex-wrap gap-3 w-full md:w-3/4">
+                            <select id="sort-by" class="p-2 border border-gray-300 rounded-lg text-sm focus:ring-blue-500 focus:border-blue-500">
+                                <option value="modificacao">Ordenar por Modificação</option>
+                                <option value="nome">Ordenar por Descrição (A-Z)</option>
+                                <option value="vencimento">Ordenar por Vencimento</option>
+                                <option value="valor_desc">Ordenar por Valor (Maior)</option>
+                                <option value="valor_asc">Ordenar por Valor (Menor)</option>
+                            </select>
+
+                            <select id="status-filter" class="p-2 border border-gray-300 rounded-lg text-sm focus:ring-blue-500 focus:border-blue-500">
+                                <option value="todas">Status: Todas</option>
+                                <option value="a_pagar">Status: A Pagar (Não Vencidas)</option>
+                                <option value="vencidas">Status: Vencidas</option>
+                                <option value="pagas">Status: Pagas</option>
+                                <option value="arquivadas">Status: Arquivadas</option>
+                            </select>
+                            
+                            <select id="empresa-filter" class="p-2 border border-gray-300 rounded-lg text-sm focus:ring-blue-500 focus:border-blue-500 w-full md:w-auto">
+                                <option value="todas">Empresa: Todas</option>
+                                </select>
+                        </div>
+                        
+                        <div class="flex-shrink-0 w-full md:w-auto">
+                            <button id="add-new-btn" class="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition-all">
+                                Cadastrar Conta
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="form-container" class="bg-white p-6 rounded-lg shadow-lg mb-8 hidden">
+                        <h2 id="form-title" class="text-2xl font-bold mb-4">Cadastrar Nova Conta</h2>
+                        <form id="item-form">
+                            <input type="hidden" id="item-id">
+                            
+                            <div class="mb-4">
+                                <label for="id-empresa" class="block text-gray-700 font-medium mb-1">
+                                    Empresa Vinculada (Incubadora ou Incubada)
+                                </label>
+                                <select id="id-empresa" name="id-empresa" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white" required>
+                                    </select>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="mb-4 md:mb-0">
+                                    <label for="item-description" class="block text-gray-700 font-medium mb-1">
+                                        Descrição da Conta (Ex: Conta de Energia)
+                                    </label>
+                                    <input type="text" id="item-description" name="description" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex: Conta de internet mensal" required>
+                                </div>
+                                <div class="mb-4 md:mb-0">
+                                    <label for="vencimento" class="block text-gray-700 font-medium mb-1">Data de Vencimento</label>
+                                    <input type="date" id="vencimento" name="vencimento" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                <div>
+                                    <label for="saldo" class="block text-gray-700 font-medium mb-1">Valor da Conta (R$)</label>
+                                    <input type="number" step="0.01" id="saldo" name="saldo" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="0.00" required>
+                                </div>
+                                <div>
+                                    <label for="status" class="block text-gray-700 font-medium mb-1">Status da Conta</label>
+                                    <select id="status" name="status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white" required>
+                                        <option value="nao_paga">Não Paga</option>
+                                        <option value="paga">Paga</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-end space-x-4 mt-6">
+                                <button type="button" id="cancel-btn" class="bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition-all">Cancelar</button>
+                                <button type="submit" class="bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75 transition-all">Salvar Conta</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="items-list" class="bg-white p-6 rounded-lg shadow-lg">
+                        <h2 class="text-2xl font-bold mb-4 border-b pb-2">Contas</h2>
+                        <div id="loading" class="text-center p-4">
+                            <p class="text-gray-500">Carregando contas...</p>
+                        </div>
+                        <ul id="items-ul" class="space-y-4">
+                            </ul>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- VARIÁVEIS GLOBAIS ---
+            let allItems = []; 
+            let currentFilter = 'todas'; 
+            let currentSort = 'modificacao'; 
+            let currentEmpresaFilter = 'todas'; // NOVO FILTRO DE EMPRESA
+
+            // --- MOCK DE EMPRESAS (Para simular o Dropdown de Busca) ---
+            const mockEmpresas = [
+                { id: 100, nome: 'Incubadora Central (Geral)' }, // ID Central para despesas da Incubadora
+                { id: 1, nome: 'Tech Solutions Ltda.' },
+                { id: 2, nome: 'E-Commerce Rápido' },
+                { id: 3, nome: 'Agência Criativa Alpha' },
+            ];
+
+            // --- ELEMENTOS DO DOM ---
+            const itemsList = document.getElementById('items-ul');
+            const itemForm = document.getElementById('item-form');
+            const formContainer = document.getElementById('form-container');
+            const addNewBtn = document.getElementById('add-new-btn');
+            const sortBySelect = document.getElementById('sort-by');
+            const statusFilterSelect = document.getElementById('status-filter');
+            const empresaSelect = document.getElementById('id-empresa');
+            const empresaFilterSelect = document.getElementById('empresa-filter'); // NOVO ELEMENTO DE FILTRO
+            
+            // --- UTILITÁRIOS E SETUP INICIAL ---
+
+            // Popula o campo de seleção de Empresa no formulário e no filtro
+            function populateEmpresaSelects() {
+                const optionsHTML = mockEmpresas.map(empresa => 
+                    `<option value="${empresa.id}">${empresa.nome} (ID: ${empresa.id})</option>`
+                ).join('');
+
+                empresaSelect.innerHTML = optionsHTML;
+                empresaFilterSelect.innerHTML = '<option value="todas">Empresa: Todas</option>' + optionsHTML;
+            }
+            populateEmpresaSelects();
+
+
+            // Obtém o nome da empresa pelo ID (útil para exibição na lista)
+            function getEmpresaNome(id) {
+                const empresa = mockEmpresas.find(e => e.id == id);
+                return empresa ? empresa.nome : 'Empresa Desconhecida';
+            }
+
+            // [Outras funções utilitárias (formatDate, getStatusInfo) mantidas...]
+            const today = new Date();
+            const formatDate = (dateStr) => {
+                if (!dateStr) return 'N/A';
+                const date = new Date(dateStr + 'T00:00:00');
+                return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            };
+
+            const getStatusInfo = (vencimentoStr, statusPagamento, isArchived) => {
+                const vencimento = new Date(vencimentoStr + 'T00:00:00');
+                const todayMidnight = new Date(today.toISOString().split('T')[0] + 'T00:00:00'); 
+                
+                let text = '';
+                let borderClass = '';
+                let textColor = '';
+
+                if (isArchived) {
+                    text = 'CONTA ARQUIVADA';
+                    borderClass = 'border-gray-500';
+                    textColor = 'text-gray-600';
+                } else if (statusPagamento === 'paga') {
+                    text = 'Conta Paga';
+                    borderClass = 'border-green-500';
+                    textColor = 'text-green-600';
+                } else if (vencimento < todayMidnight) {
+                    text = 'CONTA VENCIDA';
+                    borderClass = 'border-red-500';
+                    textColor = 'text-red-600';
+                } else {
+                    text = 'Conta Não Paga (Aberto)';
+                    borderClass = 'border-yellow-500';
+                    textColor = 'text-yellow-600';
+                }
+                
+                return { text, borderClass, textColor, rawStatus: isArchived ? 'arquivada' : (statusPagamento === 'paga' ? 'paga' : (vencimento < todayMidnight ? 'vencida' : 'a_pagar')) };
+            };
+            // [Fim das funções utilitárias]
+
+
+            // --- FUNÇÕES DA API (CRUD MOCK) ---
+            async function fetchItems() {
+                // ... (Lógica de fetchItems com dados mockados e IDs de Empresa)
+                
+                const tomorrow = new Date(); tomorrow.setDate(today.getDate() + 1);
+                const yesterday = new Date(); yesterday.setDate(today.getDate() - 1);
+
+                const mockItems = [
+                    { 
+                        id: 1, 
+                        descricao: 'Conta de Energia (Repasse)', 
+                        vencimento: tomorrow.toISOString().split('T')[0],
+                        saldo: 150.75, 
+                        status: 'nao_paga',
+                        arquivada: false,
+                        idEmpresa: 1, // Empresa 1
+                        modificadoEm: new Date().getTime() 
+                    },
+                    { 
+                        id: 2, 
+                        descricao: 'Aluguel do Escritório (Geral)', 
+                        vencimento: yesterday.toISOString().split('T')[0],
+                        saldo: 2500.00, 
+                        status: 'nao_paga', 
+                        arquivada: false,
+                        idEmpresa: 100, // Incubadora Central
+                        modificadoEm: new Date().getTime() - 60000 
+                    },
+                    { 
+                        id: 3, 
+                        descricao: 'Conta de Internet', 
+                        vencimento: '2025-09-05',
+                        saldo: 99.90, 
+                        status: 'paga',
+                        arquivada: false,
+                        idEmpresa: 2, // Empresa 2
+                        modificadoEm: new Date().getTime() - 120000 
+                    },
+                    { 
+                        id: 4, 
+                        descricao: 'Consultoria de Marketing', 
+                        vencimento: '2025-10-30',
+                        saldo: 4500.00, 
+                        status: 'nao_paga', 
+                        arquivada: true, 
+                        idEmpresa: 1, // Empresa 1 (Arquivada)
+                        modificadoEm: new Date().getTime() - 180000
+                    },
+                    { 
+                        id: 5, 
+                        descricao: 'Taxa de Condomínio', 
+                        vencimento: yesterday.toISOString().split('T')[0],
+                        saldo: 350.00, 
+                        status: 'paga', 
+                        arquivada: false,
+                        idEmpresa: 3, // Empresa 3
+                        modificadoEm: new Date().getTime() - 240000
+                    },
+                ];
+
+                setTimeout(() => {
+                    allItems = mockItems;
+                    applyFiltersAndSort();
+                    document.getElementById('loading').style.display = 'none';
+                }, 500);
+            }
+
+            // ... (Funções archiveItem e updateItem mantidas, mas usando idEmpresa)
+            function archiveItem(id) {
+                if (!confirm('Tem certeza que deseja ARQUIVAR esta conta? Ela será oculta da lista principal.')) return;
+                
+                const itemIndex = allItems.findIndex(item => item.id == id);
+                if (itemIndex > -1) {
+                    allItems[itemIndex].arquivada = true;
+                    allItems[itemIndex].modificadoEm = new Date().getTime(); 
+                    
+                    alert(`Conta ID ${id} arquivada com sucesso (Simulado).`);
+                    applyFiltersAndSort();
+                }
+            }
+
+            function updateItem(id, itemData) {
+                const itemIndex = allItems.findIndex(item => item.id == id);
+                if (itemIndex > -1) {
+                    allItems[itemIndex] = { ...allItems[itemIndex], ...itemData, modificadoEm: new Date().getTime() };
+                } else {
+                    const newItem = {
+                        id: allItems.length + 1,
+                        ...itemData,
+                        arquivada: false,
+                        modificadoEm: new Date().getTime()
+                    };
+                    allItems.push(newItem);
+                }
+                alert(`Conta ${id ? 'Atualizada' : 'Cadastrada'} com Sucesso (Simulado)!`);
+                document.getElementById('form-container').classList.add('hidden');
+                addNewBtn.classList.remove('hidden');
+                itemForm.reset();
+                applyFiltersAndSort();
+            }
+
+            // --- FILTROS E RENDERIZAÇÃO ---
+            function applyFiltersAndSort() {
+                let filteredItems = [...allItems];
+                
+                // 1. Filtragem por Status e Arquivadas
+                filteredItems = filteredItems.filter(item => {
+                    const { rawStatus } = getStatusInfo(item.vencimento, item.status, item.arquivada);
+                    
+                    if (currentFilter === 'arquivadas') {
+                        return item.arquivada;
+                    }
+                    
+                    // Exclui arquivadas dos demais filtros
+                    if (item.arquivada) return false; 
+                    
+                    if (currentFilter === 'a_pagar') return rawStatus === 'a_pagar';
+                    if (currentFilter === 'vencidas') return rawStatus === 'vencida';
+                    if (currentFilter === 'pagas') return rawStatus === 'paga';
+                    
+                    return true;
+                });
+                
+                // 2. Filtragem por Empresa (NOVO)
+                if (currentEmpresaFilter !== 'todas') {
+                    filteredItems = filteredItems.filter(item => item.idEmpresa == currentEmpresaFilter);
+                }
+
+                // 3. Ordenação (mantida)
+                filteredItems.sort((a, b) => {
+                    if (currentSort === 'nome') return a.descricao.localeCompare(b.descricao);
+                    if (currentSort === 'vencimento') return new Date(a.vencimento) - new Date(b.vencimento);
+                    if (currentSort === 'valor_desc') return b.saldo - a.saldo;
+                    if (currentSort === 'valor_asc') return a.saldo - b.saldo;
+                    if (currentSort === 'modificacao') return b.modificadoEm - a.modificadoEm;
+                    return 0;
+                });
+
+                renderItems(filteredItems);
+            }
+
+            function renderItems(items) {
+                itemsList.innerHTML = '';
+                if(items.length === 0) {
+                    itemsList.innerHTML = '<li class="text-center text-gray-500">Nenhuma conta encontrada com este filtro.</li>';
+                    return;
+                }
+                
+                items.forEach(item => {
+                    const { text, borderClass, textColor } = getStatusInfo(item.vencimento, item.status, item.arquivada);
+                    const li = document.createElement('li');
+                    
+                    li.className = `flex flex-col sm:flex-row items-start sm:items-center justify-between bg-white p-4 rounded-lg border-l-4 ${borderClass} shadow-md hover:shadow-lg transition-shadow`;
+                    
+                    const valorFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.saldo);
+                    const vencimentoFormatado = formatDate(item.vencimento);
+                    const nomeEmpresa = getEmpresaNome(item.idEmpresa); // Pega o nome da empresa
+                    
+                    li.innerHTML = `
+                        <div class="flex-grow mb-3 sm:mb-0">
+                            <h3 class="font-bold text-lg text-gray-800">${item.descricao}</h3>
+                            <p class="text-gray-600 text-sm">
+                                Empresa: <span class="font-medium">${nomeEmpresa} (ID: ${item.idEmpresa})</span>
+                            </p>
+                            <p class="text-gray-600 text-sm">
+                                Vencimento: <span class="font-medium">${vencimentoFormatado}</span> | 
+                                Valor: <span class="font-bold">${valorFormatado}</span>
+                            </p>
+                        </div>
+                        <div class="flex-shrink-0 flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 ml-0 sm:ml-4">
+                            <span class="font-bold text-sm ${textColor} uppercase">${text}</span>
+                            <div class="flex space-x-3">
+                                <button data-id="${item.id}" class="edit-btn text-blue-600 hover:text-blue-800 font-medium">Editar</button>
+                                ${item.arquivada 
+                                    ? `<button data-id="${item.id}" class="unarchive-btn text-yellow-600 hover:text-yellow-800 font-medium">Desarquivar</button>`
+                                    : `<button data-id="${item.id}" class="archive-btn text-gray-600 hover:text-gray-800 font-medium">Arquivar</button>`
+                                }
+                            </div>
+                        </div>
+                    `;
+                    itemsList.appendChild(li);
+                });
+            }
+
+            // --- FUNÇÕES DO FORMULÁRIO (showForm ajustada para carregar idEmpresa) ---
+            function showForm(item = null) {
+                if (item) {
+                    document.getElementById('form-title').textContent = 'Editar Conta';
+                    document.getElementById('item-id').value = item.id;
+                    document.getElementById('id-empresa').value = item.idEmpresa; // Define a empresa
+                    document.getElementById('item-description').value = item.descricao;
+                    document.getElementById('vencimento').value = item.vencimento;
+                    document.getElementById('saldo').value = item.saldo;
+                    document.getElementById('status').value = item.status;
+                } else {
+                    document.getElementById('form-title').textContent = 'Cadastrar Nova Conta';
+                    itemForm.reset();
+                    document.getElementById('item-id').value = '';
+                    document.getElementById('id-empresa').value = mockEmpresas[0].id; // Padrão: Incubadora Central
+                    document.getElementById('vencimento').valueAsDate = new Date(); 
+                }
+                formContainer.classList.remove('hidden');
+                addNewBtn.classList.add('hidden');
+            }
+
+            // --- EVENT LISTENERS ---
+            
+            // Ações de Filtro e Ordenação
+            sortBySelect.addEventListener('change', (e) => {
+                currentSort = e.target.value;
+                applyFiltersAndSort();
+            });
+
+            statusFilterSelect.addEventListener('change', (e) => {
+                currentFilter = e.target.value;
+                applyFiltersAndSort();
+            });
+            
+            empresaFilterSelect.addEventListener('change', (e) => { // NOVO LISTENER DE FILTRO
+                currentEmpresaFilter = e.target.value;
+                applyFiltersAndSort();
+            });
+
+            // Botões de Form
+            addNewBtn.addEventListener('click', () => showForm());
+            document.getElementById('cancel-btn').addEventListener('click', () => {
+                document.getElementById('form-container').classList.add('hidden');
+                addNewBtn.classList.remove('hidden');
+                itemForm.reset();
+            });
+
+            // Submissão do Formulário
+            itemForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const id = document.getElementById('item-id').value;
+                const itemData = {
+                    idEmpresa: parseInt(document.getElementById('id-empresa').value), 
+                    descricao: document.getElementById('item-description').value,
+                    vencimento: document.getElementById('vencimento').value,
+                    saldo: parseFloat(document.getElementById('saldo').value),
+                    status: document.getElementById('status').value
+                };
+                
+                updateItem(id, itemData);
+            });
+
+            // Ações na Lista (Editar/Arquivar/Desarquivar)
+            itemsList.addEventListener('click', async (e) => {
+                const id = e.target.dataset.id;
+                if (!id) return;
+                
+                const item = allItems.find(i => i.id == id);
+
+                if (e.target.classList.contains('archive-btn')) {
+                    archiveItem(id);
+                }
+
+                if (e.target.classList.contains('unarchive-btn')) {
+                    if (!confirm('Deseja realmente desarquivar esta conta?')) return;
+                    item.arquivada = false;
+                    item.modificadoEm = new Date().getTime();
+                    alert(`Conta ID ${id} desarquivada com sucesso (Simulado).`);
+                    applyFiltersAndSort();
+                }
+
+                if (e.target.classList.contains('edit-btn') && item) {
+                    showForm(item);
+                }
+            });
+            
+            // Lógica do Menu de Usuário (mantida)
+            document.getElementById('user-menu-button').addEventListener('click', () => document.getElementById('user-menu').classList.toggle('hidden'));
+            window.addEventListener('click', (e) => {
+                if (!document.getElementById('user-menu-button').contains(e.target) && !document.getElementById('user-menu').contains(e.target)) {
+                    document.getElementById('user-menu').classList.add('hidden');
+                }
+            });
+
+            // --- INICIALIZAÇÃO ---
+            fetchItems();
+        });
+    </script>
+</body>
+</html>
