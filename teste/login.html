@@ -5,71 +5,85 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login - Startup Overseer</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="css/style_login.css" />
+  <link rel="stylesheet" href="css/style_login.css" /> 
 </head>
 <body class="antialiased">
 
-  <section id="hero" class="relative min-h-screen w-full flex flex-col bg-brand-teal">
+  <section id="hero" class="relative min-h-screen w-full flex flex-col bg-white">
     <div class="flex flex-1">
       
-      <div class="hidden md:flex md:w-[50%] items-center justify-center">
-        <div class="max-w-lg text-white p-12 animate-fade-in">
-          <h1 class="text-4xl font-bold mb-6">Startup Overseer</h1>
-          <p class="text-xl mb-8 opacity-90">
-            Sistema de gestão para empresas incubadas
+      <div class="hidden lg:flex lg:w-[45%] flex-col items-start justify-center p-20 bg-slate-50 custom-shadow-right">
+        <div class="max-w-lg text-slate-800 animate-fade-in">
+          <h1 class="text-6xl font-extrabold mb-6 tracking-tight text-brand-teal">Startup Overseer</h1>
+          <p class="text-xl mb-10 leading-relaxed font-light">
+            Sua plataforma de gestão completa e integrada para empresas incubadas da Incubadora de Empresas Garça.
           </p>
-          <div class="bg-white/10 backdrop-blur-sm p-6 rounded-lg">
-            <p class="text-lg font-medium">
-              "Uma plataforma completa para o gerenciamento eficiente das suas empresas incubadas."
+          <div class="p-6 rounded-xl border border-slate-300 bg-white shadow-xl"> 
+            <p class="text-lg font-medium italic text-slate-700">
+              "Foque na inovação. Deixe a gestão com o Overseer."
+            </p>
+          </div>
+          <div class="mt-12">
+            <h2 class="text-2xl font-bold text-slate-900 mb-4">Incubadora de Empresas Garça</h2>
+            <p class="text-base text-slate-700">
+              O **Núcleo de Desenvolvimento Empresarial “Alfeu Rosário”** foi fundado em 1996 e atua como um ambiente planejado e protegido para o surgimento, desenvolvimento e consolidação de empresas em Garça.
             </p>
           </div>
         </div>
       </div>
 
-      <div class="w-full md:w-[40%] flex items-center justify-center p-8 relative z-20">
-        <div class="w-full max-w-md space-y-8 bg-white rounded-[2rem] shadow-2xl p-8 bubble-login animate-fade-in">
+      <div class="w-full lg:w-[55%] flex items-center justify-center p-8 relative z-20 bg-brand-teal custom-login-bg"> 
+        <div class="w-full max-w-md space-y-10 bg-white rounded-xl shadow-2xl p-10 animate-fade-in border border-slate-100">
           <div class="text-center">
-            <div class="mx-auto h-12 w-12 rounded-full bg-brand-teal text-white flex items-center justify-center mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <div class="mx-auto h-16 w-16 rounded-full bg-brand-teal text-white flex items-center justify-center mb-6 shadow-md">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
                 <path d="M9 18V6"></path>
                 <path d="M15 18V6"></path>
               </svg>
             </div>
-            <h2 class="text-2xl font-bold text-slate-900">Bem-vindo(a)</h2>
-            <p class="mt-2 text-sm text-slate-600">Faça login para acessar a plataforma</p>
+            <h2 class="text-3xl font-bold text-slate-900">Acesso à Plataforma</h2>
+            <p class="mt-3 text-base text-slate-600">Use suas credenciais para continuar</p>
           </div>
 
           <form id="login-form" class="mt-8 space-y-6">
-            <div class="space-y-4">
+            <div class="space-y-5">
               <div>
-                <label for="email" class="block text-sm font-medium text-slate-700">Email</label>
+                <label for="email" class="block text-sm font-semibold text-slate-700 mb-1">Email</label>
                 <input id="email" name="email" type="email" required
-                  class="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-teal focus:border-brand-teal"
+                  class="mt-1 block w-full px-4 py-3 border border-slate-200 rounded-lg shadow-inner-custom focus:outline-none focus:ring-2 focus:ring-brand-teal/50 focus:border-brand-teal transition-all"
                   placeholder="seu@email.com" />
               </div>
-              <div>
-                <label for="password" class="block text-sm font-medium text-slate-700">Senha</label>
+              
+              <div class="relative">
+                <label for="password" class="block text-sm font-semibold text-slate-700 mb-1">Senha</label>
                 <input id="password" name="password" type="password" required
-                  class="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-teal focus:border-brand-teal"
+                  class="mt-1 block w-full px-4 py-3 border border-slate-200 rounded-lg shadow-inner-custom focus:outline-none focus:ring-2 focus:ring-brand-teal/50 focus:border-brand-teal transition-all pr-12"
                   placeholder="••••••••" />
+                
+                <button type="button" id="toggle-password" 
+                  class="absolute inset-y-0 right-0 flex items-center px-4 text-slate-500 hover:text-brand-teal transition-colors"
+                  title="Mostrar Senha">
+                  <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    </svg>
+                </button>
               </div>
-            </div>
+              </div>
 
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between pt-2">
               <div class="flex items-center">
                 <input id="remember-me" name="remember-me" type="checkbox"
                   class="h-4 w-4 rounded border-slate-300 text-brand-teal focus:ring-brand-teal" />
                 <label for="remember-me" class="ml-2 block text-sm text-slate-700">Lembrar-me</label>
               </div>
               <div class="text-sm">
-                <a href="#" class="font-medium text-brand-teal hover:opacity-80">Esqueceu a senha?</a>
+                <a href="#" class="font-semibold text-brand-teal hover:opacity-90">Esqueceu a senha?</a>
               </div>
             </div>
 
-            <div>
+            <div class="pt-4">
               <button type="submit" id="login-button"
-                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-button text-sm font-medium text-white bg-brand-teal hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-teal disabled:opacity-70 disabled:cursor-not-allowed transition-all">
+                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-button-glow text-base font-bold text-white bg-brand-teal hover:bg-brand-teal/90 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-brand-teal/50 disabled:opacity-70 disabled:cursor-not-allowed transition-all">
                 Entrar
               </button>
             </div>
@@ -77,95 +91,102 @@
         </div>
       </div>
     </div>
-
-    <div class="absolute bottom-0 left-0 w-full h-40 gradient-separator"></div>
-
-    <button id="scroll-down-button-sobre" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-white animate-bounce z-50 p-2 rounded-full hover:bg-white/20 transition-colors" data-target="sobre">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-      </svg>
-    </button>
   </section>
 
-  <section id="sobre" class="bg-white py-20 px-6 md:px-20 text-center relative min-h-screen flex flex-col justify-center">
-    <div class="flex-grow flex items-center justify-center pt-10 pb-20"> 
-      <div class="w-full">
-        <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Sobre o Startup Overseer</h2>
-        <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-12">
-          O Startup Overseer é a plataforma de <strong>gestão integrada</strong> desenvolvida para a <strong>Incubadora de Empresas Garça</strong>, focada em centralizar o gerenciamento financeiro, de usuários e o acompanhamento das incubadas.
-        </p>
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-          <div class="p-6 bg-slate-50 rounded-xl shadow-md text-left">
-            <h3 class="text-xl font-semibold text-brand-teal mb-3">Controle Financeiro</h3>
-            <p class="text-slate-600 text-sm">Gerencie contas a <strong>Pagar e Receber</strong> de forma intuitiva para manter a saúde financeira de cada incubada.</p>
-          </div>
-          <div class="p-6 bg-slate-50 rounded-xl shadow-md text-left">
-            <h3 class="text-xl font-semibold text-brand-teal mb-3">Gestão de Empresas</h3>
-            <p class="text-slate-600 text-sm">Acompanhamento do status, documentação e ciclo de vida completo das <strong>empresas incubadas</strong>.</p>
-          </div>
-          <div class="p-6 bg-slate-50 rounded-xl shadow-md text-left">
-            <h3 class="text-xl font-semibold text-brand-teal mb-3">Múltiplos Usuários</h3>
-            <p class="text-slate-600 text-sm">Controle de acesso por níveis: <strong>Administrador, Proprietários, Gestores</strong> e <strong>Colaboradores</strong>.</p>
-          </div>
-          <div class="p-6 bg-slate-50 rounded-xl shadow-md text-left">
-            <h3 class="text-xl font-semibold text-brand-teal mb-3">Dashboard e Relatórios</h3>
-            <p class="text-slate-600 text-sm">Visualizações claras e <strong>relatórios estratégicos</strong> para embasar a tomada de decisão da Incubadora.</p>
+  <section id="sobre" class="bg-white py-20 px-6 md:px-20 relative">
+    <div class="w-full max-w-6xl mx-auto">
+      <h2 class="text-4xl font-extrabold text-slate-900 mb-12">Startup Overseer: Foco em Gestão, Resultados em Inovação</h2>
+      
+      <div class="grid lg:grid-cols-2 gap-16 items-center mb-20">
+        <div class="text-left">
+          <h3 class="text-2xl font-bold text-brand-teal mb-4">A Plataforma que Otimiza o Ciclo de Vida</h3>
+          <p class="text-lg text-slate-700 mb-6">
+            O Overseer é a espinha dorsal de gestão para a Incubadora. Ele transforma processos complexos de acompanhamento em tarefas transparentes e rastreáveis, desde a fase de **Pré-Residente** até a **Graduação** da empresa.
+          </p>
+          <div class="flex items-center mt-8 p-4 bg-slate-50 rounded-lg border-l-4 border-brand-teal shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-brand-teal mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" /></svg>
+            <p class="text-lg text-slate-700 font-semibold">
+              <strong class="text-slate-900">Desenvolvido por quem entende:</strong> Criado pelo Grupo Megaware, composto por alunos da FATEC Garça, parceira da Incubadora.
+            </p>
           </div>
         </div>
+        <div class="bg-slate-100 p-8 rounded-xl shadow-xl border border-slate-200 h-96 flex items-center justify-center text-slate-500">
+          [MOCKUP DO SISTEMA STARTUP OVERSEER - Espaço para Imagem]
+        </div>
       </div>
-    </div>
-    
-    <button id="scroll-down-button-incubadora" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-slate-700 animate-bounce z-50 p-2 rounded-full hover:bg-slate-200 transition-colors" data-target="incubadora">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-      </svg>
-    </button>
-  </section>
 
-  <section id="incubadora" class="bg-slate-50 py-20 px-6 md:px-20 min-h-screen flex items-center justify-center">
-    <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-      
-      <div class="text-left">
-        <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Incubadora de Empresas Garça</h2>
-        <p class="text-lg text-slate-600 mb-8">
-          Fundada para fomentar a inovação e o empreendedorismo na região, a Incubadora de Garça é o ambiente ideal para startups transformarem ideias em negócios sólidos.
-        </p>
-        <div class="space-y-6">
-          <div class="flex items-start text-slate-700">
-            <span class="text-brand-teal font-bold mr-2 text-2xl">•</span>
-            <div>
-              <h3 class="font-bold text-lg text-slate-900">Nossa Missão</h3>
-              <p>Apoiar o desenvolvimento tecnológico e a criação de valor, gerando emprego e renda para a comunidade.</p>
-            </div>
-          </div>
-          <div class="flex items-start text-slate-700">
-            <span class="text-brand-teal font-bold mr-2 text-2xl">•</span>
-            <div>
-              <h3 class="font-bold text-lg text-slate-900">Equipe Desenvolvedora</h3>
-              <p>O Startup Overseer é um projeto de <strong>inovação interna</strong>, mantido e aprimorado por uma equipe de P&D dedicada, garantindo a ferramenta ideal para suas necessidades de gestão.</p>
-            </div>
-          </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+        <div class="p-8 bg-slate-50 rounded-lg shadow-lg text-left border-t-4 border-brand-teal transition-all hover:shadow-xl">
+          <h3 class="text-xl font-semibold text-slate-900 mb-3">Controle Financeiro</h3>
+          <p class="text-slate-600 text-sm">Gerencie Contas a Pagar e Receber e mantenha a saúde financeira de cada incubada em dia.</p>
+        </div>
+        <div class="p-8 bg-slate-50 rounded-lg shadow-lg text-left border-t-4 border-brand-teal transition-all hover:shadow-xl">
+          <h3 class="text-xl font-semibold text-slate-900 mb-3">Gestão de Empresas</h3>
+          <p class="text-slate-600 text-sm">Acompanhamento do status, documentação e ciclo de vida completo das empresas incubadas.</p>
+        </div>
+        <div class="p-8 bg-slate-50 rounded-lg shadow-lg text-left border-t-4 border-brand-teal transition-all hover:shadow-xl">
+          <h3 class="text-xl font-semibold text-slate-900 mb-3">Múltiplos Usuários</h3>
+          <p class="text-slate-600 text-sm">Controle de acesso por níveis: Administrador, Proprietários, Gestores e Colaboradores.</p>
+        </div>
+        <div class="p-8 bg-slate-50 rounded-lg shadow-lg text-left border-t-4 border-brand-teal transition-all hover:shadow-xl">
+          <h3 class="text-xl font-semibold text-slate-900 mb-3">Dashboard e Relatórios</h3>
+          <p class="text-slate-600 text-sm">Visualizações claras e relatórios estratégicos para embasar a tomada de decisão da Incubadora.</p>
         </div>
       </div>
       
-      <div class="p-10 bg-white rounded-xl shadow-xl text-center">
-        <div class="mx-auto h-16 w-16 bg-brand-teal rounded-full text-white flex items-center justify-center mb-6">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 4v-4z" />
-          </svg>
-        </div>
-        <h3 class="text-2xl font-bold text-slate-900 mb-3">Converse com Acrova AI!</h3>
-        <p class="text-slate-600 mb-6">
-          Quer saber mais sobre o processo de incubação, os benefícios ou a história da Incubadora de Empresas Garça?
+      <div class="text-center pt-10">
+        <h3 class="text-2xl font-bold text-slate-900 mb-4">Dúvidas sobre o sistema? Fale com a Acrova AI!</h3>
+        <p class="text-lg text-slate-600 mb-6">
+          A Acrova AI é o nosso Consultor de Inovação oficial, pronto para tirar todas as suas dúvidas sobre o Startup Overseer e o processo de incubação.
         </p>
-        <button id="open-chatbot-button" class="w-full py-3 px-4 border border-transparent rounded-lg shadow-button text-base font-medium text-white bg-brand-teal hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-brand-teal/50 transition-all">
-          Acessar Consultor de Inovação
+        <button id="open-chatbot-button" class="py-3 px-8 border border-transparent rounded-lg shadow-button-glow text-base font-bold text-white bg-brand-teal hover:bg-brand-teal/90 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-brand-teal/50 transition-all">
+          Iniciar Conversa com a Acrova AI
         </button>
       </div>
 
     </div>
   </section>
+
+  <section id="incubadora" class="bg-brand-teal py-20 px-6 md:px-20 flex items-center justify-center">
+    <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center text-white">
+      
+      <div class="bg-slate-800/20 p-8 rounded-xl shadow-xl h-96 flex items-center justify-center text-white/70 border border-white/20">
+        [FOTO DA INCUBADORA DE EMPRESAS GARÇA - Espaço para Imagem]
+      </div>
+
+      <div class="text-left">
+        <h2 class="text-4xl font-bold mb-6">Nossa Missão e Parceria</h2>
+        <p class="text-lg mb-8 font-light">
+          A Incubadora de Empresas Garça tem a missão de incentivar a criação de micro e pequenas empresas, auxiliando-as na gestão e promovendo sua consolidação no mercado. É um programa de perfil misto, apoiando tanto o ramo industrial quanto iniciativas de base tecnológica.
+        </p>
+        <div class="space-y-6">
+          <div class="flex items-start">
+            <span class="font-bold mr-2 text-2xl">✓</span>
+            <div>
+              <h3 class="font-bold text-lg">Parceiros Chave</h3>
+              <p>Gerida pela ACIG e apoiada pelo SEBRAE-SP, FATEC Garça, CIESP e Prefeitura Municipal de Garça.</p>
+            </div>
+          </div>
+          <div class="flex items-start">
+            <span class="font-bold mr-2 text-2xl">✓</span>
+            <div>
+              <h3 class="font-bold text-lg">Localização Histórica</h3>
+              <p>Nossas instalações funcionam nos antigos armazéns da antiga estação ferroviária de Garça.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
   
+  <button id="chatbot-fab" class="fixed bottom-8 right-8 w-14 h-14 bg-brand-teal rounded-full text-white shadow-button-glow z-40 transition-all duration-300 hover:scale-105" title="Abrir Chatbot">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 4v-4z" />
+    </svg>
+  </button>
+
+
   <div id="chatbot-panel" class="fixed top-0 right-0 w-full md:w-[400px] h-screen bg-white shadow-2xl z-[100] transform translate-x-full transition-transform duration-300 flex flex-col">
     
     <div class="p-4 bg-brand-teal text-white flex justify-between items-center shadow-md">
@@ -177,24 +198,16 @@
       </button>
     </div>
 
-    <div class="p-3 border-b border-slate-200 flex justify-around bg-slate-50 text-sm">
-      <button id="chat-clear" class="text-slate-600 hover:text-brand-teal transition-colors flex items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
-        Limpar Conversa
-      </button>
-      <button id="chat-history" class="text-slate-600 hover:text-brand-teal transition-colors flex items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.5v8.75m3.5-3.5h-7m-7 5.25v-12.5a2 2 0 012-2h12a2 2 0 012 2v12.5a2 2 0 01-2 2H5a2 2 0 01-2-2z" /></svg>
-        Histórico
-      </button>
-      <button id="chat-delete-history" class="text-red-500 hover:text-red-700 transition-colors flex items-center">
+    <div class="p-3 border-b border-slate-200 flex justify-center bg-slate-50 text-sm">
+      <button id="chat-clear" class="text-red-500 hover:text-red-700 transition-colors flex items-center font-medium">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-        Apagar
+        Limpar Conversa
       </button>
     </div>
 
-    <div id="chat-messages" class="flex-grow p-4 overflow-y-auto space-y-4">
-      <div class="flex justify-start">
-        <div class="bg-slate-200 p-3 rounded-xl max-w-[80%] shadow-sm text-sm">
+    <div id="chat-messages" class="flex-grow p-4 overflow-y-auto space-y-6">
+      <div class="flex justify-start"> 
+        <div class="bg-slate-200 p-3 rounded-2xl max-w-[80%] shadow-sm text-sm">
           Seja muito bem-vindo(a)! Eu sou a <strong>Acrova AI</strong>, sua <strong>Consultora de Inovação</strong> da Incubadora de Empresas Garça. É um prazer recebê-lo. Por favor, sinta-se à vontade para perguntar sobre o processo de incubação, nossos serviços ou o sistema Startup Overseer. Como posso iniciar nossa conversa hoje?
         </div>
       </div>
@@ -206,8 +219,8 @@
     <div class="p-4 border-t border-slate-200 bg-white">
       <div class="flex space-x-3">
         <input type="text" id="chat-input" placeholder="Pergunte à Acrova AI..."
-          class="flex-grow px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-teal" />
-        <button id="chat-send-button" class="bg-brand-teal text-white p-2 rounded-lg shadow-button hover:opacity-90 transition-opacity">
+          class="flex-grow px-4 py-3 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-teal/50" />
+        <button id="chat-send-button" class="bg-brand-teal text-white p-3 rounded-xl shadow-button-glow hover:opacity-90 transition-opacity">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
         </button>
       </div>

@@ -4,8 +4,14 @@ body {
   padding: 0;
 }
 
+/* Paleta de Cores e Estilos Básicos */
 .bg-brand-teal { background-color: #00C3A0; }
 .text-brand-teal { color: #00C3A0; }
+
+/* REFORÇO DO FOCUS: Garante que a borda primária (border-color) seja a cor tema */
+input:focus {
+    border-color: #00C3A0 !important;
+}
 
 .focus\:ring-brand-teal:focus { --tw-ring-color: #00C3A0; }
 .focus\:border-brand-teal:focus { border-color: #00C3A0; }
@@ -13,23 +19,48 @@ body {
 .animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
 @keyframes fadeIn { from {opacity:0; transform: translateY(10px);} to {opacity:1; transform: translateY(0);} }
 
-.bubble-login {
-  border-radius: 2rem;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-  animation: floatBubble 6s ease-in-out infinite;
-}
-@keyframes floatBubble {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+/* Sombra Customizada para a barra lateral esquerda (Efeito de Profundidade) */
+.custom-shadow-right {
+    box-shadow: 10px 0 20px rgba(0, 0, 0, 0.15);
 }
 
+/* Sombra customizada para Inputs (Neumorphism Suave) */
+.shadow-inner-custom {
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08); 
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}/*
+.shadow-inner-custom:focus {
+  /* Adiciona um glow suave ao focar 
+  box-shadow: 0 0 0 3px rgba(0, 195, 160, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.08); 
+}
+*/
+.input_border {
+  border: 1px solid #d1d5db; /* Cor de borda padrão */
+}
+
+.input_border:focus {
+  border: 1px solid #00C3A0; /* Cor de borda ao focar */
+}
+
+/* Sombra com "Glow" para Botões Principais (FAB e Login) */
+.shadow-button-glow {
+  box-shadow: 0 4px 10px rgba(0, 195, 160, 0.4); 
+  transition: all 0.3s ease;
+}
+.shadow-button-glow:hover {
+  transform: translateY(-2px); 
+  box-shadow: 0 8px 20px rgba(0, 195, 160, 0.6), 0 0 0 4px rgba(0, 195, 160, 0.1); 
+}
+
+/* Sombra para o botão de 'Acessar Consultor de Inovação' (Mantido) */
 .shadow-button {
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   transition: all 0.2s ease;
 }
 .shadow-button:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
 
+
+/* Estilo para o checkbox */
 input[type="checkbox"] {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -53,9 +84,5 @@ input[type="checkbox"]:checked {
 a { transition: opacity 0.2s ease; }
 a:hover { opacity: 0.8; }
 
-/* gradiente entre seções */
-.gradient-separator {
-  background: linear-gradient(to bottom, #00C3A0 0%, #00C3A0 40%, #ffffff 100%);
-}
 /* Garante o scroll suave entre seções */
 html { scroll-behavior: smooth; }
