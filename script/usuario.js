@@ -15,6 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingIndicator = document.getElementById('loading');
     const userMenuButton = document.getElementById('user-menu-button');
     const userMenu = document.getElementById('user-menu');
+    
+    const navUsers = document.getElementById('navUsers');
+
+    if(localStorage.getItem('userGroup') !== 'admin'){
+        navUsers.style.display = 'none';
+    }
 
     // --- LÓGICA DO MENU DE USUÁRIO ---
     userMenuButton.addEventListener('click', () => {
@@ -214,12 +220,12 @@ document.addEventListener('DOMContentLoaded', () => {
             phoneNumber: document.getElementById('item-phoneNumber').value,
             group: document.getElementById('item-group').value,
             state: document.getElementById('item-state').value,
-            password: document.getElementById('item-password').value,
         };
         if (id) {
             itemData.id = id;
             updateItem(id, itemData);
         } else {
+            itemData.password = document.getElementById('item-password').value;
             createItem(itemData);
         }
     });

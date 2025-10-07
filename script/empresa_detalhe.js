@@ -86,9 +86,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 data-user-role-id="${user.Id}"
                 class="cargo-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5">
                 <option selected disabled>Selecione o cargo</option>
-                <option value="1">Administrador</option>
-                <option value="2">Gestor</option>
-                <option value="3">Colaborador</option>
+                <option value="1">Proprietário</option>
+                <option value="2">Colaborador</option>
             </select>
 
             <button 

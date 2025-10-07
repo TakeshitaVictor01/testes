@@ -1,6 +1,20 @@
 import { ApiService } from './apiService.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    // 1. CONFIG: Configurações iniciais e constantes.
+    const token = localStorage.getItem('token');
+    const group = localStorage.getItem('userGroup');
+    const userId = localStorage.getItem('userId');
+    const enterpriseId = 24;
+
+    // Se não tiver token, volta para login
+    if (!token || !group) {
+        alert('Você precisa estar logado para acessar o dashboard.');
+        window.location.href = 'login.html';
+        return;
+    }
+
     // --- ELEMENTOS DO DOM ---
     const entryService = new ApiService('https://megaware.incubadora.shop/incubadora/entry');
     const financialService = new ApiService('https://megaware.incubadora.shop/incubadora/financial');
@@ -130,7 +144,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const mesAtual = hoje.getMonth();
             const anoAtual = hoje.getFullYear();
 
-            const response = await financialService.getAll();
+            const endpoint = "getByEnterprise";
+            const itemData = { id: enterpriseId };
+            const response = await financialService.generic(endpoint, itemData);
 
             //Filtra lançamentos do mês atual - Deve vir da API
             // const lancamentosDoMes = response.data.filter(lanc => {
@@ -197,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 category: data.categoryId,
                 description: data.description,
                 dueDate: data.dueDate,
-                enterpriseId: 9, // Valor fixo para testes
+                enterpriseId: enterpriseId, // Valor fixo para testes
                 entryEmployeeId: 1,
                 type: data.type
             }
@@ -242,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
             accountsList.innerHTML = '<li class="text-center text-gray-500 p-4">Carregando contas...</li>';
 
             const endpoint = "getEnterpriseAccounts";
-            const itemData = { id: 9 };
+            const itemData = { id: enterpriseId };
             const response = await accountService.generic(endpoint, itemData);
             const accounts = response.data;
             accountsList.innerHTML = ''; // Limpa a lista

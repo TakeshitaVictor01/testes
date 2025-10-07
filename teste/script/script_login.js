@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const chatMessagesContainer = document.getElementById('chat-messages');
   const chatInput = document.getElementById('chat-input');
   const chatSendButton = document.getElementById('chat-send-button');
-  
+
   const chatSuggestionsContainer = document.getElementById('chat-suggestions');
 
   const chatClearButton = document.getElementById('chat-clear');
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // NOVO: A base de conhecimento e as sugestões podem ser removidas daqui,
   // pois a lógica agora está no servidor Flask (app.py).
-  
+
   const SUGGESTION_QUESTIONS = [
     "Como funciona o processo de incubação?",
     "Quais serviços e benefícios a Garça oferece?",
@@ -61,25 +61,25 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sender === 'user') {
       messageWrapper.classList.add('flex', 'justify-end');
       messageBubble.classList.add('bg-brand-teal', 'text-white');
-      
+
       // Remove sugestões após a primeira pergunta do usuário
-      chatSuggestionsContainer.innerHTML = ''; 
+      chatSuggestionsContainer.innerHTML = '';
     } else { // 'ai'
       messageWrapper.classList.add('flex', 'justify-start');
       messageBubble.classList.add('bg-slate-200', 'text-slate-800');
     }
-    
+
     // Processar o texto, substituindo negrito markdown (**) por <strong>
     const processedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     messageBubble.innerHTML = processedText;
 
     messageWrapper.appendChild(messageBubble);
     chatMessagesContainer.appendChild(messageBubble);
-    
+
     // Rola para o final da conversa
     chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
   }
-  
+
   /**
    * Função principal para enviar a mensagem (AGORA COM CHAMADA REAL AO FLASK).
    */
@@ -150,16 +150,25 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-      
+
       const result = await response.json();
 
       if (result.status === 'success' && result.data?.token) {
         if (rememberMe) {
           localStorage.setItem('token', result.data.token);
+          localStorage.setItem('userId', result.data.user.Id);
+          localStorage.setItem('userGroup', result.data.user.Group);
         } else {
-          sessionStorage.setItem('token', result.data.token);
+          localStorage.setItem('token', result.data.token);
+          localStorage.setItem('userId', result.data.user.Id);
+          localStorage.setItem('userGroup', result.data.user.Group);
         }
-        window.location.href = 'dashboard.html';
+        if (result.data.user.Group === 'admin') {
+          window.location.href = 'dashboard_adm.html';
+        }
+        else {
+          window.location.href = 'dashboard.html';
+        }
       } else {
         alert(result.message || 'Erro ao autenticar');
         loginButton.disabled = false;
@@ -175,8 +184,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   scrollButtons.forEach(button => {
     button.addEventListener('click', () => {
-      const targetId = button.getAttribute('data-target'); 
-      const targetElement = document.getElementById(targetId); 
+      const targetId = button.getAttribute('data-target');
+      const targetElement = document.getElementById(targetId);
 
       if (targetElement) {
         targetElement.scrollIntoView({ behavior: 'smooth' });
@@ -210,13 +219,13 @@ document.addEventListener('DOMContentLoaded', () => {
   chatHistoryButton.addEventListener('click', () => {
     alert('Acrova AI: O histórico de conversas está indisponível neste ambiente de demonstração.');
   });
-  
+
   chatDeleteHistoryButton.addEventListener('click', () => {
     const confirmDelete = confirm('Acrova AI: Tem certeza que deseja apagar permanentemente todo o histórico de conversas?');
     if (confirmDelete) {
-        chatMessagesContainer.innerHTML = '';
-        renderSuggestions();
-        alert('Acrova AI: Histórico apagado. Reinicie a conversa clicando em "Limpar Conversa".');
+      chatMessagesContainer.innerHTML = '';
+      renderSuggestions();
+      alert('Acrova AI: Histórico apagado. Reinicie a conversa clicando em "Limpar Conversa".');
     }
   });
 });

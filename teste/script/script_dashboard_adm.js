@@ -24,8 +24,8 @@ document.addEventListener('DOMContentLoaded', async () => {
      window.location.href = 'login.html';
     return;
   }
-  if (group !== 'user') {
-     window.location.href = 'dashboard_adm.html';
+  if (group !== 'admin') {
+     window.location.href = 'dashboard.html';
     return;
   }
 

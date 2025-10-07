@@ -2,6 +2,18 @@ import { ApiService } from './apiService.js';
 
 //python3 -m http.server 5500
 document.addEventListener('DOMContentLoaded', () => {
+
+    const token = localStorage.getItem('token');
+    const group = localStorage.getItem('userGroup');
+    const userId = localStorage.getItem('userId');
+
+    // Se não tiver token, volta para login
+    if (!token || !group) {
+        alert('Você precisa estar logado para acessar o dashboard.');
+        window.location.href = 'login.html';
+        return;
+    }
+
     // --- CONFIGURAÇÃO ---
     const apiService = new ApiService('https://megaware.incubadora.shop/incubadora/enterprise');
     // --- ELEMENTOS DO DOM ---
@@ -15,6 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingIndicator = document.getElementById('loading');
     const userMenuButton = document.getElementById('user-menu-button');
     const userMenu = document.getElementById('user-menu');
+
+    const navUsers = document.getElementById('navUsers');
+    if (localStorage.getItem('userGroup') !== 'admin') {
+        navUsers.style.display = 'none';
+        addNewBtn.style.display = 'none';
+    }
+
 
     // --- LÓGICA DO MENU DE USUÁRIO ---
     userMenuButton.addEventListener('click', () => {
@@ -33,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loadingIndicator.style.display = 'block';
         itemsList.innerHTML = '';
         try {
-            const response = await apiService.getAll();
+            const response = (group !== 'admin') ? await apiService.generic("getByAssociateUser", { id: userId }) : await apiService.getAll();
             renderItems(response.data);
         } catch (error) {
             itemsList.innerHTML = `<li class="text-red-500 text-center">${error.message}</li>`;
@@ -64,17 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    async function deleteItem(id, itemData) {
-        // Substituindo confirm() por um modal customizado seria o ideal em uma app real
-        if (!confirm('Tem certeza que deseja excluir este item?')) return;
-        try {
-            await apiService.delete(itemData);
-            fetchItems();
-        } catch (error) {
-            alert(error.message);
-        }
-    }
-
     // --- RENDERIZAÇÃO E MANIPULAÇÃO DO DOM ---
     function renderItems(items) {
         itemsList.innerHTML = '';
@@ -82,60 +90,115 @@ document.addEventListener('DOMContentLoaded', () => {
             itemsList.innerHTML = '<li class="text-center text-gray-500">Nenhum item encontrado.</li>';
             return;
         }
-        items.forEach(item => {
-            const li = document.createElement('li');
-            li.className = 'bg-white p-4 rounded-lg border border-gray-200 shadow-sm hover:shadow-lg transition-shadow duration-300';
 
-            // --- Lógica Auxiliar ---
-            // 1. Define o texto e a cor do selo de status
-            const isActive = item.State === '1';
-            const statusText = isActive ? 'Ativo' : 'Inativo';
-            const statusClass = isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+        if (group !== 'admin') {
+            items.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'bg-white p-4 rounded-lg border border-gray-200 shadow-sm hover:shadow-lg transition-shadow duration-300';
 
-            // 2. Formata a data para o padrão brasileiro (DD/MM/AAAA)
-            let formattedEndDate = 'Não definida';
-            if (item.ContractEndDate) {
-                // Pega a data antes do 'T' e divide em ano, mês e dia
-                const [year, month, day] = item.ContractEndDate.split('T')[0].split('-');
-                formattedEndDate = `${day}/${month}/${year}`;
-            }
-            // --- Fim da Lógica Auxiliar ---
+                // --- Lógica Auxiliar ---
+                // 1. Define o texto e a cor do selo de status
+                const isActive = item.State === '1';
+                const statusText = isActive ? 'Ativo' : 'Inativo';
+                const statusClass = isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
 
-            li.innerHTML = `
-        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            
-            <div class="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-3 w-full">
+                // 2. Formata a data para o padrão brasileiro (DD/MM/AAAA)
+                let formattedEndDate = 'Não definida';
+                if (item.ContractEndDate) {
+                    // Pega a data antes do 'T' e divide em ano, mês e dia
+                    const [year, month, day] = item.ContractEndDate.split('T')[0].split('-');
+                    formattedEndDate = `${day}/${month}/${year}`;
+                }
+                // --- Fim da Lógica Auxiliar ---
+
+                li.innerHTML = `
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                
+                <div class="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-3 w-full">
                 
                 <div class="flex flex-col">
-                    <div class="flex items-center gap-3">
-                        <h3 class="font-bold text-lg text-gray-900 truncate">${item.TradeName}</h3>
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${statusClass}">
-                            ${statusText}
-                        </span>
-                    </div>
-                    <p class="text-sm text-gray-500">${item.LegalName}</p>
+                <div class="flex items-center gap-3">
+                <h3 class="font-bold text-lg text-gray-900 truncate">${item.TradeName}</h3>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${statusClass}">
+                ${statusText}
+                </span>
                 </div>
-
+                <p class="text-sm text-gray-500">${item.LegalName}</p>
+                </div>
+                
                 <div class="flex flex-col">
-                    <p class="text-sm font-semibold text-gray-700">CNPJ</p>
-                    <p class="text-sm text-gray-500">${item.CNPJ}</p>
+                <p class="text-sm font-semibold text-gray-700">CNPJ</p>
+                <p class="text-sm text-gray-500">${item.CNPJ}</p>
                 </div>
-
+                
                 <div class="flex flex-col">
-                     <p class="text-sm font-semibold text-gray-700">Fim do Contrato</p>
-                     <p class="text-sm text-gray-500">${formattedEndDate}</p>
+                <p class="text-sm font-semibold text-gray-700">Fim do Contrato</p>
+                <p class="text-sm text-gray-500">${formattedEndDate}</p>
                 </div>
-            </div>
+                </div>
+                
+                <div class="flex-shrink-0 flex items-center space-x-3 w-full md:w-auto justify-end">
+                <button data-id="${item.Id}" class="view-btn text-blue-600 hover:text-blue-800 font-medium transition-colors">Visualizar</button>
+                </div>
+                </div>
+                `;
+                itemsList.appendChild(li);
+            });
+        } else {
+            items.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'bg-white p-4 rounded-lg border border-gray-200 shadow-sm hover:shadow-lg transition-shadow duration-300';
 
-            <div class="flex-shrink-0 flex items-center space-x-3 w-full md:w-auto justify-end">
+                // --- Lógica Auxiliar ---
+                // 1. Define o texto e a cor do selo de status
+                const isActive = item.State === '1';
+                const statusText = isActive ? 'Ativo' : 'Inativo';
+                const statusClass = isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+
+                // 2. Formata a data para o padrão brasileiro (DD/MM/AAAA)
+                let formattedEndDate = 'Não definida';
+                if (item.ContractEndDate) {
+                    // Pega a data antes do 'T' e divide em ano, mês e dia
+                    const [year, month, day] = item.ContractEndDate.split('T')[0].split('-');
+                    formattedEndDate = `${day}/${month}/${year}`;
+                }
+                // --- Fim da Lógica Auxiliar ---
+
+                li.innerHTML = `
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                
+                <div class="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-3 w-full">
+                
+                <div class="flex flex-col">
+                <div class="flex items-center gap-3">
+                <h3 class="font-bold text-lg text-gray-900 truncate">${item.TradeName}</h3>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${statusClass}">
+                ${statusText}
+                </span>
+                </div>
+                <p class="text-sm text-gray-500">${item.LegalName}</p>
+                </div>
+                
+                <div class="flex flex-col">
+                <p class="text-sm font-semibold text-gray-700">CNPJ</p>
+                <p class="text-sm text-gray-500">${item.CNPJ}</p>
+                </div>
+                
+                <div class="flex flex-col">
+                <p class="text-sm font-semibold text-gray-700">Fim do Contrato</p>
+                <p class="text-sm text-gray-500">${formattedEndDate}</p>
+                </div>
+                </div>
+                
+                <div class="flex-shrink-0 flex items-center space-x-3 w-full md:w-auto justify-end">
                 <button data-id="${item.Id}" class="view-btn text-blue-600 hover:text-blue-800 font-medium transition-colors">Visualizar</button>
                 <button data-id="${item.Id}" class="edit-btn text-blue-600 hover:text-blue-800 font-medium transition-colors">Editar</button>
-                <button data-id="${item.Id}" class="delete-btn text-red-600 hover:text-red-800 font-medium transition-colors">Excluir</button>
-            </div>
-        </div>
-    `;
-            itemsList.appendChild(li);
-        });
+                </div>
+                </div>
+                `;
+                itemsList.appendChild(li);
+            });
+        }
     }
     // item-id
     // item-legalName
@@ -215,13 +278,6 @@ document.addEventListener('DOMContentLoaded', () => {
     itemsList.addEventListener('click', async (e) => {
         const id = e.target.dataset.id;
         if (!id) return;
-
-        if (e.target.classList.contains('delete-btn')) {
-            const itemData = {
-                id: id
-            };
-            deleteItem(id, itemData);
-        }
 
         if (e.target.classList.contains('edit-btn')) {
             try {

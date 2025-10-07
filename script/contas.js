@@ -2,10 +2,22 @@ import { ApiService } from './apiService.js';
 
 //python3 -m http.server 5500
 document.addEventListener('DOMContentLoaded', () => {
+
+    const token = localStorage.getItem('token');
+    const group = localStorage.getItem('userGroup');
+    const userId = localStorage.getItem('userId');
+    const enterpriseId = 24; 
+
+    // Se não tiver token, volta para login
+    if (!token || !group) {
+        alert('Você precisa estar logado para acessar o dashboard.');
+        window.location.href = 'login.html';
+        return;
+    }
+
     // --- CONFIGURAÇÃO ---
     const apiService = new ApiService('https://megaware.incubadora.shop/incubadora/account');
 
-    const enterpriseId = 9; // ID fixo da empresa para testes
 
     // --- ELEMENTOS DO DOM ---
     const itemsList = document.getElementById('items-ul');
