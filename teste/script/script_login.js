@@ -7,19 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Elementos do Input Senha ---
   const passwordInput = document.getElementById('password');
   const togglePasswordButton = document.getElementById('toggle-password');
-  const eyeIcon = document.getElementById('eye-icon'); 
+  const eyeIcon = document.getElementById('eye-icon'); // Agora é a tag <img>
   
-  // Ícones SVG Corrigidos com paths das suas imagens (ViewBox 0 0 24 24 assumido)
-  // Olho Aberto (image_fd00f0.png) - Ícone limpo de visibilidade
-  const EYE_OPEN_PATH = `<path stroke-linecap="round" d="M12 4.5c4.71 0 8.8 3.51 9.5 8 0 0 0 0 0 0s-4.79 8-9.5 8c-4.71 0-8.8-3.51-9.5-8 0 0 0 0 0 0s4.79-8 9.5-8zM12 15a3 3 0 100-6 3 3 0 000 6z" />`;
-  // Olho Fechado/Riscado (image_fd012b.png) - Ícone de ocultar
-  const EYE_CLOSED_PATH = `<path stroke-linecap="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.419 0-8-1.748-8-4 0-2.252 3.581-4 8-4s8 1.748 8 4a10.05 10.05 0 01-1.875 3.825M12 11c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zM4.5 19.5L19.5 4.5" />`;
+  // Caminhos dos arquivos SVG (necessários para a troca)
+  const EYE_OPEN_SRC = 'img/olhoaberto.svg';
+  const EYE_CLOSED_SRC = 'img/olhofechado.svg';
 
-
-  // Define o ícone inicial (olho fechado)
-  if (eyeIcon) {
-      eyeIcon.innerHTML = EYE_CLOSED_PATH;
-  }
+  // O ícone inicial já está definido no HTML: <img src="img/olhofechado.svg">
   
   // --- Elementos do Chatbot ---
   const openChatbotButton = document.getElementById('open-chatbot-button');
@@ -45,20 +39,23 @@ document.addEventListener('DOMContentLoaded', () => {
     "Quem desenvolveu o sistema?",
   ];
   
-  const DEFAULT_PROMPT = "Inicie a conversa me perguntando 'Quem é a Acrova AI?'";
+  const DEFAULT_PROMPT = "Olá, Acrova AI. Gostaria de saber mais sobre a Incubadora de Empresas Garça.";
 
 
-  // --- Lógica de Visualização de Senha ---
+  // --- Lógica de Visualização de Senha (CORRIGIDA) ---
   if (togglePasswordButton) {
       togglePasswordButton.addEventListener('click', () => {
-          const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+          const isPassword = passwordInput.getAttribute('type') === 'password';
+          const type = isPassword ? 'text' : 'password';
           passwordInput.setAttribute('type', type);
           
-          // Altera o ícone
-          if (type === 'text') {
-              eyeIcon.innerHTML = EYE_OPEN_PATH;
+          // Altera o SRC da imagem
+          if (isPassword) {
+              eyeIcon.src = EYE_OPEN_SRC;
+              eyeIcon.alt = 'Ocultar Senha';
           } else {
-              eyeIcon.innerHTML = EYE_CLOSED_PATH;
+              eyeIcon.src = EYE_CLOSED_SRC;
+              eyeIcon.alt = 'Mostrar Senha';
           }
       });
   }
@@ -91,53 +88,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const messageWrapper = document.createElement('div');
     const messageBubble = document.createElement('div');
 
-    messageBubble.classList.add('p-3', 'rounded-xl', 'max-w-[80%]', 'shadow-sm', 'text-sm');
+    messageBubble.classList.add('p-3', 'rounded-2xl', 'max-w-[80%]', 'shadow-sm', 'text-sm');
 
     if (sender === 'user') {
       messageWrapper.classList.add('flex', 'justify-end');
       messageBubble.classList.add('bg-brand-teal', 'text-white');
       
-      // Remove sugestões após a primeira pergunta do usuário
       chatSuggestionsContainer.innerHTML = ''; 
-    } else { // 'ai'
+    } else { 
       messageWrapper.classList.add('flex', 'justify-start');
       messageBubble.classList.add('bg-slate-200', 'text-slate-800');
     }
     
-    // Processar o texto, substituindo negrito markdown (**) por <strong>
     const processedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-    messageBubble.innerHTML = processedText;
+    messageBubble.innerHTML = processedText; 
 
     messageWrapper.appendChild(messageBubble);
-    chatMessagesContainer.appendChild(messageWrapper);
+    chatMessagesContainer.appendChild(messageWrapper); 
     
-    // Rola para o final da conversa
     chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
   }
   
   /**
-   * Envia um comando POST para a rota de limpeza no Back-End.
+   * Função dummy para manter a estabilidade, evitando erro de servidor.
    */
   async function clearAiHistory() {
-      try {
-          const response = await fetch('http://127.0.0.1:5000/api/chatbot/clear-history', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-          });
-          
-          if (response.ok) {
-              const data = await response.json();
-              return data.status === 'success';
-          }
-          return false;
-      } catch (error) {
-          console.error('Erro de conexão ao limpar histórico:', error);
-          return false;
-      }
+      // Retorna true para que o Front-End prossiga com o reset visual
+      return true; 
   }
 
   /**
-   * Função principal para enviar a mensagem (USANDO 127.0.0.1).
+   * Função principal para enviar a mensagem.
    */
   async function sendMessage() {
     let userMessage = chatInput.value.trim();
@@ -148,12 +129,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 1. Exibe a mensagem do usuário (pode ser a padrão)
     appendMessage(userMessage, 'user');
-    chatInput.value = ''; // Limpa o input
-    chatInput.disabled = true; // Desabilita input enquanto espera a IA
+    chatInput.value = ''; 
+    chatInput.disabled = true; 
     chatSendButton.disabled = true;
 
     try {
-      // Chamada usando o IP numérico (mais estável)
       const response = await fetch('http://127.0.0.1:5000/api/chatbot', {
         method: 'POST',
         headers: {
@@ -162,15 +142,20 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({ message: userMessage }),
       });
 
+      if (!response.ok) {
+         throw new Error(`Server returned status: ${response.status}`);
+      }
+
       const data = await response.json();
-      const aiResponse = data.response || "Erro: Não foi possível obter uma resposta do servidor. Tente novamente.";
+      const aiResponse = data.response || data.error || "Erro: Não foi possível obter uma resposta do servidor. Tente novamente.";
 
       // 2. Exibe a resposta da IA
       appendMessage(aiResponse, 'ai');
 
     } catch (error) {
       console.error('Erro na comunicação com o chatbot Flask:', error);
-      appendMessage("Desculpe, a **Acrova AI** está offline. Verifique se o servidor Flask está rodando na porta 5000.", 'ai');
+      appendMessage("Erro: Não foi possível obter uma resposta do servidor. Tente novamente.", 'ai');
+      
     } finally {
       chatInput.disabled = false;
       chatSendButton.disabled = false;
@@ -178,8 +163,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // --- Atribuição de Eventos do Chatbot ---
-
+  // Evento para o botão FAB (atalho)
+  if (chatbotFab) {
+    chatbotFab.addEventListener('click', () => {
+      chatbotPanel.classList.remove('translate-x-full');
+      renderSuggestions();
+    });
+  }
+  
+  // Eventos de Chat
   chatSendButton.addEventListener('click', sendMessage);
 
   chatInput.addEventListener('keypress', (e) => {
@@ -189,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-  // --- Lógica de Login (USANDO 127.0.0.1) ---
+  // --- Lógica de Login e Scroll Geral (Mantida) ---
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     loginButton.disabled = true;
@@ -201,7 +193,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const rememberMe = rememberMeCheckbox.checked;
 
     try {
-      // Chamada de autenticação (usando 127.0.0.1)
       const response = await fetch('http://127.0.0.1:5000/incubadora/authenticate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -242,32 +233,41 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --- Lógica de Exibição e Ocultação do Chatbot ---
-  openChatbotButton.addEventListener('click', () => {
-    chatbotPanel.classList.remove('translate-x-full');
-    renderSuggestions(); 
-  });
+  if (openChatbotButton) {
+      openChatbotButton.addEventListener('click', () => {
+        chatbotPanel.classList.remove('translate-x-full');
+        renderSuggestions(); 
+      });
+  }
 
   closeChatbotButton.addEventListener('click', () => {
     chatbotPanel.classList.add('translate-x-full');
   });
 
-  // --- Lógica de Limpar Conversa ---
+  // --- Lógica de Limpar Conversa (APENAS RESET VISUAL) ---
   chatClearButton.addEventListener('click', async () => {
-    const historyCleared = await clearAiHistory();
+    const historyCleared = await clearAiHistory(); 
     
     if (historyCleared) {
-        chatMessagesContainer.innerHTML = '';
-        
-        appendMessage("Seja muito bem-vindo(a)! Eu sou a **Acrova AI**, sua **Consultora de Inovação** da Incubadora de Empresas Garça. É um prazer recebê-lo. Por favor, sinta-se à vontade para perguntar sobre o processo de incubação, nossos serviços ou o sistema Startup Overseer. Como posso iniciar nossa conversa hoje?", 'ai');
-
-        appendMessage('**Conversa Limpa!** Por favor, digite sua mensagem ou clique no botão **Enviar** para iniciar um novo tópico.', 'ai');
+        // Limpa todas as mensagens ANTES de adicionar a mensagem de boas-vindas
+        chatMessagesContainer.innerHTML = `
+            <div class="flex justify-start"> 
+                <div class="bg-slate-200 p-3 rounded-2xl max-w-[80%] shadow-sm text-sm">
+                    Seja muito bem-vindo(a)! Eu sou a <strong>Acrova AI</strong>, sua <strong>Consultora de Inovação</strong> da Incubadora de Empresas Garça. É um prazer recebê-lo. Por favor, sinta-se à vontade para perguntar sobre o processo de incubação, nossos serviços ou o sistema Startup Overseer. Como posso iniciar nossa conversa hoje?
+                </div>
+            </div>
+            <div class="flex justify-start"> 
+                <div class="bg-slate-200 p-3 rounded-2xl max-w-[80%] shadow-sm text-sm">
+                    **Conversa Limpa!** Por favor, digite sua mensagem ou clique no botão **Enviar** para iniciar um novo tópico.
+                </div>
+            </div>
+        `;
         
         renderSuggestions(); 
+        chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight; 
     } else {
-         alert('Acrova AI: Falha ao limpar a conversa no servidor. Verifique o Back-End.');
+         // Não deve mais acontecer, mas mantido como fallback
+         alert('Acrova AI: Falha ao limpar a conversa na interface.');
     }
   });
-  
-  // Lógica de Histórico e Apagar (mantida no código, mas sem botões visíveis no HTML final)
-  
 });
