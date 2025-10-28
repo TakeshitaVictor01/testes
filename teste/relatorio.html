@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios Inteligentes - Startup Overseer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <link rel="stylesheet" href="css/style_relatorio.css" /> 
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="flex flex-col h-full">
+            <div class="sidebar-header">
+                <h1>Overseer</h1>
+                <p>Gestão de Incubadas</p>
+            </div>
+            <nav class="sidebar-nav flex-grow">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fa-solid fa-table-columns"></i> Dashboard</a></li>
+                    <li><a href="#"><i class="fa-solid fa-building"></i> Empresas</a></li>
+                    <li><a href="#"><i class="fa-solid fa-users"></i> Usuários</a></li>
+                    <li><a href="#" class="active"><i class="fa-solid fa-chart-pie"></i> Relatórios</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#"><i class="fa-solid fa-gear"></i> Configurações</a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="main-header">
+            <h2>Relatórios Inteligentes</h2>
+            <div class="user-profile">
+                <i class="fa-solid fa-user-circle"></i>
+                <div>
+                    <span id="user-display-name">Carregando...</span>
+                    <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                </div>
+            </div>
+        </header>
+
+        <section class="reports-grid">
+            
+            <div class="reports-container">
+                <h3 class="section-title">Análise Estratégica da Incubadora</h3>
+                
+                <div class="report-card col-span-2">
+                    <h4 class="report-title">1. Status de Incubação (Portfólio Detalhado)</h4>
+                    <div id="data-portfolio" class="data-placeholder h-64 overflow-y-auto">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Empresa</th>
+                                    <th>Status</th>
+                                    <th>Dias em Fase</th>
+                                    <th>Última Atualização</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Tech Solutions</td><td>Residente</td><td>450</td><td>20/10/2025</td></tr>
+                                <tr><td>Health Plus</td><td>Pré-Residente</td><td>90</td><td>25/10/2025</td></tr>
+                                <tr><td>FinSmart</td><td>Graduada</td><td>800</td><td>15/09/2025</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="quick-actions">
+                        <button class="quick-action-btn" data-command="Filtrar por 'Empresas Residentes'"><i class="fa-solid fa-filter"></i> Filtrar Residentes</button>
+                        <button class="quick-action-btn" data-command="Analisar Tempo Crítico"><i class="fa-solid fa-chart-line"></i> Analisar Tempo Crítico</button>
+                    </div>
+                </div>
+
+                <div class="report-card col-span-2">
+                    <h4 class="report-title">2. Fluxo de Caixa (Dados Brutos - Últimos 6 Meses)</h4>
+                    <div id="data-fluxo-caixa" class="data-placeholder h-64 overflow-y-auto">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Mês</th>
+                                    <th>Lucros (R$)</th>
+                                    <th>Despesas (R$)</th>
+                                    <th>Margem (R$)</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody id="fluxo-caixa-body">
+                                <tr data-mes="Out/25"><td>Out/25</td><td>15.000</td><td>12.500</td><td>+ 2.500</td><td><button class="download-btn quick-action-btn" data-mes="Out/25"><i class="fa-solid fa-file-arrow-down"></i> Baixar</button></td></tr>
+                                <tr data-mes="Set/25"><td>Set/25</td><td>14.800</td><td>13.000</td><td>+ 1.800</td><td><button class="download-btn quick-action-btn" data-mes="Set/25"><i class="fa-solid fa-file-arrow-down"></i> Baixar</button></td></tr>
+                                <tr data-mes="Ago/25"><td>Ago/25</td><td>16.200</td><td>15.500</td><td>+ 700</td><td><button class="download-btn quick-action-btn" data-mes="Ago/25"><i class="fa-solid fa-file-arrow-down"></i> Baixar</button></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="quick-actions">
+                        <button class="quick-action-btn" data-command="Projetar fluxo de caixa para próximo trimestre"><i class="fa-solid fa-arrow-right"></i> Projeção Futura</button>
+                        <button class="quick-action-btn" data-command="Identificar categoria de despesa mais alta"><i class="fa-solid fa-coins"></i> Despesa Crítica</button>
+                    </div>
+                </div>
+                
+                <div class="report-card">
+                    <h4 class="report-title">3. Rentabilidade por Empresa (Detalhamento)</h4>
+                    <div id="data-rentabilidade" class="data-placeholder h-48 overflow-y-auto">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Empresa</th>
+                                    <th>Receita Total</th>
+                                    <th>Custo Operacional</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>MK Laser</td><td>R$ 8.000</td><td>R$ 1.200</td></tr>
+                                <tr><td>RB Injeções</td><td>R$ 7.500</td><td>R$ 1.500</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="report-card">
+                    <h4 class="report-title">4. Usuários por Nível e Engajamento</h4>
+                    <div id="data-usuarios" class="data-placeholder h-48 overflow-y-auto">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Nível</th>
+                                    <th>Último Acesso</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>João Silva</td><td>Administrador</td><td>Hoje</td></tr>
+                                <tr><td>Maria Souza</td><td>Proprietário</td><td>Ontem</td></tr>
+                                <tr><td>Lucas Ferreira</td><td>RH</td><td>1 Semana</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="ai-interaction-container">
+                <div class="ai-card">
+                    <h4 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-brain text-brand-teal"></i> Acrova AI - Análise
+                    </h4>
+                    
+                    <div id="ai-insights-panel" class="bg-slate-100 p-4 rounded-lg shadow-inner min-h-[150px] mb-4 overflow-y-auto">
+                        <p id="ai-insight-text" class="text-sm text-slate-700">
+                            <strong class="text-brand-teal">Acrova AI:</strong> Bem-vindo(a) ao módulo de relatórios. Clique em um dos botões de <strong>Ações Rápidas</strong> ou use a barra de comando para uma análise profunda dos dados brutos.
+                        </p>
+                    </div>
+
+                    <div id="ai-command-box" class="space-y-3">
+                        <label for="ai-input-field" class="text-sm font-medium text-slate-700 block">Comando de Linguagem Natural:</label>
+                        <input type="text" id="ai-input-field" 
+                            placeholder="Ex: 'Compare Rentabilidade do 1º e 2º trimestre'" 
+                            class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-teal text-sm"
+                            disabled> <button id="ai-send-button" class="w-full py-2 bg-brand-teal text-white rounded-lg font-semibold hover:bg-brand-teal/90 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all" disabled>
+                            <i class="fa-solid fa-magnifying-glass-chart mr-2"></i> Analisar / Filtrar
+                        </button>
+                        <p id="access-warning" class="text-xs text-red-600 hidden mt-2 text-center">
+                            A filtragem dinâmica é um recurso restrito ao nível Administrador.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="script/script_relatorio.js" defer></script>
+</body>
+</html>
