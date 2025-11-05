@@ -9,13 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const togglePasswordButton = document.getElementById('toggle-password');
   const eyeIcon = document.getElementById('eye-icon'); // Agora é a tag <img>
   
-  // MUDANÇA: Caminhos dos arquivos SVG corrigidos
-  // O script está em /static/script/, as imagens em /static/img/
-  // O caminho relativo correto é ../img/
-  const EYE_OPEN_SRC = '../img/olhoaberto.svg';
-  const EYE_CLOSED_SRC = '../img/olhofechado.svg';
-
-  // O ícone inicial é carregado pelo HTML (que já corrigimos)
+  // O ícone inicial é carregado pelo HTML
   
   // --- Elementos do Chatbot ---
   const openChatbotButton = document.getElementById('open-chatbot-button');
@@ -51,11 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const type = isPassword ? 'text' : 'password';
           passwordInput.setAttribute('type', type);
           
-          // Altera o SRC da imagem
           if (isPassword) {
-              // MUDANÇA: O caminho agora é relativo à URL do site, não ao arquivo JS
-              // Usamos a propriedade 'src' para obter o caminho base e então trocamos o arquivo.
-              // Isso é mais robusto do que setar o 'EYE_OPEN_SRC' diretamente
               eyeIcon.src = eyeIcon.src.replace('olhofechado.svg', 'olhoaberto.svg');
               eyeIcon.alt = 'Ocultar Senha';
           } else {
@@ -115,11 +105,18 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   /**
-   * Função dummy para manter a estabilidade, evitando erro de servidor.
+   * Função para limpar o histórico do chatbot.
    */
   async function clearAiHistory() {
-      // Retorna true para que o Front-End prossiga com o reset visual
-      return true; 
+      try {
+          // Esta chamada ainda precisa do servidor Flask local
+          const response = await fetch('http://127.0.0.1:5000/api/chatbot/clear-history', { method: 'POST' });
+          const data = await response.json();
+          return data.status === "success";
+      } catch (e) {
+          console.error("Falha ao limpar histórico no servidor:", e);
+          return false;
+      }
   }
 
   /**
@@ -138,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     chatSendButton.disabled = true;
 
     try {
+      // Esta chamada ainda usa o servidor Flask local
       const response = await fetch('http://127.0.0.1:5000/api/chatbot', {
         method: 'POST',
         headers: {
@@ -196,7 +194,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const rememberMe = rememberMeCheckbox.checked;
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/incubadora/authenticate', {
+      // ===================================================================
+      // MUDANÇA CRÍTICA: 
+      // Esta URL agora aponta para sua API de produção real, 
+      // removendo o "envolvimento com o flask" para autenticação.
+      // ===================================================================
+      const response = await fetch('https://megaware.incubadora.shop/incubadora/authenticate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -210,7 +213,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           sessionStorage.setItem('token', result.data.token);
         }
-        window.location.href = 'dashboard.html'; // TODO: Mudar para /dashboard
+        
+        // Redireciona para a ROTA /dashboard servida pelo Flask
+        window.location.href = '/dashboard'; 
+        
       } else {
         alert(result.message || 'Erro ao autenticar');
         loginButton.disabled = false;
@@ -218,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } catch (error) {
       console.error(error);
-      alert('Erro de conexão com o servidor. Verifique se o Flask está rodando na porta 5000.');
+      alert('Erro de conexão com o servidor. Verifique sua internet ou contate o suporte.');
       loginButton.disabled = false;
       loginButton.innerHTML = 'Entrar';
     }

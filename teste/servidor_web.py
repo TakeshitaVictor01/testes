@@ -14,9 +14,13 @@ app.register_blueprint(relatorio_api, url_prefix='/api/relatorio')
 
 @app.route('/')
 def index():
-    """Redireciona a rota principal para a página de relatórios (ou dashboard)."""
-    # Vamos apontar para relatórios por enquanto, já que é o que temos
-    return redirect(url_for('pagina_relatorios'))
+    """Redireciona a rota principal para a página de login."""
+    return redirect(url_for('pagina_login'))
+
+@app.route('/dashboard')
+def pagina_dashboard():
+    """Renderiza a página principal do dashboard."""
+    return render_template('dashboard.html', active_page='dashboard')
 
 @app.route('/relatorios')
 def pagina_relatorios():
@@ -43,7 +47,6 @@ def pagina_lancamentos():
     """Renderiza a página de lançamentos financeiros."""
     return render_template('lancamentos.html', active_page='lancamentos')
 
-# NOVA ROTA para a página de Login
 @app.route('/login')
 def pagina_login():
     """Renderiza a página de login."""
@@ -84,7 +87,7 @@ def clear_history():
         agent = agent(
             model="gemini-flash-lite-latest",
             temperature=0.5,
-            api_key="SUA_CHAVE_REAL_AQUI", # ATENÇÃO: Use sua chave real
+            api_key="AIzaSyC_SBlSyqaOisdzeJHr9DMCMVDIKMMsWRo", # ATENÇÃO: Use sua chave real
             base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
             system_prompt=INSTRUCTIONS
         )
@@ -104,11 +107,13 @@ def authenticate():
     email = data.get('email')
     password = data.get('password')
 
-    if email == "admin@garca.com" and password == "123456":
+    # MUDANÇA: Atualizado para as credenciais reais que você forneceu
+    if email == "victor@gmail.com" and password == "string":
         return jsonify({
             "status": "success",
             "message": "Autenticação bem-sucedida",
-            "data": {"token": "FAKE_TOKEN_ABC123"}
+            # No futuro, você pode querer que sua API real gere e retorne um token JWT aqui
+            "data": {"token": "REAL_TOKEN_PLACEHOLDER"} 
         })
     else:
         return jsonify({"status": "error", "message": "Email ou senha inválidos"}), 401
