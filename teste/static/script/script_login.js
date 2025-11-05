@@ -9,11 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const togglePasswordButton = document.getElementById('toggle-password');
   const eyeIcon = document.getElementById('eye-icon'); // Agora é a tag <img>
   
-  // Caminhos dos arquivos SVG (necessários para a troca)
-  const EYE_OPEN_SRC = 'img/olhoaberto.svg';
-  const EYE_CLOSED_SRC = 'img/olhofechado.svg';
+  // MUDANÇA: Caminhos dos arquivos SVG corrigidos
+  // O script está em /static/script/, as imagens em /static/img/
+  // O caminho relativo correto é ../img/
+  const EYE_OPEN_SRC = '../img/olhoaberto.svg';
+  const EYE_CLOSED_SRC = '../img/olhofechado.svg';
 
-  // O ícone inicial já está definido no HTML: <img src="img/olhofechado.svg">
+  // O ícone inicial é carregado pelo HTML (que já corrigimos)
   
   // --- Elementos do Chatbot ---
   const openChatbotButton = document.getElementById('open-chatbot-button');
@@ -34,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Sugestões para o Chatbot ---
   const SUGGESTION_QUESTIONS = [
     "Como funciona o processo de incubação?",
-    "Quais serviços e benefícios a Garça oferece?",
+    "Quais serviços e benefícios a Incubadora oferece?",
     "Quais são os módulos do Startup Overseer?",
     "Quem desenvolveu o sistema?",
   ];
@@ -51,10 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
           
           // Altera o SRC da imagem
           if (isPassword) {
-              eyeIcon.src = EYE_OPEN_SRC;
+              // MUDANÇA: O caminho agora é relativo à URL do site, não ao arquivo JS
+              // Usamos a propriedade 'src' para obter o caminho base e então trocamos o arquivo.
+              // Isso é mais robusto do que setar o 'EYE_OPEN_SRC' diretamente
+              eyeIcon.src = eyeIcon.src.replace('olhofechado.svg', 'olhoaberto.svg');
               eyeIcon.alt = 'Ocultar Senha';
           } else {
-              eyeIcon.src = EYE_CLOSED_SRC;
+              eyeIcon.src = eyeIcon.src.replace('olhoaberto.svg', 'olhofechado.svg');
               eyeIcon.alt = 'Mostrar Senha';
           }
       });
@@ -127,7 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
         userMessage = DEFAULT_PROMPT;
     }
 
-    // 1. Exibe a mensagem do usuário (pode ser a padrão)
     appendMessage(userMessage, 'user');
     chatInput.value = ''; 
     chatInput.disabled = true; 
@@ -149,7 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await response.json();
       const aiResponse = data.response || data.error || "Erro: Não foi possível obter uma resposta do servidor. Tente novamente.";
 
-      // 2. Exibe a resposta da IA
       appendMessage(aiResponse, 'ai');
 
     } catch (error) {
@@ -207,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           sessionStorage.setItem('token', result.data.token);
         }
-        window.location.href = 'dashboard.html';
+        window.location.href = 'dashboard.html'; // TODO: Mudar para /dashboard
       } else {
         alert(result.message || 'Erro ao autenticar');
         loginButton.disabled = false;
@@ -249,7 +252,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const historyCleared = await clearAiHistory(); 
     
     if (historyCleared) {
-        // Limpa todas as mensagens ANTES de adicionar a mensagem de boas-vindas
         chatMessagesContainer.innerHTML = `
             <div class="flex justify-start"> 
                 <div class="bg-slate-200 p-3 rounded-2xl max-w-[80%] shadow-sm text-sm">
@@ -258,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="flex justify-start"> 
                 <div class="bg-slate-200 p-3 rounded-2xl max-w-[80%] shadow-sm text-sm">
-                    **Conversa Limpa!** Por favor, digite sua mensagem ou clique no botão **Enviar** para iniciar um novo tópico.
+                    <strong>Conversa Limpa!</strong> Por favor, digite sua mensagem ou clique no botão <strong>Enviar</strong> para iniciar um novo tópico.
                 </div>
             </div>
         `;
@@ -266,7 +268,6 @@ document.addEventListener('DOMContentLoaded', () => {
         renderSuggestions(); 
         chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight; 
     } else {
-         // Não deve mais acontecer, mas mantido como fallback
          alert('Acrova AI: Falha ao limpar a conversa na interface.');
     }
   });

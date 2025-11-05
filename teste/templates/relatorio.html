@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+
+{% block title %}Relatórios - Overseer{% endblock %}
+
+{% block page_title %}
+    Relatórios Consolidados
+{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_relatorio.css') }}" />
+{% endblock %}
+
+
+{% block content %}
+<section class="page-grid"> 
+            
+    <div class="page-content-main">
+        
+        <div class="card filter-card">
+
+            <div id="filter-content">
+                <form id="report-filter-form">
+                    
+                    <div class="form-grid">
+
+                        <div class="form-group full-width">
+                            <label class="form-label" for="company-all">Empresas Incubadas</label>
+                            <div class="form-input-scrolling" id="filter-companies-container">
+                                <div class="checkbox-group">
+                                    <input id="company-all" type="checkbox">
+                                    <label for="company-all" class="checkbox-label-all">Selecionar Todas</label>
+                                </div>
+                                <hr class="form-divider">
+                                
+                                <div class="checkbox-group"><input id="company-1" name="companyIds" value="1" type="checkbox" class="company-checkbox"><label for="company-1" class="form-label-checkbox">Startup A (Tech)</label></div>
+                                <div class="checkbox-group"><input id="company-2" name="companyIds" value="2" type="checkbox" class="company-checkbox"><label for="company-2" class="form-label-checkbox">Startup B (Saúde)</label></div>
+                                <div class="checkbox-group"><input id="company-3" name="companyIds" value="3" type="checkbox" class="company-checkbox"><label for="company-3" class="form-label-checkbox">Startup C (Fintech)</label></div>
+                                <div class="checkbox-group"><input id="company-4" name="companyIds" value="4" type="checkbox" class="company-checkbox"><label for="company-4" class="form-label-checkbox">Startup D (EduTech)</label></div>
+                                <div class="checkbox-group"><input id="company-5" name="companyIds" value="5" type="checkbox" class="company-checkbox"><label for="company-5" class="form-label-checkbox">Startup E (E-commerce)</label></div>
+                            </div>
+                            <p id="company-selection-error" class="form-error-message hidden">Selecione ao menos uma empresa.</p>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="filter-report-type" class="form-label">Tipo de Relatório</label>
+                            <select id="filter-report-type" name="reportType" class="form-select" required>
+                                <option value="" disabled selected>Selecione um relatório</option>
+                                <option value="ranking_faturamento">Ranking de Faturamento (Gráfico)</option>
+                                <option value="consolidado_fluxo_caixa">Fluxo de Caixa Consolidado (Tabela)</option>
+                                <option value="balanco_categorias">Balanço Consolidado por Categoria (Tabela)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="filter-date-start" class="form-label">Período De</label>
+                            <input type="date" id="filter-date-start" name="dateStart" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="filter-date-end" class="form-label">Período Até</label>
+                            <input type="date" id="filter-date-end" name="dateEnd" class="form-input" required>
+                        </div>
+                    
+                        <div class="form-group">
+                            <label for="filter-status" class="form-label">Status Lançamentos</label>
+                            <select id="filter-status" name="status" class="form-select">
+                                <option value="todos">Todos</option>
+                                <option value="Pendente">Pendente</option>
+                                <option value="Baixado">Baixado</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="filter-category" class="form-label">Filtrar por Categoria</label>
+                            <select id="filter-category" name="categoryId" class="form-select">
+                                <option value="todas">Todas as Categorias</option>
+                                <option value="1">Aluguel</option>
+                                <option value="2">Fornecedores</option>
+                                <option value="3">Venda de Produtos</option>
+                                <option value="4">Marketing</option>
+                                <option value="5">Recursos Humanos</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" id="filter-clear-btn" class="button button-secondary">
+                            Limpar Filtros
+                        </button>
+                        <button type="submit" id="generate-report-btn" class="button button-primary">
+                            Gerar Relatório
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="report-display-area-container" class="card report-display-card">
+            
+            <div id="report-header" class="report-card-header hidden">
+                <div class="report-header-info">
+                    <h2 id="report-title">Resultado do Relatório</h2>
+                    <p id="report-subtitle">Período de DD/MM/AAAA até DD/MM/AAAA</p>
+                </div>
+                <div class="report-header-actions">
+                    <button id="export-pdf-btn" class="button button-danger">
+                        <i class="fa-solid fa-file-pdf"></i> Exportar PDF
+                    </button>
+                </div>
+            </div>
+
+            <div id="report-content" class="report-card-content">
+                
+                <div id="report-placeholder">
+                    <svg class="placeholder-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V7c0-1.1.9-2 2-2h10a2 2 0 012 2v8a2 2 0 01-2 2z"></path></svg>
+                    <p class="placeholder-text-lg">Gere um relatório para visualizar os dados.</p>
+                    <p class="placeholder-text-sm">Os resultados aparecerão aqui.</p>
+                </div>
+
+                <div id="report-table-container" class="data-table-wrapper hidden">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Descrição</th>
+                                <th class="text-right">Valor Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="report-table-body">
+                            </tbody>
+                        <tfoot class="data-table-footer">
+                            <tr>
+                                <td class="text-right footer-label">Total:</td>
+                                <td id="report-table-total" class="text-right footer-total">R$ 0,00</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div id="report-chart-container" class="report-chart-wrapper hidden">
+                    <canvas id="myReportChart"></canvas>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="page-sidebar-ai">
+        <div class="ai-card">
+            <h4><i class="fa-solid fa-brain"></i> Acrova AI - Análise</h4>
+            
+            <div id="ai-insights-panel">
+                <p id="ai-insight-text">
+                    <strong>Acrova AI:</strong> Gere um relatório para começar a análise.
+                </p>
+            </div>
+
+            <div id="ai-command-box">
+                <label for="ai-input-field" class="form-label">Comando de Linguagem Natural:</label>
+                <input type="text" id="ai-input-field" 
+                    placeholder="Ex: 'Compare Rentabilidade do 1º e 2º trimestre'" 
+                    class="form-input"
+                    disabled> 
+                
+                <button id="ai-send-button" class="button button-primary full-width" disabled>
+                    <i class="fa-solid fa-magnifying-glass-chart"></i> Analisar / Filtrar
+                </button>
+                
+                <button id="ai-insight-button" class="button button-purple full-width" disabled>
+                    <i class="fa-solid fa-lightbulb"></i> Gerar Insight (Destaque)
+                </button>
+
+                <button id="ai-forecast-button" class="button button-blue full-width" disabled>
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Previsão de Faturamento (Beta)
+                </button>
+
+                <p id="access-warning" class="form-error-message text-center hidden">
+                    A filtragem dinâmica é um recurso restrito ao nível Administrador.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='script/script_relatorio.js') }}" defer></script>
+{% endblock %}

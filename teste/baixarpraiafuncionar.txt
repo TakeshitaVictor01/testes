@@ -1,1 +1,2 @@
-pip install flask flask_cors openai fpdf2
+pip install flask flask_cors openai
+pip install fpdf2 --default-timeout=100

@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% block title %}Lançamentos Financeiros - Overseer{% endblock %}
+
+{% block page_title %}
+    Lançamentos Financeiros
+{% endblock %}
+
+
+{% block content %}
+<section class="page-grid-single-column"> 
+
+    <div class="page-actions">
+        <button id="add-new-btn" class="button button-primary">
+            <i class="fa-solid fa-plus"></i> Novo Lançamento
+        </button>
+    </div>
+
+    <div id="baixa-container" class="card hidden">
+        <h2 id="baixa-form-title" class="card-title">Confirmar Baixa de Lançamento</h2>
+        <form id="baixa-form">
+            <input type="hidden" id="settlementId" name="id">
+
+            <div class="form-grid-2-col">
+                <div class="form-group">
+                    <label for="paymentDate" class="form-label">Data do Pagamento:</label>
+                    <input type="date" id="paymentDate" name="paymentDate" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="paymentMethod" class="form-label">Método de Pagamento:</label>
+                    <select id="paymentMethod" name="paymentMethod" class="form-select" required>
+                        <option value="" disabled selected>Selecione um método</option>
+                        <option value="Pix">Pix</option>
+                        <option value="Boleto">Boleto</option>
+                    </select>
+                </div>
+
+                <div class="form-group full-width-2-col">
+                    <label for="settlementDescription" class="form-label">Descrição da Baixa (Opcional):</label>
+                    <input type="text" id="settlementDescription" name="settlementDescription" placeholder="Ex: Pagamento da fatura de energia" class="form-input">
+                </div>
+
+                <div class="form-group full-width-2-col">
+                    <label class="form-label">Selecione a Conta de Origem/Destino:</label>
+                    <input type="hidden" id="accountId" name="accountId" required>
+                    
+                    <ul id="accounts-list" class="account-list-selector">
+                        <li class="loading-indicator">Carregando contas...</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" id="cancel-baixa-btn" class="button button-secondary">
+                    Cancelar
+                </button>
+                <button type="submit" class="button button-success">
+                    Confirmar Baixa
+                </button>
+            </div>
+        </form>
+    </div>
+    
+    <div id="form-container" class="card hidden">
+        <h2 id="form-title" class="card-title">Adicionar Novo Lançamento</h2>
+        <form id="item-form">
+            <input type="hidden" id="enterpriseId" name="enterpriseId" value="1">
+            <input type="hidden" id="userId" name="userId" value="123">
+
+            <div class="form-grid-2-col">
+                <div class="form-group full-width-2-col">
+                    <label for="description" class="form-label">Descrição:</label>
+                    <input type="text" id="description" name="description" placeholder="Ex: Pagamento de fornecedor" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="type" class="form-label">Tipo:</label>
+                    <select id="type" name="type" class="form-select" required>
+                        <option value="" disabled selected>Selecione o tipo</option>
+                        <option value="Receita">Receita</option>
+                        <option value="Despesa">Despesa</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoryId" class="form-label">Categoria:</label>
+                    <select id="categoryId" name="categoryId" class="form-select" required>
+                        <option value="" disabled selected>Selecione uma categoria</option>
+                        <option value="Aluguel">Aluguel</option>
+                        <option value="Fornecedores">Fornecedores</option>
+                        <option value="Venda de Produtos">Venda de Produtos</option>
+                        <option value="Salários">Salários</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="amount" class="form-label">Valor (R$):</label>
+                    <input type="number" id="amount" name="amount" step="0.01" placeholder="1500.00" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dueDate" class="form-label">Data de Vencimento:</label>
+                    <input type="date" id="dueDate" name="dueDate" class="form-input" required>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" id="cancel-btn" class="button button-secondary">Cancelar</button>
+                <button type="submit" class="button button-success">Salvar Lançamento</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-icon-wrapper kpi-green">
+                <i class="fa-solid fa-arrow-up"></i>
+            </div>
+            <div class="kpi-info">
+                <p class="kpi-label">Receitas do Mês</p>
+                <p id="receitas-mes" class="kpi-value">R$ 0,00</p>
+            </div>
+        </div>
+
+        <div class="kpi-card">
+            <div class="kpi-icon-wrapper kpi-red">
+                <i class="fa-solid fa-arrow-down"></i>
+            </div>
+            <div class="kpi-info">
+                <p class="kpi-label">Despesas do Mês</p>
+                <p id="despesas-mes" class="kpi-value">R$ 0,00</p>
+            </div>
+        </div>
+        
+        <div class="kpi-card">
+            <div class="kpi-icon-wrapper kpi-yellow">
+                <i class="fa-solid fa-clock"></i>
+            </div>
+            <div class="kpi-info">
+                <p class="kpi-label">Contas Pendentes</p>
+                <p id="contas-pendentes" class="kpi-value">R$ 0,00</p>
+            </div>
+        </div>
+
+        <div class="kpi-card">
+            <div class="kpi-icon-wrapper kpi-blue">
+                <i class="fa-solid fa-scale-balanced"></i>
+            </div>
+            <div class="kpi-info">
+                <p class="kpi-label">Saldo do Mês</p>
+                <p id="saldo-mes" class="kpi-value">R$ 0,00</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+         <h3 class="card-title-small">Balanço do Mês</h3>
+         <p class="card-subtitle">Proporção entre receitas e despesas no período atual.</p>
+         <div class="balance-bar-wrapper">
+             <div id="barra-receitas" class="balance-bar bar-green" style="width: 0%"></div>
+             <div id="barra-despesas" class="balance-bar bar-red" style="width: 0%"></div>
+         </div>
+         <div class="balance-bar-legend">
+             <div class="legend-item">
+                 <span class="legend-dot dot-green"></span>
+                 <span id="legenda-receitas">Receitas: R$ 0,00</span>
+             </div>
+             <div class="legend-item">
+                 <span class="legend-dot dot-red"></span>
+                 <span id="legenda-despesas">Despesas: R$ 0,00</span>
+             </div>
+         </div>
+    </div>
+
+    <div id="items-grid" class="entry-grid">
+        </div>
+
+</section>
+{% endblock %}
+
+
+{% block scripts %}
+    <script type="module" src="{{ url_for('static', filename='script/lancamentos.js') }}" defer></script>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestão de Usuários - Overseer{% endblock %}
+
+{% block page_title %}
+    Gerenciador de Usuários
+{% endblock %}
+
+
+{% block content %}
+<section class="page-grid-single-column"> 
+            
+    <div class="page-actions">
+        <button id="add-new-btn" class="button button-primary">
+            <i class="fa-solid fa-plus"></i> Adicionar Novo Usuário
+        </button>
+    </div>
+
+    <div id="form-container" class="card hidden">
+        <h2 id="form-title" class="card-title">Adicionar Novo Usuário</h2>
+        <form id="item-form">
+            <input type="hidden" id="item-id">
+
+            <div class="form-grid-2-col">
+                <div class="form-group full-width-2-col">
+                    <label for="item-name" class="form-label">Nome Completo:</label>
+                    <input type="text" id="item-name" name="name" class="form-input" required>
+                </div>
+
+                <div class="form-group full-width-2-col">
+                    <label for="item-email" class="form-label">Email:</label>
+                    <input type="email" id="item-email" name="email" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="item-cpf" class="form-label">CPF:</label>
+                    <input type="text" id="item-cpf" name="cpf" placeholder="000.000.000-00" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="item-phoneNumber" class="form-label">Telefone:</label>
+                    <input type="tel" id="item-phoneNumber" name="phoneNumber" placeholder="(00) 90000-0000" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="item-group" class="form-label">Grupo:</label>
+                    <select id="item-group" name="group" class="form-select" required>
+                        <option value="" disabled selected>Selecione um grupo</option>
+                        <option value="admin">Administrador</option>
+                        <option value="user">Usuário Padrão</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="item-state" class="form-label">Status:</label>
+                    <select id="item-state" name="state" class="form-select" required>
+                        <option value="" disabled selected>Selecione o status</option>
+                        <option value="1">Ativo</option>
+                        <option value="2">Inativo</option>
+                    </select>
+                </div>
+
+                <div class="form-group full-width-2-col" id="password-group">
+                    <label for="item-password" class="form-label">Senha:</label>
+                    <input type="password" id="item-password" name="password" class="form-input" required>
+                </div>
+
+            </div>
+            <div class="form-actions">
+                <button type="button" id="cancel-btn" class="button button-secondary">Cancelar</button>
+                <button type="submit" class="button button-success">Salvar Usuário</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="items-list" class="card">
+        <h2 class="card-title">Usuários Cadastrados</h2>
+        <div id="loading" class="loading-indicator">
+            <p>Carregando itens...</p>
+        </div>
+        <ul id="items-ul" class="item-list">
+            </ul>
+    </div>
+
+</section>
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="https://unpkg.com/imask"></script>
+    <script src="{{ url_for('static', filename='script/usuario.js') }}"></script>
+{% endblock %}

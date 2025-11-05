@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestão de Empresas - Overseer{% endblock %}
+
+{% block page_title %}
+    Gerenciador de Empresas
+{% endblock %}
+
+
+{% block content %}
+<section class="page-grid-single-column"> 
+            
+    <div class="page-actions">
+        <button id="add-new-btn" class="button button-primary">
+            <i class="fa-solid fa-plus"></i> Adicionar Nova Empresa
+        </button>
+    </div>
+
+    <div id="form-container" class="card hidden">
+        <h2 id="form-title" class="card-title">Adicionar Nova Empresa</h2>
+        <form id="item-form">
+            <input type="hidden" id="item-id">
+
+            <div class="form-grid-2-col">
+                <div class="form-group full-width-2-col">
+                    <label for="item-legalName" class="form-label">Razão Social:</label>
+                    <input type="text" id="item-legalName" name="legalName" class="form-input" required>
+                </div>
+
+                <div class="form-group full-width-2-col">
+                    <label for="item-tradeName" class="form-label">Nome Fantasia:</label>
+                    <input type="text" id="item-tradeName" name="tradeName" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="item-cnpj" class="form-label">CNPJ:</label>
+                    <input type="text" id="item-cnpj" name="cnpj" placeholder="00.000.000/0000-00" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="item-phoneNumber" class="form-label">Telefone:</label>
+                    <input type="tel" id="item-phoneNumber" name="phoneNumber" placeholder="(00) 90000-0000" class="form-input" required>
+                </div>
+
+                <div class="form-group full-width-2-col">
+                    <label for="item-email" class="form-label">Email:</label>
+                    <input type="email" id="item-email" name="email" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="item-startOperationsDate" class="form-label">Início das Operações:</label>
+                    <input type="date" id="item-startOperationsDate" name="startOperationsDate" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="item-contractEndDate" class="form-label">Fim do Contrato:</label>
+                    <input type="date" id="item-contractEndDate" name="contractEndDate" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="item-endOperationsDate" class="form-label">Fim das Operações (Opcional):</label>
+                    <input type="date" id="item-endOperationsDate" name="endOperationsDate" class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label for="item-state" class="form-label">Status:</label>
+                    <select id="item-state" name="state" class="form-select" required>
+                        <option value="" disabled selected>Selecione o status</option>
+                        <option value="1">Ativo</option>
+                        <option value="2">Inativo</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="form-actions">
+                <button type="button" id="cancel-btn" class="button button-secondary">Cancelar</button>
+                <button type="submit" class="button button-success">Salvar</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="items-list" class="card">
+        <h2 class="card-title">Empresas Cadastradas</h2>
+        <div id="loading" class="loading-indicator">
+            <p>Carregando itens...</p>
+        </div>
+        <ul id="items-ul" class="item-list">
+            </ul>
+    </div>
+
+</section>
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="https://unpkg.com/imask"></script>
+    
+    <script type="module" src="{{ url_for('static', filename='../script/empresa.js') }}"></script>
+    
+    <script src="{{ url_for('static', filename='script/empresa_masks.js') }}" defer></script>
+{% endblock %}
