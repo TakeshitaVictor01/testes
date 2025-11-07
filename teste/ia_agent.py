@@ -23,7 +23,7 @@ Seu conhecimento deve ser estritamente baseado nas informações abaixo:
 agent = Agent(
     model="gemini-2.5-flash",
     temperature=0.5,
-    api_key="AIzaSyC_SBlSyqaOisdzeJHr9DMCMVDIKMMsWRo", # ATENÇÃO: Sua chave está visível aqui
+    api_key="AIzaSyD4hQTk3gIPKwINOxwnh1guidxl8gKm3ro", # ATENÇÃO: Sua chave está visível aqui
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
     system_prompt=INSTRUCTIONS
 )
@@ -36,3 +36,4 @@ def chamar_ia(prompt: str) -> str:
         resposta += i
 
     return resposta
+
