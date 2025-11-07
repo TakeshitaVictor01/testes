@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('token');
     const group = localStorage.getItem('userGroup');
     const userId = localStorage.getItem('userId');
-    const enterpriseId = 24; 
+    const enterpriseId = localStorage.getItem('enterpriseId');; 
 
     // Se não tiver token, volta para login
     if (!token || !group) {

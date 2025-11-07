@@ -194,11 +194,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const rememberMe = rememberMeCheckbox.checked;
 
     try {
+<<<<<<< HEAD:teste/static/script/script_login.js
       // ===================================================================
       // MUDANÇA CRÍTICA: 
       // Esta URL agora aponta para sua API de produção real, 
       // removendo o "envolvimento com o flask" para autenticação.
       // ===================================================================
+=======
+      // Chamada de autenticação (usando 127.0.0.1)
+>>>>>>> origin/atualizacao:teste/script/script_login.js
       const response = await fetch('https://megaware.incubadora.shop/incubadora/authenticate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -207,16 +211,32 @@ document.addEventListener('DOMContentLoaded', () => {
       
       const result = await response.json();
 
-      if (result.status === 'success' && result.data?.token) {
+       if (result.status === 'success' && result.data?.token) {
         if (rememberMe) {
           localStorage.setItem('token', result.data.token);
+          localStorage.setItem('enterpriseId', result.data.enterpriseId);
+          localStorage.setItem('userId', result.data.user.Id);
+          localStorage.setItem('userGroup', result.data.user.Group);
         } else {
-          sessionStorage.setItem('token', result.data.token);
+          // sessionStorage.setItem('token', result.data.token);
+          localStorage.setItem('token', result.data.token);
+          localStorage.setItem('enterpriseId', result.data.enterpriseId);
+          localStorage.setItem('userId', result.data.user.Id);
+          localStorage.setItem('userGroup', result.data.user.Group);
         }
+        if (result.data.user.Group === 'admin') {
+          window.location.href = 'dashboard_adm.html';
+        }
+        else {
+          window.location.href = 'dashboard.html';
+        }
+<<<<<<< HEAD:teste/static/script/script_login.js
         
         // Redireciona para a ROTA /dashboard servida pelo Flask
         window.location.href = '/dashboard'; 
         
+=======
+>>>>>>> origin/atualizacao:teste/script/script_login.js
       } else {
         alert(result.message || 'Erro ao autenticar');
         loginButton.disabled = false;
