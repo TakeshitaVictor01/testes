@@ -191,7 +191,7 @@ def create_report_pdf(report_data):
 
     # Salva o PDF no buffer
     buffer = io.BytesIO()
-    pdf.output(buffer, 'F')
+    pdf.output(buffer)
     buffer.seek(0)
     return buffer
 
@@ -223,4 +223,5 @@ def export_pdf():
         )
     except Exception as e:
         print(f"Erro na geração do PDF: {e}")
+
         return jsonify({"error": f"Falha ao gerar o PDF. Erro: {str(e)}"}), 500
