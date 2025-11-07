@@ -21,7 +21,7 @@ Seu conhecimento deve ser estritamente baseado nas informações abaixo:
 # Inicialização do Agente
 # ATENÇÃO: Substitua "chave _gemini" pela sua chave real se for executar.
 agent = Agent(
-    model="gemini-flash-lite-latest",
+    model="gemini-2.5-flash",
     temperature=0.5,
     api_key="AIzaSyC_SBlSyqaOisdzeJHr9DMCMVDIKMMsWRo", # ATENÇÃO: Sua chave está visível aqui
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
@@ -34,4 +34,5 @@ def chamar_ia(prompt: str) -> str:
     # O FALSE é CRUCIAL para que o agente mantenha o contexto da conversa.
     for i in agent.run_stream(prompt, clear_history_after_execution=False):
         resposta += i
+
     return resposta
