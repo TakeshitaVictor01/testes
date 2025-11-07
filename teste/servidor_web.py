@@ -85,7 +85,7 @@ def clear_history():
     try:
         # Recria a instância
         agent = agent(
-            model="gemini-flash-lite-latest",
+            model="gemini-2.5-flash",
             temperature=0.5,
             api_key="AIzaSyC_SBlSyqaOisdzeJHr9DMCMVDIKMMsWRo", # ATENÇÃO: Use sua chave real
             base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
@@ -120,4 +120,5 @@ def authenticate():
 
 if __name__ == '__main__':
     # Execute em uma porta que o Front-End espera (5000)
+
     app.run(port=5000, debug=True)
