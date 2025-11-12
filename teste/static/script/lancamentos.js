@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const userId = localStorage.getItem('userId');
     const enterpriseId = localStorage.getItem('enterpriseId');
     console.log(`Enterprise ID: ${enterpriseId}`);
-    // Se não tiver token, volta para login
     if (!token || !group) {
         alert('Você precisa estar logado para acessar o dashboard.');
         window.location.href = 'login.html';
@@ -24,10 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const formContainer = document.getElementById('form-container');
     const cancelBtn = document.getElementById('cancel-btn');
     const itemForm = document.getElementById('item-form');
-
-    // Menu do Usuário
-    const userMenuButton = document.getElementById('user-menu-button');
-    const userMenu = document.getElementById('user-menu');
 
     // Grid dos Cards
     const gridContainer = document.getElementById('items-grid');
@@ -233,7 +228,6 @@ document.addEventListener('DOMContentLoaded', () => {
         formContainer.classList.remove('hidden');
     })
     cancelBtn.addEventListener('click', () => formContainer.classList.add('hidden'));
-    userMenuButton.addEventListener('click', () => userMenu.classList.toggle('hidden'));
 
     itemForm.addEventListener('submit', criarLancamento);
     // baixaForm.addEventListener('submit', handleBaixarLancamento);

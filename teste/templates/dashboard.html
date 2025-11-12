@@ -6,11 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - Startup Overseer</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="css/style_dashboard.css" />
+  <link rel="stylesheet" href="../static/css/style_login.css" />
 </head>
 
 <body class="bg-gray-50 min-h-screen">
   <!-- Layout Principal -->
+
   <div class="min-h-screen flex">
     <!-- Sidebar -->
     </button id="logout-button" hidden>
@@ -58,8 +59,7 @@
             </svg>
             Dashboard
           </a>
-          <a href="empresa.html"
-            class="flex items-center px-2 py-2 text-base font-medium rounded-md hover:bg-slate-800">
+          <a href="empresas" class="flex items-center px-2 py-2 text-base font-medium rounded-md hover:bg-slate-800">
             <svg class="mr-3 h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round">
@@ -69,7 +69,7 @@
             </svg>
             Empresas
           </a>
-          <a href="lancamentos2.html"
+          <a href="lancamentos2"
             class="flex items-center px-2 py-2 text-base font-medium rounded-md hover:bg-slate-800">
             <svg class="mr-3 h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -80,7 +80,7 @@
             </svg>
             Lançamentos
           </a>
-          <a href="conta.html" class="flex items-center px-2 py-2 text-base font-medium rounded-md hover:bg-slate-800">
+          <a href="contas" class="flex items-center px-2 py-2 text-base font-medium rounded-md hover:bg-slate-800">
             <svg class="mr-3 h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round">
@@ -93,7 +93,7 @@
         </nav>
 
         <div class="p-4 border-t border-slate-800">
-          <a href="configuracoes.html" class="flex items-center text-sm font-medium text-slate-400 hover:text-white">
+          <a href="configuracoes" class="flex items-center text-sm font-medium text-slate-400 hover:text-white">
             <svg class="mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="3"></circle>
@@ -528,9 +528,8 @@
     </div>
   </div>
 
-  <!-- <script src="script/script_dashboard.js" defer></script> -->
-   <script type="module" src="script/script_dashboard.js" defer></script>
-
+  <script src="script/script_dashboard.js" defer></script> 
+  <script type="module" src="../static/script/script_dashboard.js" defer></script>
 </body>
 
 </html>

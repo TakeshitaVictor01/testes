@@ -194,11 +194,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const rememberMe = rememberMeCheckbox.checked;
 
     try {
-      // ===================================================================
-      // MUDANÇA CRÍTICA: 
-      // Esta URL agora aponta para sua API de produção real, 
-      // removendo o "envolvimento com o flask" para autenticação.
-      // ===================================================================
       const response = await fetch('https://megaware.incubadora.shop/incubadora/authenticate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -221,14 +216,11 @@ document.addEventListener('DOMContentLoaded', () => {
           localStorage.setItem('userGroup', result.data.user.Group);
         }
         if (result.data.user.Group === 'admin') {
-          window.location.href = 'dashboard_adm.html';
+           window.location.href = 'dashboard_adm';
         }
         else {
-          window.location.href = 'dashboard.html';
+          window.location.href = 'dashboard';
         }
-        
-        // Redireciona para a ROTA /dashboard servida pelo Flask
-        window.location.href = '/dashboard'; 
         
       } else {
         alert(result.message || 'Erro ao autenticar');

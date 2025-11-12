@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Se não tiver token, volta para login
     if (!token || !group) {
         alert('Você precisa estar logado para acessar o dashboard.');
-        window.location.href = 'login.html';
+        window.location.href = 'login';
         return;
     }
 
@@ -25,27 +25,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const addNewBtn = document.getElementById('add-new-btn');
     const cancelBtn = document.getElementById('cancel-btn');
     const loadingIndicator = document.getElementById('loading');
-    const userMenuButton = document.getElementById('user-menu-button');
     const userMenu = document.getElementById('user-menu');
 
-    const navUsers = document.getElementById('navUsers');
-    if (localStorage.getItem('userGroup') !== 'admin') {
-        navUsers.style.display = 'none';
+     if (group !== 'admin') {
         addNewBtn.style.display = 'none';
     }
 
-
-    // --- LÓGICA DO MENU DE USUÁRIO ---
-    userMenuButton.addEventListener('click', () => {
-        userMenu.classList.toggle('hidden');
-    });
-
-    // Fecha o menu se clicar fora dele
-    window.addEventListener('click', (e) => {
-        if (!userMenuButton.contains(e.target) && !userMenu.contains(e.target)) {
-            userMenu.classList.add('hidden');
-        }
-    });
+    // // Fecha o menu se clicar fora dele
+    // window.addEventListener('click', (e) => {
+    //     if (!userMenuButton.contains(e.target) && !userMenu.contains(e.target)) {
+    //         userMenu.classList.add('hidden');
+    //     }
+    // });
 
     // --- FUNÇÕES DA API (CRUD) ---
     async function fetchItems() {
@@ -229,12 +220,12 @@ document.addEventListener('DOMContentLoaded', () => {
             itemForm.reset();
         }
         formContainer.classList.remove('hidden');
-        addNewBtn.classList.add('hidden');
+        addNewBtn.style.display = 'none';
     }
 
     function hideForm() {
         formContainer.classList.add('hidden');
-        addNewBtn.classList.remove('hidden');
+         addNewBtn.style.display = 'block';
         itemForm.reset();
     }
 
@@ -294,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (e.target.classList.contains('view-btn')) {
             try {
-                window.location.href = `empresa_detalhe.html?id=${id}`;
+                window.location.href = `empresa_detalhe?id=${id}`;
             } catch (error) {
                 alert(error.message);
             }

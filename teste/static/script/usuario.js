@@ -2,6 +2,22 @@ import { ApiService } from './apiService.js';
 
 //python3 -m http.server 5500
 document.addEventListener('DOMContentLoaded', () => {
+
+    const token = localStorage.getItem('token');
+    const group = localStorage.getItem('userGroup');
+
+     if (!token || !group) {
+        alert('Você precisa estar logado para acessar o dashboard.');
+        window.location.href = 'login';
+        return;
+    }
+
+     if (group !== 'admin') {
+        alert('Acesso não autorizado!.');
+        window.location.href = 'dashboard';
+        return;
+    }
+
     // --- CONFIGURAÇÃO ---
     const apiService = new ApiService('https://megaware.incubadora.shop/incubadora/user');
     // --- ELEMENTOS DO DOM ---
@@ -13,26 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const addNewBtn = document.getElementById('add-new-btn');
     const cancelBtn = document.getElementById('cancel-btn');
     const loadingIndicator = document.getElementById('loading');
-    const userMenuButton = document.getElementById('user-menu-button');
-    const userMenu = document.getElementById('user-menu');
-    
-    const navUsers = document.getElementById('navUsers');
-
-    if(localStorage.getItem('userGroup') !== 'admin'){
-        navUsers.style.display = 'none';
-    }
-
-    // --- LÓGICA DO MENU DE USUÁRIO ---
-    userMenuButton.addEventListener('click', () => {
-        userMenu.classList.toggle('hidden');
-    });
-
-    // Fecha o menu se clicar fora dele
-    window.addEventListener('click', (e) => {
-        if (!userMenuButton.contains(e.target) && !userMenu.contains(e.target)) {
-            userMenu.classList.add('hidden');
-        }
-    });
 
     // --- FUNÇÕES DA API (CRUD) ---
     async function fetchItems() {
@@ -187,12 +183,12 @@ document.addEventListener('DOMContentLoaded', () => {
             itemForm.reset();
         }
         formContainer.classList.remove('hidden');
-        addNewBtn.classList.add('hidden');
+        addNewBtn.style.display = 'none';
     }
 
     function hideForm() {
         formContainer.classList.add('hidden');
-        addNewBtn.classList.remove('hidden');
+        addNewBtn.style.display = 'block';
         itemForm.reset();
     }
 

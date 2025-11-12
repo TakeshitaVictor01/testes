@@ -1,4 +1,4 @@
-import { ApiService } from '../../script/apiService.js';
+import { ApiService } from '/static/script/apiService.js';
 
 // Variáveis para elementos DOM
 // const userDropdownToggle = document.getElementById('user-dropdown-toggle');
@@ -76,11 +76,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Se não tiver token, volta para login
   if (!token || !group) {
     alert('Você precisa estar logado para acessar o dashboard.');
-    window.location.href = 'login.html';
+    window.location.href = 'login';
     return;
   }
   if (group !== 'user') {
-    window.location.href = 'dashboard_adm.html';
+    window.location.href = 'dashboard_adm';
     return;
   }
 

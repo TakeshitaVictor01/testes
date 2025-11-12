@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Overseer{% endblock %}</title>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-          
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}" /> 
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}" />
+
     {% block page_css %}{% endblock %}
 </head>
+
 <body>
 
     <aside class="sidebar" id="sidebar-menu">
         <div>
-            
+
             <button class="sidebar-close-button" id="sidebar-close-btn" aria-label="Fechar menu">
                 &times; </button>
 
@@ -25,12 +30,18 @@
             </div>
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="/dashboard" class="{{ 'active' if active_page == 'dashboard' else '' }}"><i class="fa-solid fa-table-columns"></i> <span class="nav-text">Dashboard</span></a></li>
-                    <li><a href="/empresas" class="{{ 'active' if active_page == 'empresas' else '' }}"><i class="fa-solid fa-building"></i> <span class="nav-text">Empresas</span></a></li>
-                    <li><a href="/usuarios" class="{{ 'active' if active_page == 'usuarios' else '' }}"><i class="fa-solid fa-users"></i> <span class="nav-text">Usuários</span></a></li>
-                    <li><a href="/contas" class="{{ 'active' if active_page == 'contas' else '' }}"><i class="fa-solid fa-wallet"></i> <span class="nav-text">Contas a Pagar</span></a></li>
-                    <li><a href="/lancamentos" class="{{ 'active' if active_page == 'lancamentos' else '' }}"><i class="fa-solid fa-dollar-sign"></i> <span class="nav-text">Lançamentos</span></a></li>
-                    <li><a href="/relatorios" class="{{ 'active' if active_page == 'relatorios' else '' }}"><i class="fa-solid fa-chart-pie"></i> <span class="nav-text">Relatórios</span></a></li>
+                    <li><a href="/dashboard" class="{{ 'active' if active_page == 'dashboard' else '' }}"><i
+                                class="fa-solid fa-table-columns"></i> <span class="nav-text">Dashboard</span></a></li>
+                    <li><a href="/empresas" class="{{ 'active' if active_page == 'empresas' else '' }}"><i
+                                class="fa-solid fa-building"></i> <span class="nav-text">Empresas</span></a></li>
+                    <li><a id="navUser" href="/usuarios" class="{{ 'active' if active_page == 'usuarios' else '' }}"><i
+                                class="fa-solid fa-users"></i> <span class="nav-text">Usuários</span></a></li>
+                    <li><a href="/contas" class="{{ 'active' if active_page == 'contas' else '' }}"><i
+                                class="fa-solid fa-wallet"></i> <span class="nav-text">Contas a Pagar</span></a></li>
+                    <li><a href="/lancamentos" class="{{ 'active' if active_page == 'lancamentos' else '' }}"><i
+                                class="fa-solid fa-dollar-sign"></i> <span class="nav-text">Lançamentos</span></a></li>
+                    <li><a href="/relatorios" class="{{ 'active' if active_page == 'relatorios' else '' }}"><i
+                                class="fa-solid fa-chart-pie"></i> <span class="nav-text">Relatórios</span></a></li>
                 </ul>
             </nav>
             <div class="sidebar-footer">
@@ -41,13 +52,13 @@
 
     <main class="main-content">
         <header class="main-header">
-            
+
             <button class="hamburger-button" id="hamburger-btn" aria-label="Abrir menu">
                 <i class="fa-solid fa-bars"></i>
             </button>
 
             <h2>{% block page_title %}Dashboard{% endblock %}</h2>
-            
+
             <div class="user-profile">
                 <i class="fa-solid fa-user-circle"></i>
                 <div>
@@ -64,19 +75,25 @@
 
     {% block scripts %}
     {% endblock %}
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const sidebar = document.getElementById('sidebar-menu');
             const openBtn = document.getElementById('hamburger-btn');
             const closeBtn = document.getElementById('sidebar-close-btn');
+            const navUser = document.getElementById('navUser');
+            const group = localStorage.getItem('userGroup');
+
+            if (group !== 'admin') {
+                navUser.style.display = 'none';
+            }
 
             if (sidebar && openBtn && closeBtn) {
                 // Abre o menu
                 openBtn.addEventListener('click', () => {
                     sidebar.classList.add('is-open');
                 });
-                
+
                 // Fecha o menu
                 closeBtn.addEventListener('click', () => {
                     sidebar.classList.remove('is-open');
@@ -85,4 +102,5 @@
         });
     </script>
 </body>
+
 </html>
