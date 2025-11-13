@@ -1,9 +1,8 @@
 // Variáveis para elementos DOM
 const userDropdownToggle = document.getElementById('user-dropdown-toggle');
-const userDropdownMenu = document.getElementById('user-dropdown-menu');
-const sidebarToggle = document.getElementById('sidebar-toggle');
-const closeSidebarButton = document.getElementById('close-sidebar');
-const sidebar = document.getElementById('sidebar');
+const userDropdownMenu = document.getElementById('user-dropdown-menu');const sidebarToggle = document.getElementById('sidebar-toggle');
+//const closeSidebarButton = document.getElementById('close-sidebar');
+//const sidebar = document.getElementById('sidebar');
 const savedPhoto = localStorage.getItem('userProfilePhoto');
 const logoutBtn = document.getElementById('logout-button');
 
@@ -76,13 +75,13 @@ document.addEventListener('click', (e) => {
 });
 
 // Mostrar/esconder sidebar no mobile
-sidebarToggle.addEventListener('click', () => {
-  sidebar.classList.remove('-translate-x-full');
-});
+//sidebarToggle.addEventListener('click', () => {
+  //sidebar.classList.remove('-translate-x-full');
+//});
 
-closeSidebarButton.addEventListener('click', () => {
-  sidebar.classList.add('-translate-x-full');
-});
+//closeSidebarButton.addEventListener('click', () => {
+  //sidebar.classList.add('-translate-x-full');
+//});
 
 document.getElementById('upload-photo').addEventListener('change', (e) => {
   const file = e.target.files[0];

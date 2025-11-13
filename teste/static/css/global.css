@@ -907,6 +907,38 @@ body {
     -webkit-appearance: none;
 }
 
+#add-new-btn{
+    background-color: var(--brand-teal);
+}
+
+#add-new-btn:hover{
+    background-color: var(--brand-teal-dark);
+}
+
+#global-transfer-btn{
+    background-color: #288ADE;
+}
+
+#global-transfer-btn:hover{
+    background-color: #1C5F9C;
+}
+
+#submit-transfer-btn{
+    background-color: var(--brand-teal);
+}
+
+#submit-transfer-btn:hover{
+    background-color: var(--brand-teal-dark);
+}
+
+#submit{
+    background-color: var(--brand-teal);
+}
+
+#submit:hover{
+    background-color: var(--brand-teal-dark);
+}
+
 
 /* ================================================================== */
 /* --- RESPONSIVIDADE GERAL --- */
@@ -948,7 +980,10 @@ body {
     }
 }
 
+/* ================================================================== */
 /* --- CELULAR (768px e abaixo) --- */
+/* ================================================================== */
+
 @media (max-width: 768px) {
     body {
         grid-template-columns: 1fr;
@@ -1006,25 +1041,38 @@ body {
         height: auto;
         padding: 1rem;
     }
-
+    
+    /* --- CORREÇÃO DO HEADER (PROBLEMA 2) --- */
     .main-header {
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 1rem;
+        flex-direction: column; /* Empilha as linhas */
+        align-items: flex-start; /* Alinha tudo à esquerda */
+        gap: 0.5rem;
+        flex-wrap: nowrap; /* Remove a quebra de linha antiga */
     }
-    .main-header h2 {
-        font-size: 1.5rem;
+    .header-top-row { /* O novo wrapper */
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
         width: 100%;
-        order: 2;
+    }
+    /* Seletores genéricos para Título (h1 ou h2) */
+    .header-top-row h1, .header-top-row h2 {
+        font-size: 1.25rem; /* Título menor */
+        width: auto;
+        order: 0;
+        margin-right: auto; /* Empurra o resto para o lado */
     }
     .main-header .hamburger-button {
-        order: 1;
+        order: 0;
     }
     .main-header .user-profile {
-        order: 3;
-        margin-left: auto;
+        order: 0; /* Reseta a ordem */
+        margin-left: 0; /* Reseta a margem */
+        width: 100%;
+        padding-left: 0.25rem;
     }
+    /* --- FIM DA CORREÇÃO DO HEADER --- */
+
 
     /* Empilhando Grids de Formulário */
     .form-grid-2-col {
@@ -1034,8 +1082,7 @@ body {
         grid-column: span 1;
     }
     
-    .card,
-    .ai-card {
+    .card {
         padding: 1rem;
     }
     

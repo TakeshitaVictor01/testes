@@ -1,2 +1,3 @@
-pip install flask flask_cors openai
+pip install flask flask_cors openai flask-limiter
+pip install requests beautifulsoup4
 pip install fpdf2 --default-timeout=100

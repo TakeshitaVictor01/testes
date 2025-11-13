@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{# Define o título da aba do navegador #}
+{% block title %}Gerenciador de Contas{% endblock %}
+
+{# Define o título que aparece no header da página #}
+{% block page_title %}Dashboard de Controle{% endblock %}
+
+
+{# CSS específico para esta página (ex: seu style block) #}
+{% block page_css %}
+    <style>
+        /* Efeito de transição suave para elementos */
+        .transition-all {
+            transition: all 0.3s ease-in-out;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+    </style>
+{% endblock %}
+
+
+{# Todo o conteúdo principal da sua página vai aqui dentro #}
+{% block content %}
+<main class="flex-1 overflow-x-hidden overflow-y-auto">
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-4xl">
+        
+        <div class="flex justify-end mb-4 space-x-4">
+            <button id="global-transfer-btn"
+                class="bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75 transition-all">
+                Realizar Transferência
+            </button>
+            <button id="add-new-btn"
+                class="text-white font-semibold py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition-all">
+                Adicionar Novo Item
+            </button>
+        </div>
+
+        <div id="form-container" class="bg-white p-6 rounded-lg shadow-lg mb-8 hidden">
+            <h2 id="form-title" class="text-2xl font-bold mb-6">Adicionar Nova Conta</h2>
+
+            <form id="item-form">
+                <input type="hidden" id="id" name="id">
+                <div class="space-y-4 mb-6">
+                    <div>
+                        <label for="description"
+                            class="block text-gray-700 font-medium mb-1">Descrição:</label>
+                        <textarea id="description" name="description" rows="3"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required placeholder="Ex: Conta Salário, Poupança..."></textarea>
+                    </div>
+                    <div>
+                        <label for="balance" class="block text-gray-700 font-medium mb-1">Saldo
+                            Inicial:</label>
+                        <input type="number" id="balance" name="balance"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required placeholder="0.00" step="0.01" value="0">
+                    </div>
+                </div>
+                <div class="flex items-center justify-end space-x-4">
+                    <button type="button" id="cancel-btn"
+                        class="bg-red-400 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-700 transition-all">Cancelar</button>
+                    <button type="submit"
+                        id="submit"
+                        class="text-white font-semibold py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75 transition-all">Salvar</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="items-list" class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold mb-4 border-b pb-2">Itens Cadastrados</h2>
+            <div id="loading" class="text-center p-4">
+                <p class="text-gray-500">Carregando itens...</p>
+            </div>
+            <ul id="items-ul" class="space-y-4">
+                </ul>
+        </div>
+    </div>
+</main>
+
+<div id="transfer-modal"
+    class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center hidden z-50">
+    <div class="relative mx-auto p-6 border w-full max-w-md shadow-lg rounded-lg bg-white">
+        <h3 class="text-xl font-bold mb-4" id="transfer-title">Realizar Transferência</h3>
+        <form id="transfer-form">
+            <div class="mb-4">
+                <label for="transfer-from-account" class="block text-gray-700 font-medium mb-1">De:</label>
+                <select id="transfer-from-account"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                    required>
+                    <option value="" disabled selected>Selecione uma conta de origem</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="transfer-to-account" class="block text-gray-700 font-medium mb-1">Para:</label>
+                <select id="transfer-to-account"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                    required>
+                    <option value="" disabled selected>Selecione uma conta de destino</option>
+                </select>
+            </div>
+            <div class="mb-6">
+                <label for="transfer-amount" class="block text-gray-700 font-medium mb-1">Valor:</label>
+                <input type="number" id="transfer-amount"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="0.00" step="0.01" min="0.01" required>
+            </div>
+            <div class="flex items-center justify-end space-x-4">
+                <button type="button" id="cancel-transfer-btn"
+                    class="bg-red-400 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-700 transition-all">Cancelar</button>
+                <button type="submit"
+                    id="submit-transfer-btn"
+                    class="text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all">Transferir</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+
+    <script type="module" src="{{ url_for('static', filename='script/contas2.js') }}"></script>
+{% endblock %}
+
+            

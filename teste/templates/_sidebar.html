@@ -1,0 +1,28 @@
+<aside class="sidebar" id="sidebar-menu">
+        <div>
+
+            <button class="sidebar-close-button" id="sidebar-close-btn" aria-label="Fechar menu">
+                &times; </button>
+
+            <div class="sidebar-header">
+                <h1><i class="fa-solid fa-eye"></i> <span class="nav-text">Overseer</span></h1>
+                <p><span class="nav-text">Gestão de Incubadas</span></p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="/dashboard" class="{{ 'active' if active_page == 'dashboard' else '' }}" active ><i
+                                class="fa-solid fa-table-columns"></i> <span class="nav-text">Dashboard</span></a></li>
+                    <li><a href="/empresas" class="{{ 'active' if active_page == 'empresas' else '' }}"><i
+                                class="fa-solid fa-building"></i> <span class="nav-text">Empresas</span></a></li>
+                    <li><a id="navUser" href="/usuarios" class="{{ 'active' if active_page == 'usuarios' else '' }}"><i
+                                class="fa-solid fa-users"></i> <span class="nav-text">Usuários</span></a></li>
+                    <li><a href="/contas" class="{{ 'active' if active_page == 'contas2' else '' }}"><i
+                                class="fa-solid fa-wallet"></i> <span class="nav-text">Contas</span></a></li>
+                    <li><a href="/lancamentos" class="{{ 'active' if active_page == 'lancamentos' else '' }}"><i
+                                class="fa-solid fa-dollar-sign"></i> <span class="nav-text">Lançamentos</span></a></li>
+                    <li><a href="/relatorios" class="{{ 'active' if active_page == 'relatorios' else '' }}"><i
+                                class="fa-solid fa-chart-pie"></i> <span class="nav-text">Relatórios</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </aside>

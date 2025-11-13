@@ -1,116 +1,34 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - Startup Overseer</title>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="../static/css/style_login.css" />
-</head>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}" />
+  
+  <style>
+      /* Ajuste para o CSS global não quebrar o padding */
+      .main-content { padding: 0; }
+  </style>
+  </head>
 
-<body class="bg-gray-50 min-h-screen">
+<body>
   <!-- Layout Principal -->
 
-  <div class="min-h-screen flex">
     <!-- Sidebar -->
-    </button id="logout-button" hidden>
-    <div id="sidebar"
-      class="fixed inset-y-0 left-0 w-64 bg-slate-900 text-white z-30 transform transition-all duration-300 lg:translate-x-0 -translate-x-full">
-      <div class="flex flex-col h-full">
-        <div class="flex items-center justify-between px-4 py-5 border-b border-slate-800">
-          <div class="flex items-center">
-            <div class="h-8 w-8 rounded-full bg-brand-teal flex items-center justify-center mr-2">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 8.67h4"></path>
-                <path d="M18 14v4.33a1.33 1.33 0 0 1-1.33 1.33H7.33A1.33 1.33 0 0 1 6 18.33V14"></path>
-                <path d="M12 14v8"></path>
-                <path d="M12 8.67V6"></path>
-                <path d="M8.67 22H15.33"></path>
-                <path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v6"></path>
-                <path d="M12 14a6 6 0 0 0 6-6"></path>
-                <path d="M12 14a6 6 0 0 1-6-6"></path>
-              </svg>
-            </div>
-            <div>
-              <h1 class="text-xl font-bold">Overseer</h1>
-              <p class="text-xs text-slate-400">Gestão de Incubadas</p>
-            </div>
-          </div>
-          <button id="close-sidebar" class="lg:hidden text-slate-400 hover:text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-        </div>
-
-        <nav class="flex-1 px-2 py-4 space-y-1 overflow-y-auto">
-          <a href="/.html" class="flex items-center px-2 py-2 text-base font-medium rounded-md bg-slate-800 text-white">
-            <svg class="mr-3 h-5 w-5 text-brand-teal" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round">
-              <rect x="3" y="3" width="7" height="9"></rect>
-              <rect x="14" y="3" width="7" height="5"></rect>
-              <rect x="14" y="12" width="7" height="9"></rect>
-              <rect x="3" y="16" width="7" height="5"></rect>
-            </svg>
-            Dashboard
-          </a>
-          <a href="empresas" class="flex items-center px-2 py-2 text-base font-medium rounded-md hover:bg-slate-800">
-            <svg class="mr-3 h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round">
-              <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
-              <path d="M9 18V6"></path>
-              <path d="M15 18V6"></path>
-            </svg>
-            Empresas
-          </a>
-          <a href="lancamentos2"
-            class="flex items-center px-2 py-2 text-base font-medium rounded-md hover:bg-slate-800">
-            <svg class="mr-3 h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round">
-              <line x1="18" y1="20" x2="18" y2="10"></line>
-              <line x1="12" y1="20" x2="12" y2="4"></line>
-              <line x1="6" y1="20" x2="6" y2="14"></line>
-            </svg>
-            Lançamentos
-          </a>
-          <a href="contas" class="flex items-center px-2 py-2 text-base font-medium rounded-md hover:bg-slate-800">
-            <svg class="mr-3 h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round">
-              <line x1="18" y1="20" x2="18" y2="10"></line>
-              <line x1="12" y1="20" x2="12" y2="4"></line>
-              <line x1="6" y1="20" x2="6" y2="14"></line>
-            </svg>
-            Contas
-          </a>
-        </nav>
-
-        <div class="p-4 border-t border-slate-800">
-          <a href="configuracoes" class="flex items-center text-sm font-medium text-slate-400 hover:text-white">
-            <svg class="mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="3"></circle>
-              <path
-                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
-              </path>
-            </svg>
-            Configurações
-          </a>
-        </div>
-      </div>
-    </div>
+    
+    {% include '_sidebar.html' %}
 
     <!-- Conteúdo Principal -->
-    <div class="flex-1 lg:ml-64">
+    <main class="main-content">
       <!-- Header -->
-      <header class="bg-white sticky top-0 z-30 w-full border-b border-slate-200 px-4 py-3 shadow-sm">
+      <header id="cabecalho" class="bg-white sticky top-0 z-30 w-full border-b border-slate-200 px-4 py-3 shadow-sm">
         <div class="container mx-auto flex justify-between items-center">
 
           <div class="flex items-center">
@@ -207,7 +125,7 @@
       </header>
 
       <!-- Conteúdo da Página -->
-      <main class="p-4 md:p-6 max-w-7xl mx-auto">
+      <!-- <main class="p-4 md:p-6 max-w-7xl mx-auto"> -->
         <!-- Cards de Resumo -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <!-- Card 1 -->
@@ -524,12 +442,10 @@
             </div>
           </div>
         </div>
-      </main>
-    </div>
-  </div>
+      <!-- </main> -->
+    </main>
 
-  <script src="script/script_dashboard.js" defer></script> 
-  <script type="module" src="../static/script/script_dashboard.js" defer></script>
+ <script type="module" src="{{ url_for('static', filename='script/script_dashboard.js') }}"></script>
 </body>
 
 </html>

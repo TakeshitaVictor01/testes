@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const globalTransferBtn = document.getElementById('global-transfer-btn'); // + NOVO BOTÃO
     const cancelBtn = document.getElementById('cancel-btn');
     const loadingIndicator = document.getElementById('loading');
-    const userMenuButton = document.getElementById('user-menu-button');
-    const userMenu = document.getElementById('user-menu');
+    //const userMenuButton = document.getElementById('user-menu-button');
+    //const userMenu = document.getElementById('user-menu');
 
     // --- ELEMENTOS DO MODAL DE TRANSFERÊNCIA ---
     const transferModal = document.getElementById('transfer-modal');
@@ -44,16 +44,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- LÓGICA DO MENU DE USUÁRIO ---
-    userMenuButton.addEventListener('click', () => {
-        userMenu.classList.toggle('hidden');
-    });
+    //userMenuButton.addEventListener('click', () => {
+      //  userMenu.classList.toggle('hidden');
+    //});
 
     // Fecha o menu se clicar fora dele
-    window.addEventListener('click', (e) => {
-        if (!userMenuButton.contains(e.target) && !userMenu.contains(e.target)) {
-            userMenu.classList.add('hidden');
-        }
-    });
+//    window.addEventListener('click', (e) => {
+  //      if (!userMenuButton.contains(e.target) && !userMenu.contains(e.target)) {
+    //        userMenu.classList.add('hidden');
+      //  }
+    //});
 
     // Função de mock para simular a API
     function getMockData() {

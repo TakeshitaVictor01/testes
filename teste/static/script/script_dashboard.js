@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     localStorage.removeItem('enterpriseId');
     localStorage.removeItem('userId');
     localStorage.removeItem('userGroup');
-    window.location.href = 'login.html';
+    window.location.href = 'login';
   }
 
 
