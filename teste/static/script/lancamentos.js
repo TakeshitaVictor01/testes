@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formContainer = document.getElementById('form-container');
     const cancelBtn = document.getElementById('cancel-btn');
     const itemForm = document.getElementById('item-form');
+    const categorySelect = document.getElementById('category-select');
 
     // Grid dos Cards
     const gridContainer = document.getElementById('items-grid');
@@ -37,16 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const legendaReceitasEl = document.getElementById('legenda-receitas');
     const legendaDespesasEl = document.getElementById('legenda-despesas');
 
+
     // --- Container de Baixa ---
     const baixaModal = document.getElementById('baixa-modal');
     const baixaContainer = document.getElementById('baixa-container');
     const baixaForm = document.getElementById('baixa-form');
     const settlementIdInput = document.getElementById('settlementId');
     const cancelBaixaBtn = document.getElementById('cancel-baixa-btn');
-
-    // --- Novos seletores para a lista de contas ---
-    const hiddenAccountIdInput = document.getElementById('accountId');
-    const accountsList = document.getElementById('accounts-list');
 
     function formatCurrency(value) {
         const numberValue = parseFloat(value);
@@ -205,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const endpoint = "createEntry";
             const itemData = {
                 amount: data.amount,
-                category: data.categoryId,
+                categoryId: categorySelect.value,
                 description: data.description,
                 dueDate: data.dueDate,
                 enterpriseId: enterpriseId, // Valor fixo para testes
@@ -221,12 +219,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-
+    let allCategories = [];
     // Configura os event listeners
     addNewBtn.addEventListener('click', () => {
         closeBaixaContainer();
         formContainer.classList.remove('hidden');
+        loadCategories();
     })
+
+    async function loadCategories() {
+        try {
+            // Ajuste a rota para onde busca as categorias
+            const categoryService = new ApiService('https://megaware.incubadora.shop/incubadora/category');
+            const response = await categoryService.generic("getAllByEnterprise", { enterpriseId: enterpriseId });
+            
+            allCategories = response.data;
+            renderSingleSelectCategories();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    function renderSingleSelectCategories() {
+        categorySelect.innerHTML = '<option value="" disabled selected>Selecione a Categoria...</option>';
+        allCategories.forEach(c => {
+            const option = document.createElement('option');
+            option.value = c.Id;
+            option.textContent = `${c.Description}`;
+            categorySelect.appendChild(option);
+        });
+    }
+
+
     cancelBtn.addEventListener('click', () => formContainer.classList.add('hidden'));
 
     itemForm.addEventListener('submit', criarLancamento);
@@ -245,80 +269,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    //Baixas
-
-    async function populateAccountsList() {
-        try {
-            accountsList.innerHTML = '<li class="text-center text-gray-500 p-4">Carregando contas...</li>';
-
-            const endpoint = "getEnterpriseAccounts";
-            const itemData = { id: enterpriseId };
-            const response = await accountService.generic(endpoint, itemData);
-            const accounts = response.data;
-            accountsList.innerHTML = ''; // Limpa a lista
-
-            accounts.forEach(account => {
-                const li = document.createElement('li');
-                // Adiciona o ID da conta ao dataset do elemento para fácil acesso
-                li.dataset.id = account.Id;
-                li.className = 'border rounded-lg p-3 transition-all duration-200 cursor-pointer hover:bg-gray-50';
-
-                li.innerHTML = `
-                <div class="flex items-center justify-between gap-4">
-                    <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                        </svg>
-                        <span class="font-semibold text-gray-800">${account.Description}</span>
-                    </div>
-                    <span class="font-mono text-sm text-green-700 font-medium">${formatCurrency(account.Balance)}</span>
-                </div>
-            `;
-                accountsList.appendChild(li);
-            });
-
-        } catch (error) {
-            console.error('Erro ao popular contas:', error);
-            accountsList.innerHTML = '<li class="text-center text-red-500 p-4">Erro ao carregar contas.</li>';
-        }
-    }
-
-    accountsList.addEventListener('click', (event) => {
-        // Encontra o elemento <li> mais próximo que foi clicado
-        const selectedLi = event.target.closest('li');
-
-        // Se não clicou em um <li>, não faz nada
-        if (!selectedLi || !selectedLi.dataset.id) return;
-
-        // Pega o ID do dataset do elemento
-        const selectedAccountId = selectedLi.dataset.id;
-
-        // Atualiza o valor do input oculto que será enviado com o formulário
-        hiddenAccountIdInput.value = selectedAccountId;
-
-        // Lógica para o efeito visual de seleção
-        // 1. Remove a classe de seleção de todos os irmãos
-        const allItems = accountsList.querySelectorAll('li');
-        allItems.forEach(item => item.classList.remove('selected-account'));
-
-        // 2. Adiciona a classe de seleção apenas ao item clicado
-        selectedLi.classList.add('selected-account');
-
-        console.log(`Conta selecionada: ID ${hiddenAccountIdInput.value}`);
-    });
-
-
     function openBaixaContainer(entryId) {
         formContainer.classList.add('hidden');
         baixaForm.reset();
         settlementIdInput.value = entryId;
         baixaContainer.classList.remove('hidden');
-        populateAccountsList(); // Chama a nova função para popular a lista
+        document.getElementById('paymentDate').value = getDataDeHoje();
+    }
+    
+    function getDataDeHoje() {
+        const hoje = new Date();
+        const ano = hoje.getFullYear();
+        // Os meses são baseados em zero, por isso somamos 1 e usamos padStart para ter sempre 2 dígitos
+        const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+        const dia = String(hoje.getDate()).padStart(2, '0');
+        return `${ano}-${mes}-${dia}`;
     }
 
     function closeBaixaContainer() {
         baixaContainer.classList.add('hidden');
-        hiddenAccountIdInput.value = ''; // Limpa o ID da conta selecionada
         baixaForm.reset();
     }
 
@@ -327,11 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
     baixaForm.addEventListener('submit', (event) => {
         try {
             event.preventDefault();
-            if (!hiddenAccountIdInput.value) {
-                alert('Por favor, selecione uma conta.');
-                return;
-            }
-            handleBaixarLancamento(event, hiddenAccountIdInput.value);
+            handleBaixarLancamento(event);
         }
         catch (error) {
             alert(error.message);
@@ -347,16 +312,14 @@ document.addEventListener('DOMContentLoaded', () => {
     //   "settlementEmployeeId": 0
     // }
 
-    async function handleBaixarLancamento(event, accountId) {
+    async function handleBaixarLancamento(event) {
         try {
             event.preventDefault();
             const formData = new FormData(event.target);
             const data = Object.fromEntries(formData.entries());
             const itemData = {
-                accountId: accountId,
                 id: settlementIdInput.value,
                 paymentDate: data.paymentDate,
-                paymentMethod: data.paymentMethod,
                 settlementDescription: data.settlementDescription,
                 settlementEmployeeId: 1
             };

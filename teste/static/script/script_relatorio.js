@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const IS_ADMIN = USER_DATA.level === 'Administrador';
 
     // API ENDPOINT
-    const EXPORT_PDF_URL = 'http://127.0.0.1:5000/api/relatorio/exportar-pdf'; 
+    const EXPORT_PDF_URL = 'http://127.0.0.1:5400/api/relatorio/exportar-pdf'; 
 
     // --- ELEMENTOS DE ESTRUTURA E FILTRO ---
     const userDisplayName = document.getElementById('user-display-name');
@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch('http://127.0.0.1:5000/api/chatbot', {
+            const response = await fetch('http://127.0.0.1:5400/api/chatbot', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

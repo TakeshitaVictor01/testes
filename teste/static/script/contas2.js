@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- CONFIGURAÇÃO ---
-    const apiService = new ApiService('https://megaware.incubadora.shop/incubadora/account');
+    const apiService = new ApiService('https://megaware.incubadora.shop/incubadora/category');
     let currentItems = []; // Armazena os itens buscados para usar no modal
 
     // --- ELEMENTOS DO DOM ---
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         itemsList.innerHTML = '';
         try {
             // --- SUBSTITUIÇÃO DA API ---
-             const endpoint = "getEnterpriseAccounts";
+             const endpoint = "getAllByEnterprise";
              const itemData = { id: enterpriseId };
              const response = await apiService.generic(endpoint, itemData); // Linha original comentada
 
@@ -197,39 +197,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 formattedCreationDate = `${day}/${month}/${year}`;
             }
 
-            // --- Lógica Auxiliar ---
-            const isActive = item.State === '1';
-            const statusText = isActive ? 'Ativo' : 'Inativo';
-            const statusClass = isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
-
-            let formattedEndDate = 'Não definida';
-            if (item.ContractEndDate) {
-                const [year, month, day] = item.ContractEndDate.split('T')[0].split('-');
-                formattedEndDate = `${day}/${month}/${year}`;
-            }
-            // --- Fim da Lógica Auxiliar ---
 
             li.innerHTML = `
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 
                 <div class="flex-grow">
                     <h3 class="font-bold text-lg text-gray-900 truncate">${item.Description}</h3>
-                    <p class="text-sm text-gray-500">Criada em: ${formattedCreationDate}</p>
-                </div>
-
-                <div class="flex items-center gap-3">
-                    <span class="font-semibold text-gray-800 balance-value" data-balance="${formattedBalance}">
-                        R$ ****
-                    </span>
-                    <button data-id="${item.Id}" class="toggle-balance-btn p-1 text-gray-500 hover:text-gray-800 transition-colors">
-                        <svg class="eye-open h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        <svg class="eye-closed h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                           <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.243 4.243L6.228 6.228" />
-                        </svg>
-                    </button>
                 </div>
 
                 <div class="flex-shrink-0 flex items-center space-x-3 w-full sm:w-auto justify-end">

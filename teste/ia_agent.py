@@ -1,5 +1,7 @@
 from agent import Agent
- 
+import os
+from dotenv import load_dotenv
+load_dotenv()
 # --- Configuração do Agente Gemini: O NOVO KNOWLEDGE BASE ---
 INSTRUCTIONS = """
 Você é a Acrova AI, a Consultora de Inovação oficial da Incubadora de Empresas de Garça (Hub Garça).
@@ -44,7 +46,7 @@ Seu conhecimento deve ser estritamente baseado nas informações abaixo:
 agent = Agent(
     model="gemini-2.5-flash",
     temperature=0.5,
-    api_key="AIzaSyAXM69l4DKkCq9E1_4olPulootWTdtRjVQ", # Substitua pela sua chave real
+    api_key=os.environ.get("CHAVE_API"),
     # CORREÇÃO: A URL base correta
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
     system_prompt=INSTRUCTIONS

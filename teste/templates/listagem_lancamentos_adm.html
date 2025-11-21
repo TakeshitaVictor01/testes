@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}Histórico de Lançamentos - Overseer{% endblock %}
+
+{% block page_title %}
+Histórico de Lançamentos
+{% endblock %}
+
+{% block content %}
+<section class="page-grid-single-column">
+
+    <div class="page-actions">
+        <button id="add-new-btn" class="button button-primary">
+            <i class="fa-solid fa-plus"></i> Novo Lançamento
+        </button>
+    </div>
+
+    <div class="card">
+        <div class="card-header flex justify-between items-center mb-4">
+            <h3 class="card-title-small"><i class="fa-solid fa-filter"></i> Filtros de Pesquisa</h3>
+        </div>
+
+        <form id="filter-form">
+            <div class="form-grid-4-col"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; align-items: end;">
+
+                <div class="form-group">
+                    <label for="filter-company" class="form-label">Empresa:</label>
+                    <select id="filter-company" class="form-select">
+                        <option value="">Todas as Empresas</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="filter-status" class="form-label">Status:</label>
+                    <select id="filter-status" class="form-select">
+                        <option value="all">Todos</option>
+                        <option value="Pendente" selected >Pendentes</option>
+                        <option value="Baixado">Pagos</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="filter-start-date" class="form-label">Data Inicial:</label>
+                    <input type="date" id="filter-start-date" class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label for="filter-end-date" class="form-label">Data Final:</label>
+                    <input type="date" id="filter-end-date" class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="button button-primary w-full" style="width: 100%;">
+                        <i class="fa-solid fa-search"></i> Buscar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="transactions-grid"
+        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+
+    </div>
+
+    <div id="loading-indicator" class="hidden text-center py-8">
+        <i class="fa-solid fa-spinner fa-spin fa-2x text-blue-600"></i>
+        <p class="text-gray-500 mt-2">Carregando lançamentos...</p>
+    </div>
+
+    <div id="empty-state" class="hidden card text-center py-8">
+        <div class="text-gray-400 mb-3">
+            <i class="fa-solid fa-file-invoice-dollar fa-3x"></i>
+        </div>
+        <h3 class="text-lg font-medium text-gray-900">Nenhum lançamento encontrado</h3>
+        <p class="text-gray-500">Tente ajustar os filtros de data ou empresa.</p>
+    </div>
+
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="{{ url_for('static', filename='script/listagem_lancamentos_adm.js') }}" defer></script>
+{% endblock %}

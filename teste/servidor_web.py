@@ -6,6 +6,9 @@ from ia_agent import chamar_ia, agent, INSTRUCTIONS, Agent
 from flask_limiter import Limiter              # + IMPORTAR O LIMITER
 from flask_limiter.util import get_remote_address
 import json
+import os
+from dotenv import load_dotenv
+load_dotenv()
  
 # --- Configuração do Flask e Rotas ---
 app = Flask(__name__)
@@ -104,12 +107,27 @@ def pagina_empresas():
 def pagina_contas():
     """Renderiza a página de gerenciamento de contas a pagar."""
     return render_template('contas2.html', active_page='contas2')
+
+@app.route('/categorias')
+def pagina_categoria():
+    """Renderiza a página de gerenciamento de contas a pagar."""
+    return render_template('categoria.html', active_page='categorias')
  
 @app.route('/lancamentos')
 def pagina_lancamentos():
     """Renderiza a página de lançamentos financeiros."""
     return render_template('lancamentos.html', active_page='lancamentos')
  
+@app.route('/lancamentos_adm')
+def pagina_lancamentos_adm():
+    """Renderiza a página de lançamentos financeiros."""
+    return render_template('lancamentos_adm.html', active_page='lancamentos_adm')
+
+@app.route('/listagem_lancamentos_adm')
+def pagina_listagem_lancamentos_adm():
+    """Renderiza a página de lançamentos financeiros."""
+    return render_template('listagem_lancamentos_adm.html', active_page='listagem_lancamentos_adm')
+
 @app.route('/login')
 def pagina_login():
     """Renderiza a página de login."""
@@ -186,7 +204,7 @@ def clear_history():
             model="gemini-2.5-flash",
             temperature=0.5,
             # MUDANÇA 2: Use sua chave real aqui
-            api_key="AIzaSyAXM69l4DKkCq9E1_4olPulootWTdtRjVQ",
+            api_key=os.environ.get("CHAVE_API"),
             # MUDANÇA 3: Corrigido de 'generativelace' para 'generativelanguage'
             base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
             system_prompt=INSTRUCTIONS
@@ -200,5 +218,4 @@ def clear_history():
         return jsonify({"status": "error", "message": f"Falha ao limpar histórico: {e}"}), 500
  
 if __name__ == '__main__':
-    # Execute em uma porta que o Front-End espera (5000)
     app.run(port=5400, debug=True)

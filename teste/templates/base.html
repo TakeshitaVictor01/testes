@@ -53,10 +53,17 @@
             const openBtn = document.getElementById('hamburger-btn');
             const closeBtn = document.getElementById('sidebar-close-btn');
             const navUser = document.getElementById('navUser');
+            const navLancAdm = document.getElementById('navLancAdm');
+            const navLanc = document.getElementById('navLanc');
             const group = localStorage.getItem('userGroup');
 
             if (group !== 'admin') {
                 navUser.style.display = 'none';
+                navLancAdm.style.display = 'none';
+            }
+            else
+            {
+                navLanc.style.display = 'none';
             }
 
             if (sidebar && openBtn && closeBtn) {

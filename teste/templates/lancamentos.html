@@ -27,27 +27,9 @@
                     <input type="date" id="paymentDate" name="paymentDate" class="form-input" required>
                 </div>
 
-                <div class="form-group">
-                    <label for="paymentMethod" class="form-label">Método de Pagamento:</label>
-                    <select id="paymentMethod" name="paymentMethod" class="form-select" required>
-                        <option value="" disabled selected>Selecione um método</option>
-                        <option value="Pix">Pix</option>
-                        <option value="Boleto">Boleto</option>
-                    </select>
-                </div>
-
                 <div class="form-group full-width-2-col">
                     <label for="settlementDescription" class="form-label">Descrição da Baixa (Opcional):</label>
                     <input type="text" id="settlementDescription" name="settlementDescription" placeholder="Ex: Pagamento da fatura de energia" class="form-input">
-                </div>
-
-                <div class="form-group full-width-2-col">
-                    <label class="form-label">Selecione a Conta de Origem/Destino:</label>
-                    <input type="hidden" id="accountId" name="accountId" required>
-                    
-                    <ul id="accounts-list" class="account-list-selector">
-                        <li class="loading-indicator">Carregando contas...</li>
-                    </ul>
                 </div>
             </div>
 
@@ -83,15 +65,11 @@
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <label for="categoryId" class="form-label">Categoria:</label>
-                    <select id="categoryId" name="categoryId" class="form-select" required>
-                        <option value="" disabled selected>Selecione uma categoria</option>
-                        <option value="Aluguel">Aluguel</option>
-                        <option value="Fornecedores">Fornecedores</option>
-                        <option value="Venda de Produtos">Venda de Produtos</option>
-                        <option value="Salários">Salários</option>
-                    </select>
+                <div class="form-group full-width-2-col">
+                     <label for="category-select" class="form-label">Categoria Financeira:</label>
+                     <select id="category-select" name="categoryId" class="form-select" required>
+                        <option value="" disabled selected>Carregando Categorias...</option>
+                     </select>
                 </div>
 
                 <div class="form-group">

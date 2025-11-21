@@ -39,6 +39,14 @@ export class ApiService {
         return data;
     }
 
+    async getGeneric(endpoint) {
+        const response = await fetch(`${this.baseUrl}/${endpoint}`);
+        const data = await response.json();
+        if (data.status !== 'success')
+            throw new Error(`Erro ao buscar dados. Status: ${data.message || ''}`);
+        return data;
+    }
+
     async generic(endpoint, itemData) {
         const response = await fetch(`${this.baseUrl}/${endpoint}`, {
             method: 'POST',

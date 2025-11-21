@@ -1,0 +1,109 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Lançamentos Administrativos - Overseer{% endblock %}
+
+{% block page_title %}
+    Lançamentos Administrativos
+{% endblock %}
+
+{% block content %}
+<section class="page-grid-single-column"> 
+
+    <div class="card">
+        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2 class="card-title">Novo Lançamento Financeiro</h2>
+            
+            <div class="mode-toggle-group" style="display: flex; gap: 10px;">
+                <button type="button" id="btn-mode-single" class="button button-primary text-sm">
+                    <i class="fa-solid fa-user"></i> Individual
+                </button>
+                <button type="button" id="btn-mode-multi" class="button button-secondary text-sm">
+                    <i class="fa-solid fa-users"></i> Em Lote
+                </button>
+            </div>
+        </div>
+
+        <form id="admin-transaction-form">
+            <div class="form-group full-width-2-col" style="margin-bottom: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 1.5rem;">
+                
+                <div id="single-select-container">
+                    <label for="company-select" class="form-label">Selecione a Empresa:</label>
+                    <select id="company-select" class="form-select">
+                        <option value="" disabled selected>Carregando empresas...</option>
+                    </select>
+                </div>
+
+                <div id="multi-select-container" class="hidden">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <label class="form-label">Selecione as Empresas:</label>
+                        <button type="button" id="select-all-btn" style="background: none; border: none; color: var(--primary-color, #007bff); cursor: pointer; font-size: 0.9rem;">
+                            Selecionar Todas
+                        </button>
+                    </div>
+                    
+                    <div id="companies-checkbox-list" style="max-height: 200px; overflow-y: auto; border: 1px solid #ddd; border-radius: 8px; padding: 10px; background-color: #f9fafb;">
+                        <p class="text-gray-500 text-center">Carregando...</p>
+                    </div>
+                    <p style="font-size: 0.8rem; color: #666; text-align: right; margin-top: 5px;">
+                        Selecionados: <span id="selected-count">0</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="form-grid-2-col">
+                <div class="form-group full-width-2-col">
+                    <label for="description" class="form-label">Descrição do Lançamento:</label>
+                    <input type="text" id="description" name="description" placeholder="Ex: Mensalidade Março/2025" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="amount" class="form-label">Valor (R$):</label>
+                    <input type="text" id="amount" name="amount" placeholder="0,00" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dueDate" class="form-label">Data de Vencimento:</label>
+                    <input type="date" id="dueDate" name="dueDate" class="form-input" required>
+                </div>
+                
+                 <!-- <div id="single-select-container">
+                    <label for="company-select" class="form-label">Selecione a Empresa:</label>
+                    <select id="company-select" class="form-select">
+                        <option value="" disabled selected>Carregando empresas...</option>
+                    </select>
+                </div> -->
+
+                <div class="form-group full-width-2-col">
+                     <label for="category-select" class="form-label">Categoria Financeira:</label>
+                     <select id="category-select" name="categoryId" class="form-select" required>
+                        <option value="" disabled selected>Carregando Categorias...</option>
+                     </select>
+                </div>
+            </div>
+
+            <div class="form-actions" style="margin-top: 2rem;">
+                <button type="button" onclick="window.history.back()" class="button button-secondary">
+                    Cancelar
+                </button>
+                <button type="submit" class="button button-success">
+                    <i class="fa-solid fa-check"></i> Confirmar Lançamento(s)
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- <div id="loading-overlay" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); z-index: 9999; display: flex; align-items: center; justify-content: center;">
+        <div style="text-align: center;">
+            <i class="fa-solid fa-spinner fa-spin fa-3x" style="color: #007bff;"></i>
+            <p style="margin-top: 10px; font-weight: bold; color: #333;">Processando...</p>
+        </div>
+    </div> -->
+
+</section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://unpkg.com/imask"></script> 
+    <script type="module" src="{{ url_for('static', filename='script/lancamentos_adm.js') }}" defer></script>
+{% endblock %}
