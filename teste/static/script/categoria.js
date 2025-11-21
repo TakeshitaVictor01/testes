@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const endpoint = "getAllByEnterprise"; 
             const itemData = { id: enterpriseId };
             
+            
             // Tenta chamar a API, se falhar ou retornar vazio, pode usar o mock (opcional)
             const response = await apiService.generic(endpoint, itemData);
             
@@ -123,9 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="flex items-center space-x-3">
                     <button data-id="${item.Id}" class="edit-btn text-blue-600 hover:text-blue-800 font-medium transition-colors flex items-center gap-1">
                         <span>Editar</span>
-                    </button>
-                    <button data-id="${item.Id}" class="view-btn text-gray-600 hover:text-gray-800 font-medium transition-colors flex items-center gap-1">
-                        <span>Visualizar</span>
                     </button>
                 </div>
             </div>
@@ -215,4 +213,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Inicializa
     fetchItems();
+    console.log(enterpriseId);
 });

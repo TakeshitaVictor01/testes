@@ -230,9 +230,10 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadCategories() {
         try {
             // Ajuste a rota para onde busca as categorias
+            const itemData = { id: enterpriseId };
             const categoryService = new ApiService('https://megaware.incubadora.shop/incubadora/category');
-            const response = await categoryService.generic("getAllByEnterprise", { enterpriseId: enterpriseId });
-            
+            const response = await categoryService.generic("getAllByEnterprise", itemData );
+            console.log(response.data);
             allCategories = response.data;
             renderSingleSelectCategories();
         } catch (error) {
